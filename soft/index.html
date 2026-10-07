@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
 <meta name="theme-color" content="#f3f1ec">
 <script>
 (function () {
@@ -13,7 +14,7 @@
   document.querySelector('meta[name="theme-color"]').setAttribute("content", t === "dark" ? "#1a1f27" : "#f3f1ec");
 })();
 </script>
-<title>AquaSolDB viewer, style 4 of 10: Soft app (made-up data)</title>
+<title>AquaSolDB viewer, style 4 of 10: Soft app (published v1.2 data)</title>
 <style>
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -78,13 +79,15 @@ td.sel input { width: 18px; height: 18px; }
 .printed .tablewrap { max-height: none; }
 .plot { position: relative; }
 .plot svg { width: 100%; max-width: 820px; height: auto; display: block; touch-action: manipulation; }
-.plot .pt { cursor: pointer; }
+.plot svg { cursor: crosshair; }
+.plot svg.dense .pt { stroke-width: .5; }
 .tip { position: absolute; display: none; pointer-events: none; font-size: 12px; padding: 6px 8px; max-width: 240px; z-index: 5; }
 .tip table { font-size: 12px; min-width: 0; width: auto; }
 .tip td { border: none !important; padding: 1px 6px 1px 0 !important; background: none !important; }
 .caption { font-size: 13px; margin: 6px 0; }
 .info { padding: 12px 14px; font-size: 14px; }
 #body { min-width: 0; }
+.shell { min-height: 100vh; }  /* keeps the footer below the fold while a table loads (no layout shift) */
 @media (max-width: 760px) {
   .stylenav { flex-wrap: nowrap; justify-content: flex-start !important; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
   .stylenav a, .stylenav .lab { flex: 0 0 auto; }
@@ -99,6 +102,36 @@ td.sel input { width: 18px; height: 18px; }
   #quick .field { margin-bottom: 8px; }
   .tablewrap { max-height: 360px; }
   .plotctl { gap: 0 16px; }
+}
+/* ---- real-data additions: tick-box lists, pager, legend, footer ---- */
+.banner a, .foot a { color: inherit; text-decoration: underline; }
+.banner .preview { font-size: 12px; opacity: .9; margin-top: 2px; }
+.listsearch { margin-bottom: 6px; }
+.checklist { max-height: 210px; overflow-y: auto; -webkit-overflow-scrolling: touch; border: 1px solid rgba(128,128,128,.35); border-radius: 6px; padding: 2px 0; }
+.checklist .li { display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 10px; font-size: 14px; cursor: pointer; }
+.checklist .lmore { font-size: 13px; opacity: .8; padding: 8px 10px; }
+.checklist .li + .li { border-top: 1px solid rgba(128,128,128,.15); }
+.checklist .li input { width: 18px; height: 18px; flex: 0 0 auto; margin: 0; }
+.checklist .nm { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.checklist .n { font-size: 12px; opacity: .75; font-variant-numeric: tabular-nums; }
+.listbtns { display: flex; gap: 8px; margin-top: 6px; }
+.btn.small { min-height: 40px; padding: 0 14px; font-size: 14px; }
+.btn[disabled] { opacity: .45; cursor: default; }
+.pickfield { flex: 1 1 280px; max-width: 460px; }
+.pager { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 6px 0; }
+.pager .pinfo { font-size: 14px; font-variant-numeric: tabular-nums; text-align: center; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 13px; margin: 6px 0 2px; }
+.legend .lg { display: inline-flex; align-items: center; gap: 5px; }
+.legend .more { opacity: .8; }
+td.long { white-space: normal; min-width: 16em; max-width: 34em; }
+tr.sizer { visibility: collapse; }
+.info.err { border-left: 4px solid #c0392b; }
+.foot { max-width: 1180px; margin: 0 auto; padding: 14px 20px 36px; font-size: 13px; line-height: 1.5; }
+.foot p { margin: 0 0 6px; }
+@media (max-width: 760px) {
+  td.long { min-width: 14em; max-width: 20em; }
+  .foot { padding: 10px 14px 28px; }
+  .pickfield { max-width: none; }
 }
 
 /* ---- light/dark mode ---- */
@@ -230,9 +263,9 @@ tr.picked td { background: var(--accent-soft); }
 </style>
 </head>
 <body>
-<div class="banner">Preview with made-up data -- style 4 of 10: Soft app</div>
+<div class="banner"><div class="dataline">Data: AquaSolDB v1.2 (published), CC BY 4.0 - <a href="https://doi.org/10.5281/zenodo.22905509" rel="noopener">doi:10.5281/zenodo.22905509</a></div><div class="preview">Preview of the viewer app; the database's next version is in preparation -- style 4 of 10: Soft app</div></div>
 <nav class="stylenav" aria-label="Other styles"><span class="lab">Styles:</span><a href="../index.html">All styles</a><a href="../owid/index.html">1. Our World in Data</a><a href="../dark/index.html">2. Dark dashboard</a><a href="../journal/index.html">3. Journal data page</a><a href="../soft/index.html" aria-current="page">4. Soft app</a><a href="../nord/index.html">5. Nord</a><a href="../material/index.html">6. Material</a><a href="../ios/index.html">7. iOS</a><a href="../terminal/index.html">8. Terminal</a><a href="../nature/index.html">9. Nature</a><a href="../glass/index.html">10. Glass</a></nav>
-<header class="top"><div class="toprow"><h1>AquaSolDB viewer<span class="dot">.</span></h1><button type="button" class="themebtn" id="themeBtn" aria-label="Switch to dark mode"><span class="to-dark"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>Dark</span><span class="to-light"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>Light</span></button></div><p class="lede">Read-only view of made-up sample data. Solubility in mol per kg of water; temperature in K; pressure in MPa (total pressure unless the pressure basis says otherwise).</p></header>
+<header class="top"><div class="toprow"><h1>AquaSolDB viewer<span class="dot">.</span></h1><button type="button" class="themebtn" id="themeBtn" aria-label="Switch to dark mode"><span class="to-dark"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>Dark</span><span class="to-light"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>Light</span></button></div><p class="lede">Read-only view of the published AquaSolDB v1.2. Solubility in mol per kg of water; temperature in K; pressure in MPa (total pressure unless the pressure basis says otherwise).</p></header>
 <nav class="tabs" id="tabs" aria-label="Tables"></nav>
 <div class="shell">
   <aside id="side" aria-label="Filters">
@@ -243,251 +276,211 @@ tr.picked td { background: var(--accent-soft); }
   </aside>
   <main id="body"></main>
 </div>
+<footer class="foot"><p>If you use this dataset, cite it as below AND cite the original paper that printed each value you use; the source_id column of every row names that paper, and csv/sources.csv gives its full reference and DOI.</p><p>Data: AquaSolDB v1.2 (published), <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a> - cite: Abd, A., &amp; Abushaikha, A. (2026). AquaSolDB (Version 1.2) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.22905509 - <a href="https://doi.org/10.5281/zenodo.22905509" rel="noopener">doi:10.5281/zenodo.22905509</a></p><p>Preview of the viewer app; the database's next version is in preparation.</p></footer>
 <script>
 "use strict";
 const THEME = {"palette": ["#34507a", "#b8693f", "#6da394", "#d4ae55"], "direct": false, "shapes": false, "r": 8};
-// ---------- made-up sample data (never real data, never real DOIs) ----------
-const SOURCES = [
-  {source_id: "sample2001", reference: "Sample, A. (2001) Gas solubility in salt water at moderate pressure. Journal of Example Data 1, 1-10.", source_type: "journal", doi: "10.0000/example.0001", method: "analytical_sampling"},
-  {source_id: "example2010", reference: "Example, B., Placeholder, C. (2010) Phase behaviour of light gases with brines. Example Fluids 22, 100-112.", source_type: "journal", doi: "10.0000/example.0002", method: "manometric_volumetric"},
-  {source_id: "demo2015", reference: "Demo, D., Mock, E., Sample, F. (2015) A small sample compilation of gas-water data. Sample Compilations 3, 45-60.", source_type: "compilation", doi: "10.0000/example.0003", method: "calculated_compilation"},
-  {source_id: "mock1998", reference: "Mock, G. (1998) Hydrate and dew points of wet gases. PhD thesis, University of Example.", source_type: "thesis", doi: "", method: "synthetic_visual"},
-];
-const REASON = {
-  measured: "read from the source's data table",
-  calculated: "computed by the source from its own model",
-  no_value: "the source gives no number for this row",
-};
-const ION = {none: {}, NaCl: {m_Na: 1, m_Cl: 1}, CaCl2: {m_Ca: 1, m_Cl: 2}, not_stated: {}};
-const seq = {};
-function pid(gas, src) {
-  const k = gas + "_" + src; seq[k] = (seq[k] || 0) + 1;
-  return gas + "_" + src + "_" + gas.toLowerCase() + "_" + String(seq[k]).padStart(3, "0");
-}
-function salted(row, salt, m, cols) {
-  row.salt = salt;
-  row.salt_molality = (salt === "none" || salt === "not_stated" || m === "") ? (salt === "none" ? "0" : "") : String(m);
-  if (cols.includes("salt_composition")) row.salt_composition = salt === "none" ? "" : (salt === "not_stated" ? "" : salt + " only");
-  for (const ion of ["m_Na", "m_Cl", "m_K", "m_Ca", "m_Mg", "m_SO4"]) {
-    if (!cols.includes(ion)) continue;
-    const f = (ION[salt] || {})[ion];
-    row[ion] = f && m !== "" ? String(+(f * m).toFixed(3)) : (salt === "none" ? "0" : "");
-  }
-}
-function fill(cols, row) { const o = {}; for (const c of cols) o[c] = row[c] === undefined ? "" : String(row[c]); return o; }
-
-const COLS = {
-  solubility: ["point_id","gas","temperature_K","pressure_MPa","pressure_basis","salt","salt_molality","salt_composition",
-    "m_Na","m_Cl","m_K","m_Ca","m_Mg","m_SO4","solubility_mol_per_kgw","status","status_reason","flags","method","source_id"],
-  water_content: ["point_id","gas","phase","temperature_K","pressure_MPa","salt","salt_molality","salt_composition",
-    "water_mole_fraction","status","status_reason","flags","method","source_id"],
-  mixtures: ["point_id","gas","gas2","gas2_mole_fraction_feed","temperature_K","pressure_MPa","salt","salt_molality",
-    "salt_composition","m_Na","m_Cl","m_Ca","solubility_mol_per_kgw","status","status_reason","flags","method","source_id"],
-  phase_boundaries: ["point_id","gas","boundary_type","temperature_K","pressure_MPa","salt","salt_molality","m_Na","m_Cl",
-    "m_Ca","extra_value","extra_quantity","status","status_reason","flags","method","source_id"],
-  other_quantities: ["point_id","source_table","gas","gas2","gas2_mole_fraction_feed","phase","temperature_K","pressure_MPa",
-    "pressure_basis","salt","salt_molality","salt_composition","m_Na","m_Cl","m_K","m_Ca","quantity_as_printed",
-    "value_as_printed","status","status_reason","flags","method","source_id"],
-};
-const SRC_METHOD = Object.fromEntries(SOURCES.map(s => [s.source_id, s.method]));
-const PRINTED = [];
-function addPrinted(id, value, unit, page) {
-  PRINTED.push({point_id: id, value_as_printed: value, unit_as_printed: unit, page_ref: page,
-                page_ref_convention: page.startsWith("p. ") ? "printed_page" : "pdf_page", page_offset: page.startsWith("p. ") ? "0" : "-2"});
-}
-function make(table, spec) {
-  return spec.map(r => {
-    const row = Object.assign({}, r);
-    row.point_id = pid(r.gas, r.source_id);
-    salted(row, r.salt, r.m, COLS[table]);
-    row.status_reason = REASON[r.status];
-    row.method = r.method || SRC_METHOD[r.source_id];
-    if (row.flags === undefined) row.flags = "";
-    if (r.printed) addPrinted(row.point_id, r.printed[0], r.printed[1], r.printed[2]);
-    return fill(COLS[table], row);
-  });
-}
-
-const TABLES = {};
-TABLES.solubility = make("solubility", [
-  {gas:"CO2", temperature_K:"323.15", pressure_MPa:"5.00",  pressure_basis:"total", salt:"none",  m:0,   solubility_mol_per_kgw:"0.800", status:"measured", source_id:"sample2001", printed:["0.0142","mole fraction","p. 4"]},
-  {gas:"CO2", temperature_K:"323.15", pressure_MPa:"10.00", pressure_basis:"total", salt:"none",  m:0,   solubility_mol_per_kgw:"1.100", status:"measured", source_id:"sample2001", printed:["0.0194","mole fraction","p. 4"]},
-  {gas:"CO2", temperature_K:"323.15", pressure_MPa:"15.00", pressure_basis:"total", salt:"NaCl",  m:1.0, solubility_mol_per_kgw:"0.950", status:"measured", source_id:"sample2001", printed:["0.950","mol/kg","p. 5"]},
-  {gas:"CO2", temperature_K:"353.15", pressure_MPa:"10.00", pressure_basis:"total", salt:"CaCl2", m:0.5, solubility_mol_per_kgw:"0.700", status:"measured", flags:"replicate", source_id:"example2010", printed:["0.70","mol/kg","Table 2, p. 104"]},
-  {gas:"H2",  temperature_K:"298.15", pressure_MPa:"5.00",  pressure_basis:"total", salt:"none",  m:0,   solubility_mol_per_kgw:"0.040", status:"measured", source_id:"example2010", printed:["0.040","mol/kg","Table 1, p. 103"]},
-  {gas:"H2",  temperature_K:"298.15", pressure_MPa:"10.00", pressure_basis:"total", salt:"none",  m:0,   solubility_mol_per_kgw:"0.078", status:"measured", source_id:"example2010", printed:["0.078","mol/kg","Table 1, p. 103"]},
-  {gas:"H2",  temperature_K:"323.15", pressure_MPa:"20.00", pressure_basis:"total", salt:"NaCl",  m:2.0, solubility_mol_per_kgw:"0.090", status:"measured", source_id:"sample2001", printed:["1.6e-3","mole fraction","p. 6"]},
-  {gas:"CH4", temperature_K:"310.00", pressure_MPa:"8.00",  pressure_basis:"total", salt:"none",  m:0,   solubility_mol_per_kgw:"0.090", status:"calculated", flags:"from_compilation", source_id:"demo2015", printed:["0.090","mol/kg","pdf 12"]},
-  {gas:"CH4", temperature_K:"340.00", pressure_MPa:"12.00", pressure_basis:"total", salt:"NaCl",  m:1.0, solubility_mol_per_kgw:"0.085", status:"calculated", flags:"from_compilation", source_id:"demo2015", printed:["0.085","mol/kg","pdf 12"]},
-  {gas:"N2",  temperature_K:"300.00", pressure_MPa:"10.00", pressure_basis:"total", salt:"not_stated", m:"", solubility_mol_per_kgw:"0.060", status:"measured", flags:"suspect_value", source_id:"demo2015", printed:["0.060","mol/kg","pdf 14"]},
-  {gas:"H2S", temperature_K:"330.00", pressure_MPa:"2.00",  pressure_basis:"partial_H2S", salt:"none", m:0, solubility_mol_per_kgw:"0.450", status:"measured", source_id:"sample2001", printed:["0.45","mol/kg","p. 7"]},
-  {gas:"C2H6",temperature_K:"320.00", pressure_MPa:"",      pressure_basis:"total", salt:"none",  m:0,   solubility_mol_per_kgw:"0.030", status:"measured", flags:"digitized_from_figure", source_id:"example2010", printed:["0.03","mol/kg","Fig. 3, p. 107"]},
-  {gas:"CO2", temperature_K:"373.15", pressure_MPa:"20.00", pressure_basis:"total", salt:"NaCl",  m:3.0, solubility_mol_per_kgw:"",      status:"no_value", source_id:"demo2015", printed:["--","","pdf 15"]},
-]);
-TABLES.water_content = make("water_content", [
-  {gas:"CO2", phase:"vapour", temperature_K:"323.15", pressure_MPa:"5.00",  salt:"none", m:0, water_mole_fraction:"0.0040", status:"measured", source_id:"sample2001", printed:["4.0e-3","mole fraction","p. 8"]},
-  {gas:"CO2", phase:"vapour", temperature_K:"323.15", pressure_MPa:"10.00", salt:"none", m:0, water_mole_fraction:"0.0030", status:"measured", source_id:"sample2001", printed:["3.0e-3","mole fraction","p. 8"]},
-  {gas:"CO2", phase:"liquid_hydrocarbon_or_co2", temperature_K:"298.15", pressure_MPa:"8.00", salt:"none", m:0, water_mole_fraction:"0.0025", status:"measured", source_id:"example2010", printed:["0.25","mol %","Table 4, p. 109"]},
-  {gas:"CH4", phase:"vapour", temperature_K:"310.00", pressure_MPa:"10.00", salt:"NaCl", m:1.0, water_mole_fraction:"0.0012", status:"measured", source_id:"mock1998", printed:["1.2e-3","mole fraction","pdf 40"]},
-  {gas:"CH4", phase:"vapour", temperature_K:"340.00", pressure_MPa:"10.00", salt:"not_stated", m:"", water_mole_fraction:"0.0035", status:"calculated", flags:"from_compilation", source_id:"demo2015", printed:["3.5e-3","mole fraction","pdf 20"]},
-  {gas:"N2",  phase:"vapour", temperature_K:"300.00", pressure_MPa:"5.00",  salt:"none", m:0, water_mole_fraction:"0.0009", status:"measured", source_id:"mock1998", printed:["9e-4","mole fraction","pdf 41"]},
-  {gas:"H2",  phase:"vapour", temperature_K:"323.15", pressure_MPa:"10.00", salt:"none", m:0, water_mole_fraction:"0.0015", status:"measured", source_id:"example2010", printed:["0.15","mol %","Table 5, p. 110"]},
-  {gas:"H2S", phase:"vapour", temperature_K:"350.00", pressure_MPa:"",      salt:"none", m:0, water_mole_fraction:"",       status:"no_value", source_id:"demo2015", printed:["n.d.","","pdf 21"]},
-]);
-TABLES.mixtures = make("mixtures", [
-  {gas:"CO2", gas2:"H2",  gas2_mole_fraction_feed:"0.10", temperature_K:"323.15", pressure_MPa:"10.00", salt:"none", m:0,   solubility_mol_per_kgw:"0.950", status:"measured", source_id:"example2010", printed:["0.95","mol/kg","Table 6, p. 111"]},
-  {gas:"H2",  gas2:"CO2", gas2_mole_fraction_feed:"0.90", temperature_K:"323.15", pressure_MPa:"10.00", salt:"none", m:0,   solubility_mol_per_kgw:"0.008", status:"measured", source_id:"example2010", printed:["0.008","mol/kg","Table 6, p. 111"]},
-  {gas:"CH4", gas2:"CO2", gas2_mole_fraction_feed:"0.20", temperature_K:"340.00", pressure_MPa:"15.00", salt:"NaCl", m:1.0, solubility_mol_per_kgw:"0.070", status:"measured", source_id:"sample2001", printed:["0.070","mol/kg","p. 9"]},
-  {gas:"CO2", gas2:"CH4", gas2_mole_fraction_feed:"0.80", temperature_K:"340.00", pressure_MPa:"15.00", salt:"NaCl", m:1.0, solubility_mol_per_kgw:"0.210", status:"measured", source_id:"sample2001", printed:["0.21","mol/kg","p. 9"]},
-  {gas:"N2",  gas2:"CH4", gas2_mole_fraction_feed:"0.50", temperature_K:"310.00", pressure_MPa:"20.00", salt:"CaCl2", m:1.0, solubility_mol_per_kgw:"0.040", status:"calculated", flags:"from_compilation", source_id:"demo2015", printed:["0.040","mol/kg","pdf 30"]},
-  {gas:"CH4", gas2:"N2",  gas2_mole_fraction_feed:"0.50", temperature_K:"310.00", pressure_MPa:"20.00", salt:"CaCl2", m:1.0, solubility_mol_per_kgw:"0.055", status:"calculated", flags:"from_compilation", source_id:"demo2015", printed:["0.055","mol/kg","pdf 30"]},
-]);
-TABLES.phase_boundaries = make("phase_boundaries", [
-  {gas:"CH4", boundary_type:"hydrate",     temperature_K:"280.00", pressure_MPa:"5.00",  salt:"none", m:0,   extra_value:"", extra_quantity:"", status:"measured", source_id:"mock1998", printed:["5.0","MPa","pdf 52"]},
-  {gas:"CH4", boundary_type:"hydrate",     temperature_K:"285.00", pressure_MPa:"8.50",  salt:"NaCl", m:1.0, extra_value:"", extra_quantity:"", status:"measured", source_id:"mock1998", printed:["8.5","MPa","pdf 52"]},
-  {gas:"CO2", boundary_type:"hydrate",     temperature_K:"278.00", pressure_MPa:"2.50",  salt:"none", m:0,   extra_value:"", extra_quantity:"", status:"measured", source_id:"mock1998", printed:["25","bar","pdf 53"]},
-  {gas:"CO2", boundary_type:"three_phase", temperature_K:"290.00", pressure_MPa:"5.20",  salt:"none", m:0,   extra_value:"0.025", extra_quantity:"water mole fraction in liquid CO2", status:"measured", source_id:"example2010", printed:["5.2","MPa","Table 7, p. 112"]},
-  {gas:"C2H6",boundary_type:"dew_point",   temperature_K:"300.00", pressure_MPa:"3.00",  salt:"none", m:0,   extra_value:"", extra_quantity:"", status:"measured", source_id:"mock1998", printed:["3.0","MPa","pdf 60"]},
-  {gas:"N2",  boundary_type:"",            temperature_K:"283.00", pressure_MPa:"15.00", salt:"not_stated", m:"", extra_value:"", extra_quantity:"", status:"calculated", flags:"from_compilation", source_id:"demo2015", printed:["150","bar","pdf 33"]},
-]);
-TABLES.other_quantities = make("other_quantities", [
-  {source_table:"Table 3", gas:"CO2", gas2:"", gas2_mole_fraction_feed:"", phase:"", temperature_K:"323.15", pressure_MPa:"10.00", pressure_basis:"total", salt:"none", m:0, quantity_as_printed:"Gas-water ratio, m3/m3 (sample)", value_as_printed:"24.0", status:"measured", source_id:"sample2001", printed:["24.0","m3/m3","p. 10"]},
-  {source_table:"Table 3", gas:"CH4", gas2:"", gas2_mole_fraction_feed:"", phase:"", temperature_K:"340.00", pressure_MPa:"12.00", pressure_basis:"total", salt:"NaCl", m:1.0, quantity_as_printed:"Henry constant, MPa (sample)", value_as_printed:"5200", status:"calculated", source_id:"demo2015", printed:["5200","MPa","pdf 40"]},
-  {source_table:"Fig. 2", gas:"H2", gas2:"", gas2_mole_fraction_feed:"", phase:"", temperature_K:"300.00", pressure_MPa:"", pressure_basis:"", salt:"not_stated", m:"", quantity_as_printed:"Volume ratio from a figure (sample); no number read", value_as_printed:"", status:"no_value", flags:"digitized_from_figure", source_id:"example2010", printed:["--","","Fig. 2, p. 106"]},
-  {source_table:"Table 8", gas:"CO2", gas2:"N2", gas2_mole_fraction_feed:"0.30", phase:"vapour", temperature_K:"310.00", pressure_MPa:"8.00", pressure_basis:"total", salt:"none", m:0, quantity_as_printed:"yCO2, vapour mole fraction (sample)", value_as_printed:"0.69", status:"measured", source_id:"example2010", printed:["0.69","mole fraction","Table 8, p. 112"]},
-  {source_table:"Table 4", gas:"H2S", gas2:"", gas2_mole_fraction_feed:"", phase:"", temperature_K:"330.00", pressure_MPa:"1.00", pressure_basis:"total", salt:"CaCl2", m:0.5, quantity_as_printed:"Molarity, mol/dm3 (sample)", value_as_printed:"0.21", status:"measured", source_id:"sample2001", printed:["0.21","mol/dm3","p. 11"]},
-  {source_table:"Table 5", gas:"N2", gas2:"", gas2_mole_fraction_feed:"", phase:"", temperature_K:"295.00", pressure_MPa:"6.00", pressure_basis:"total", salt:"NaCl", m:2.0, quantity_as_printed:"Bunsen coefficient (sample)", value_as_printed:"0.011", status:"measured", source_id:"mock1998", printed:["0.011","-","pdf 70"]},
-]);
-
-const DICTIONARY = [
-  ["*","point_id","-","Permanent row ID: gas, source, gas tag and a three-digit number.","never blank"],
-  ["*","gas","-","Dissolved gas, as a formula.","never blank"],
-  ["*","temperature_K","K","Temperature.","the source gives no temperature"],
-  ["*","pressure_MPa","MPa","Total pressure (unless the pressure basis says otherwise).","the source gives no pressure"],
-  ["*","pressure_basis","-","Whether the pressure is total or a partial pressure.","total"],
-  ["*","salt","-","Dissolved salt; 'none' = pure water; 'not_stated' = the source does not say.","never blank"],
-  ["*","salt_molality","mol/kg water","Salt molality.","no salt amount given"],
-  ["*","salt_composition","-","Salt mixture in words.","single salt or pure water"],
-  ["*","m_Na","mol/kg water","Sodium ion molality.","not present or not given"],
-  ["*","m_Cl","mol/kg water","Chloride ion molality.","not present or not given"],
-  ["*","m_K","mol/kg water","Potassium ion molality.","not present or not given"],
-  ["*","m_Ca","mol/kg water","Calcium ion molality.","not present or not given"],
-  ["*","m_Mg","mol/kg water","Magnesium ion molality.","not present or not given"],
-  ["*","m_SO4","mol/kg water","Sulfate ion molality.","not present or not given"],
-  ["solubility","solubility_mol_per_kgw","mol/kg water","Dissolved gas per kg of water.","status is no_value"],
-  ["water_content","phase","-","The gas-rich phase whose water content is given.","never blank"],
-  ["water_content","water_mole_fraction","-","Mole fraction of water in that phase.","status is no_value"],
-  ["mixtures","gas2","-","The second gas in the feed.","never blank"],
-  ["mixtures","gas2_mole_fraction_feed","-","Second gas in the feed, mole fraction.","not given"],
-  ["phase_boundaries","boundary_type","-","Kind of boundary: hydrate, three_phase, dew_point.","not stated by the source"],
-  ["phase_boundaries","extra_value","-","A further number printed with the boundary point.","none printed"],
-  ["phase_boundaries","extra_quantity","-","What the extra value is.","none printed"],
-  ["other_quantities","source_table","-","Where in the source the row was read.","never blank"],
-  ["other_quantities","quantity_as_printed","-","The quantity and unit as the source prints them.","never blank"],
-  ["other_quantities","value_as_printed","-","The value as printed.","no number printed"],
-  ["*","status","-","measured, calculated or no_value.","never blank"],
-  ["*","status_reason","-","One short reason for the status.","never blank"],
-  ["*","flags","-","Tags such as from_compilation, digitized_from_figure, replicate, suspect_value.","no flag"],
-  ["*","method","-","How the source measured or obtained the value.","never blank"],
-  ["*","source_id","-","The source; full reference in sources.csv.","never blank"],
-  ["sources","reference","-","Full reference.","never blank"],
-  ["sources","source_type","-","journal, compilation, thesis, report or conference.","never blank"],
-  ["sources","doi","-","DOI.","the source has no DOI"],
-  ["printed_values","value_as_printed","-","The number exactly as printed.","nothing printed"],
-  ["printed_values","unit_as_printed","-","The unit exactly as printed.","no unit printed"],
-  ["printed_values","page_ref","-","Page, table or figure where the value sits.","never blank"],
-  ["printed_values","page_ref_convention","-","Whether the page is the printed page or the PDF page.","never blank"],
-  ["printed_values","page_offset","-","PDF page minus printed page.","not known"],
-].map(r => ({table: r[0], column: r[1], unit: r[2], meaning: r[3], blank_means: r[4]}));
-
-// ---------- labels, help (copied from the app's data.py) ----------
+// ---------- table shapes, labels and column help (the rows themselves are fetched from ../data/*.json) ----------
 const LABELS = {
   point_id:"Row ID", gas:"Gas", gas2:"Second gas", gas2_mole_fraction_feed:"Second gas in feed (mole fraction)",
   phase:"Phase", boundary_type:"Boundary type", temperature_K:"Temperature (K)", pressure_MPa:"Pressure (MPa)",
   pressure_basis:"Pressure basis", salt:"Salt", salt_molality:"Salt molality (mol/kg water)", salt_composition:"Salt composition",
   m_Na:"Na+ (mol/kg water)", m_Cl:"Cl- (mol/kg water)", m_K:"K+ (mol/kg water)", m_Ca:"Ca2+ (mol/kg water)",
   m_Mg:"Mg2+ (mol/kg water)", m_SO4:"SO4 2- (mol/kg water)", solubility_mol_per_kgw:"Solubility (mol/kg water)",
-  water_mole_fraction:"Water mole fraction", extra_value:"Extra value", extra_quantity:"Extra quantity",
-  source_table:"Source table", quantity_as_printed:"Quantity as printed", value_as_printed:"Value as printed",
-  unit_as_printed:"Unit as printed", page_ref:"Page", page_ref_convention:"Page numbering", page_offset:"Page offset",
-  status:"Status", status_reason:"Status reason", flags:"Flags", method:"Method", source_id:"Source",
-  reference:"Reference", source_type:"Source type", doi:"DOI",
+  solubility_mole_fraction:"Solubility (mole fraction)",
+  water_mole_fraction:"Water mole fraction", value_as_printed:"Value as printed", unit_as_printed:"Unit as printed",
+  flags:"Flags", method:"Method", source_id:"Source", reference:"Reference", short_reference:"Short reference",
+  source_type:"Source type", doi:"DOI",
 };
 const label = c => LABELS[c] || c;
 const NUMERIC = new Set(["temperature_K","pressure_MPa","salt_molality","m_Na","m_Cl","m_K","m_Ca","m_Mg","m_SO4",
-  "solubility_mol_per_kgw","water_mole_fraction","gas2_mole_fraction_feed"]);
+  "solubility_mol_per_kgw","solubility_mole_fraction","water_mole_fraction","gas2_mole_fraction_feed"]);
 const PLOT_QUANTITY = {solubility:"solubility_mol_per_kgw", mixtures:"solubility_mol_per_kgw", water_content:"water_mole_fraction"};
+// v1.2 has no "other quantities" table, so that tab is not offered.
 const TAB_LIST = [
   ["solubility","Gas solubility"],["water_content","Water content"],["mixtures","Gas mixtures"],
-  ["phase_boundaries","Phase boundaries"],["other_quantities","Other quantities"],["sources","Sources"],["dictionary","Column meanings"],
+  ["phase_boundaries","Phase boundaries"],["sources","Sources"],["dictionary","Column meanings"],
 ];
+const ROW_TABLES = ["solubility","water_content","mixtures","phase_boundaries"];
 const TITLE = Object.fromEntries(TAB_LIST);
-function helpFor(table, col) {
-  const hit = DICTIONARY.find(d => d.table === table && d.column === col) || DICTIONARY.find(d => d.table === "*" && d.column === col);
-  if (!hit) return "";
-  let t = hit.meaning;
-  if (hit.unit && hit.unit !== "-") t += " Unit: " + hit.unit + ".";
-  if (hit.blank_means) t += " Blank means: " + hit.blank_means + ".";
-  return t;
-}
 
-const SRC_COLOR = Object.fromEntries(SOURCES.map((s, i) => [s.source_id, THEME.palette[i % THEME.palette.length]]));
-const SRC_SHAPE = Object.fromEntries(SOURCES.map((s, i) => [s.source_id, ["circle","square","triangle","diamond"][i % 4]]));
+// Column help from the v1.2 column dictionary. Its applies_to lists v1.2 FILE names, so map the viewer's tables to them.
+const V12_FILES = {solubility:["solubility"], water_content:["watercontent","liquidwatercontent"], mixtures:["mixtures"],
+                   phase_boundaries:["phaseboundaries"], sources:["sources"]};
+// Viewer columns renamed from v1.2 (identical meaning) or added by the preview's converter.
+const HELP_ALIAS = {water_mole_fraction:["water_mole_fraction_vapor","water_mole_fraction_liquid_hydrocarbon"]};
+const HELP_EXTRA = {
+  phase: "Which v1.2 file the row comes from: vapour = watercontent.csv (water in the gas-rich phase); " +
+         "liquid_hydrocarbon_or_co2 = liquidwatercontent.csv (water in the liquid hydrocarbon- or CO2-rich phase).",
+  short_reference: "Short reference printed in every v1.2 row file (column 'reference' there).",
+  "sources|method": "The method of this source's own published rows (every source has exactly one).",
+  "sources|reference": "Full reference of the source.",
+};
+let DICTIONARY = null;  // loaded with the Column meanings tab, or on the first column-title tap
+function helpFor(table, col) {
+  if (HELP_EXTRA[table + "|" + col]) return HELP_EXTRA[table + "|" + col];
+  if (!DICTIONARY) return "";
+  const files = V12_FILES[table] || [];
+  const names = HELP_ALIAS[col] || [col];
+  const parts = [];
+  for (const n of names) {
+    const hits = DICTIONARY.filter(d => d.column === n);
+    const hit = hits.find(d => d.applies_to.split(",").some(f => files.includes(f))) || hits[0];
+    if (!hit) continue;
+    let t = hit.meaning;
+    if (hit.unit && hit.unit !== "-") t += " Unit: " + hit.unit + ".";
+    if (names.length > 1) t = (n.endsWith("vapor") ? "Phase vapour: " : "Phase liquid_hydrocarbon_or_co2: ") + t;
+    parts.push(t);
+  }
+  return parts.join(" ") || HELP_EXTRA[col] || "";
+}
 
 // ---------- helpers ----------
 const esc = s => String(s).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
-const num = v => (v === "" || v === undefined || isNaN(+v)) ? NaN : +v;
-const distinct = (rows, c) => [...new Set(rows.map(r => r[c]))].sort();
+const num = v => (v === "" || v === undefined || v === null || isNaN(+v)) ? NaN : +v;
+const fmt = n => n.toLocaleString("en-US");
+const PAGE = 100, MAXPTS = 2000, PRESET = 12;
 function toCSV(rows, cols) {
-  const q = v => /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
-  return [cols.join(","), ...rows.map(r => cols.map(c => q(r[c] ?? "")).join(","))].join("\n") + "\n";
+  const q = v => /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+  const out = [cols.join(",")];
+  for (const r of rows) out.push(cols.map(c => q(r[c] ?? "")).join(","));
+  return out.join("\n") + "\n";
 }
 function download(name, text) {
   const blob = new Blob([text], {type: "text/csv"});
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
-  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+}
+const $ = id => document.getElementById(id);
+
+// ---------- data: fetched from the same site, each table the first time its tab opens ----------
+// Every file is an array of arrays (row 0 = header). Blank cells arrive as null and become "".
+const DATA = {}, LOADING = {}, LOADERR = {};
+let PRINTED = null;  // Map point_id -> [value_as_printed, unit_as_printed], loaded on first use
+function fetchTable(name) {
+  return fetch("../data/" + name + ".json").then(r => {
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.json();
+  });
+}
+function load(key) {
+  if (DATA[key]) return Promise.resolve(DATA[key]);
+  if (!LOADING[key]) {
+    delete LOADERR[key];
+    LOADING[key] = fetchTable(key).then(a => {
+      const cols = a[0], n = cols.length, rows = new Array(a.length - 1);
+      for (let i = 1; i < a.length; i++) {
+        const src = a[i], o = {};
+        for (let j = 0; j < n; j++) { const v = src[j]; o[cols[j]] = v === null || v === undefined ? "" : String(v); }
+        rows[i - 1] = o;
+      }
+      const yq = PLOT_QUANTITY[key];  // numbers parsed once, so filtering and plotting never re-parse text
+      if (cols.includes("temperature_K")) for (const r of rows) { r._T = num(r.temperature_K); r._P = num(r.pressure_MPa); if (yq) r._Y = num(r[yq]); }
+      const t = {cols, rows};
+      DATA[key] = t;
+      if (key === "dictionary") DICTIONARY = rows;
+      return t;
+    }).catch(e => { LOADERR[key] = "Could not load data/" + key + ".json (" + (e.message || e) + "). Check the connection, then open the tab again."; throw e; })
+      .finally(() => { delete LOADING[key]; });
+  }
+  return LOADING[key];
+}
+function loadPrinted() {
+  if (PRINTED) return Promise.resolve(PRINTED);
+  return load("printed_values").then(t => {
+    PRINTED = new Map(t.rows.map(r => [r.point_id, r]));
+    delete DATA.printed_values;
+    return PRINTED;
+  });
 }
 
 // ---------- state ----------
-// plotOff[key] = sources switched off in the plot only (the table ignores it)
-const state = {tab: "solubility", f: {}, picked: {}, joined: {}, axis: {}, plotOff: {}, src: {text: "", methods: []}};
+const state = {tab: "solubility", f: {}, fver: {}, page: {}, picked: {}, joined: {}, axis: {}, plotSel: {}, plotQ: {}, srcQ: {},
+               src: {text: "", methods: []}};
+const FCACHE = {}, OPTS = {};
+const CHIP_COLS = ["gas", "salt", "phase", "boundary_type"];
+function options(key, col) {
+  const o = OPTS[key] || (OPTS[key] = {});
+  if (!o[col]) {
+    const m = new Map();
+    for (const r of DATA[key].rows) m.set(r[col], (m.get(r[col]) || 0) + 1);
+    o[col] = [...m.entries()].sort((a, b) => a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);
+  }
+  return o[col];
+}
 function filtersFor(key) {
   if (!state.f[key]) {
-    const rows = TABLES[key];
-    const f = {gas: [], salt: [], source_id: [], status: [], phase: []};
-    for (const c of ["temperature_K", "pressure_MPa"]) {
-      const v = rows.map(r => num(r[c])).filter(x => !isNaN(x));
-      f[c] = v.length ? {lo: Math.min(...v), hi: Math.max(...v), min: Math.min(...v), max: Math.max(...v),
-                         blank: rows.some(r => isNaN(num(r[c]))), keepBlank: true} : null;
+    const rows = DATA[key].rows, f = {gas: [], salt: [], phase: [], boundary_type: [], source_id: new Set()};
+    for (const [c, p] of [["temperature_K", "_T"], ["pressure_MPa", "_P"]]) {
+      let lo = Infinity, hi = -Infinity, blank = false;
+      for (const r of rows) { const v = r[p]; if (isNaN(v)) blank = true; else { if (v < lo) lo = v; if (v > hi) hi = v; } }
+      f[c] = lo <= hi ? {lo, hi, min: lo, max: hi, blank, keepBlank: true} : null;
     }
     state.f[key] = f;
   }
   return state.f[key];
 }
+function changed(key) {  // any filter moved: back to page 1, plot picker back to its default
+  state.fver[key] = (state.fver[key] || 0) + 1;
+  state.page[key] = 0;
+  state.plotSel[key] = null;
+}
 function filtered(key) {
-  const f = filtersFor(key), rows = TABLES[key];
-  return rows.filter(r => {
-    for (const c of ["gas","salt","source_id","status","phase"])
-      if (f[c].length && c in r && !f[c].includes(r[c])) return false;
-    for (const c of ["temperature_K","pressure_MPa"]) {
-      const g = f[c]; if (!g) continue;
-      const v = num(r[c]);
-      if (isNaN(v)) { if (!g.keepBlank) return false; }
-      else if (v < g.lo - 1e-9 || v > g.hi + 1e-9) return false;
+  const ver = state.fver[key] || 0, c = FCACHE[key];
+  if (c && c.ver === ver) return c.rows;
+  const f = filtersFor(key), rows = DATA[key].rows, out = [];
+  const chips = CHIP_COLS.filter(c => f[c].length && DATA[key].cols.includes(c)).map(c => [c, new Set(f[c])]);
+  const srcs = f.source_id.size ? f.source_id : null;
+  const rng = [["_T", f.temperature_K], ["_P", f.pressure_MPa]].filter(x => x[1]);
+  outer: for (const r of rows) {
+    for (const [c, s] of chips) if (!s.has(r[c])) continue outer;
+    if (srcs && !srcs.has(r.source_id)) continue;
+    for (const [p, g] of rng) {
+      const v = r[p];
+      if (isNaN(v)) { if (!g.keepBlank) continue outer; }
+      else if (v < g.lo - 1e-9 || v > g.hi + 1e-9) continue outer;
     }
-    return true;
-  });
+    out.push(r);
+  }
+  FCACHE[key] = {ver, rows: out};
+  return out;
 }
 
-// ---------- filter panel: a short row (gas, source) always shown, the rest under "More filters" on a phone ----------
+// ---------- filter panel: gas always shown, the rest under "More filters" on a phone ----------
 function chipField(key, col, title, help) {
-  const opts = distinct(TABLES[key], col), f = filtersFor(key);
-  const id = "h_" + col;
+  const f = filtersFor(key), id = "h_" + col;
   return `<div class="field" data-field="${col}"><div class="lbl">${esc(title)}${help ? ` <button class="help" data-help="${id}" aria-label="What is this"><span>?</span></button>` : ""}
-      <span class="hint">${f[col].length ? f[col].length + " chosen" : "all"}</span></div>
+      <span class="hint" id="hint_${col}">${f[col].length ? f[col].length + " chosen" : "all"}</span></div>
     ${help ? `<div class="helptext" id="${id}">${esc(help)}</div>` : ""}
-    <div class="chips">${opts.map(o => `<button class="chip${f[col].includes(o) ? " on" : ""}" aria-pressed="${f[col].includes(o)}" data-col="${col}" data-val="${esc(o)}">${esc(o || "(blank)")}</button>`).join("")}</div></div>`;
+    <div class="chips">${options(key, col).map(([o]) => `<button class="chip${f[col].includes(o) ? " on" : ""}" aria-pressed="${f[col].includes(o)}" data-col="${col}" data-val="${esc(o)}">${esc(o || "(blank)")}</button>`).join("")}</div></div>`;
+}
+// A tick-box list with a search box. Only the first LISTMAX matches are drawn (ticked ones first), so a list of
+// hundreds of sources stays cheap to draw on a phone; the search box reaches the rest.
+const LISTMAX = 40;
+function checkItems(entries, q, isOn, attr) {
+  q = q.toLowerCase();
+  const hit = entries.filter(([s]) => !q || s.toLowerCase().includes(q));
+  const ordered = hit.filter(([s]) => isOn(s)).concat(hit.filter(([s]) => !isOn(s)));
+  const shown = ordered.slice(0, LISTMAX);
+  return shown.map(([s, n]) => `<label class="li" data-q="${esc(s.toLowerCase())}"><input type="checkbox" ${attr}="${esc(s)}"${isOn(s) ? " checked" : ""}><span class="nm">${esc(s)}</span><span class="n">${fmt(n)}</span></label>`).join("") +
+    (ordered.length > shown.length ? `<div class="lmore">+ ${fmt(ordered.length - shown.length)} more: type in the search box</div>` : "") +
+    (!ordered.length ? `<div class="lmore">No source matches.</div>` : "");
+}
+function sourceListHTML(key) {
+  const f = filtersFor(key);
+  return checkItems(options(key, "source_id"), state.srcQ[key] || "", s => f.source_id.has(s), "data-fsrc");
+}
+function plotListHTML(key) {
+  const {present, on} = plotState(key);
+  return checkItems(present, state.plotQ[key] || "", s => on.has(s), "data-plotsrc");
+}
+function sourceField(key) {
+  const f = filtersFor(key), q = state.srcQ[key] || "", items = sourceListHTML(key);
+  return `<div class="field" data-field="source_id"><div class="lbl">Source <span class="hint" id="hint_source_id">${f.source_id.size ? f.source_id.size + " chosen" : "all " + options(key, "source_id").length}</span></div>
+    <input type="text" inputmode="search" class="listsearch" data-listsearch="fsrclist" data-qkey="srcQ" placeholder="Search sources, e.g. duan" aria-label="Search sources" value="${esc(q)}">
+    <div class="checklist" id="fsrclist">${items}</div>
+    <div class="listbtns"><button class="btn small" data-fsrcclear="1">Clear sources</button></div></div>`;
 }
 function rangeField(key, col, title) {
   const g = filtersFor(key)[col];
@@ -499,82 +492,136 @@ function rangeField(key, col, title) {
     <div class="range-row"><span class="rl">to</span><input type="range" aria-label="${esc(word)} to" data-range="${col}" data-end="hi" min="${g.min}" max="${g.max}" step="${step}" value="${g.hi}"><span class="v">${g.hi.toFixed(2)}</span></div>
     ${g.blank ? `<label class="check"><input type="checkbox" data-blank="${col}" ${g.keepBlank ? "checked" : ""}> Keep rows with no ${esc(word)} given</label>` : ""}</div>`;
 }
+function renderMoreBtn() {
+  const key = state.tab, side = $("side"), btn = $("moreBtn");
+  if (!DATA[key] || !ROW_TABLES.includes(key)) return;
+  const f = filtersFor(key);
+  const extra = ["salt", "phase", "boundary_type"].filter(c => f[c].length).length + (f.source_id.size ? 1 : 0) +
+    ["temperature_K", "pressure_MPa"].filter(c => f[c] && (f[c].lo > f[c].min || f[c].hi < f[c].max || !f[c].keepBlank)).length;
+  const open = side.classList.contains("open");
+  btn.innerHTML = `<span>${open ? "Fewer filters" : "More filters"}${extra ? ` <b class="badge">${extra}</b>` : ""}</span><span class="sub">source, salt, phase, temperature, pressure</span><span class="caret">${open ? "&#9652;" : "&#9662;"}</span>`;
+  btn.setAttribute("aria-expanded", open);
+}
 function renderSide() {
-  const key = state.tab, quick = document.getElementById("quick"), more = document.getElementById("more");
-  const btn = document.getElementById("moreBtn"), side = document.getElementById("side");
-  document.getElementById("sideTab").textContent = TITLE[key];
+  const key = state.tab, quick = $("quick"), more = $("more"), side = $("side");
+  $("sideTab").textContent = TITLE[key];
   side.classList.toggle("nomore", true);
+  if (!DATA[key]) {  // the loading line sits where the filters will appear; nothing below it is drawn yet, so nothing jumps
+    quick.innerHTML = LOADERR[key] ? `<div class="hint">No data.</div>` : `<div class="info loading" role="status">Loading ${esc(TITLE[key].toLowerCase())} (AquaSolDB v1.2)...</div>`;
+    more.innerHTML = ""; return;
+  }
   if (key === "sources") {
-    quick.innerHTML = `<div class="field"><label class="lbl" for="srcText">Search the reference text</label><input type="text" id="srcText" value="${esc(state.src.text)}" placeholder="e.g. brine"></div>
-      <div class="field"><div class="lbl">Method <span class="hint">${state.src.methods.length ? state.src.methods.length + " chosen" : "all"}</span></div><div class="chips">${distinct(SOURCES, "method").map(m =>
+    quick.innerHTML = `<div class="field"><label class="lbl" for="srcText">Search the references</label><input type="text" inputmode="search" id="srcText" value="${esc(state.src.text)}" placeholder="e.g. Duan or 1998"></div>
+      <div class="field"><div class="lbl">Method <span class="hint" id="hint_method">${state.src.methods.length ? state.src.methods.length + " chosen" : "all"}</span></div><div class="chips">${options("sources", "method").map(([m]) =>
         `<button class="chip${state.src.methods.includes(m) ? " on" : ""}" aria-pressed="${state.src.methods.includes(m)}" data-method="${esc(m)}">${esc(m)}</button>`).join("")}</div></div>`;
     more.innerHTML = "";
     return;
   }
   if (key === "dictionary") { quick.innerHTML = `<div class="hint">No filters on this tab.</div>`; more.innerHTML = ""; return; }
   side.classList.toggle("nomore", false);
-  const cols = COLS[key], f = filtersFor(key);
-  quick.innerHTML = chipField(key, "gas", "Gas") + chipField(key, "source_id", "Source");
-  let h = chipField(key, "salt", "Salt", "'none' = pure water; 'not_stated' = the source does not say.");
-  if (cols.includes("status")) h += chipField(key, "status", "Status");
+  const cols = DATA[key].cols;
+  quick.innerHTML = chipField(key, "gas", "Gas");
+  let h = sourceField(key);
+  h += chipField(key, "salt", "Salt", "'none' = pure water; '(blank)' = v1.2 leaves the salt empty.");
   if (cols.includes("phase")) h += chipField(key, "phase", "Phase");
+  if (cols.includes("boundary_type")) h += chipField(key, "boundary_type", "Boundary type");
   h += rangeField(key, "temperature_K", "Temperature (K)") + rangeField(key, "pressure_MPa", "Pressure (MPa)");
   more.innerHTML = h;
-  const extra = ["salt","status","phase"].filter(c => f[c].length).length +
-    ["temperature_K","pressure_MPa"].filter(c => f[c] && (f[c].lo > f[c].min || f[c].hi < f[c].max || !f[c].keepBlank)).length;
-  const open = side.classList.contains("open");
-  btn.innerHTML = `<span>${open ? "Fewer filters" : "More filters"}${extra ? ` <b class="badge">${extra}</b>` : ""}</span><span class="sub">salt, status, phase, temperature, pressure</span><span class="caret">${open ? "&#9652;" : "&#9662;"}</span>`;
-  btn.setAttribute("aria-expanded", open);
+  renderMoreBtn();
 }
 
 // ---------- tables ----------
+const LONG = new Set(["reference", "meaning", "derivation", "unit_as_printed", "applies_to"]);
+function cellHTML(r, c) {
+  const v = r[c] ?? "";
+  if (c === "doi" && v) return `<td><a href="https://doi.org/${esc(v)}" target="_blank" rel="noopener">${esc(v)}</a></td>`;
+  if (v === "") return `<td class="blank">${NUMERIC.has(c) ? "None" : ""}</td>`;
+  return `<td class="${NUMERIC.has(c) ? "num" : LONG.has(c) ? "long" : ""}">${esc(v)}</td>`;
+}
+function rowHTML(r, cols, table, opts) {
+  const picked = opts.select && opts.pickedId === r.point_id;
+  return `<tr${picked ? ' class="picked"' : ""}${opts.select ? ` data-pick="${esc(r.point_id)}"` : ""}>` +
+    (opts.select ? `<td class="sel"><input type="radio" name="pick_${table}" ${picked ? "checked" : ""} aria-label="pick row"></td>` : "") +
+    cols.map(c => cellHTML(r, c)).join("") + "</tr>";
+}
+// opts.first: draw only the first rows now (fast first paint on a phone); the caller appends the rest a frame later.
+// A collapsed "sizer" row carries the longest text of each column on the page, so the columns already have their
+// final widths and nothing jumps sideways when the other rows arrive.
 function tableHTML(rows, cols, table, opts = {}) {
   const head = (opts.select ? `<th class="sel" aria-label="pick"></th>` : "") +
-    cols.map(c => `<th data-colhelp="${esc(table)}|${esc(c)}">${esc(opts.rawHeads ? c : (opts.heads?.[c] || label(c)))}</th>`).join("");
-  const body = rows.map(r => {
-    const picked = opts.select && opts.pickedId === r.point_id;
-    return `<tr${picked ? ' class="picked"' : ""}${opts.select ? ` data-pick="${esc(r.point_id)}"` : ""}>` +
-      (opts.select ? `<td class="sel"><input type="radio" name="pick_${table}" ${picked ? "checked" : ""} aria-label="pick row"></td>` : "") +
-      cols.map(c => {
-        const v = r[c] ?? "";
-        if (c === "doi" && v) return `<td><a href="https://doi.org/${esc(v)}" target="_blank" rel="noopener">${esc(v)}</a></td>`;
-        if (v === "") return `<td class="blank">${NUMERIC.has(c) ? "None" : ""}</td>`;
-        return `<td class="${NUMERIC.has(c) || opts.numCols?.includes(c) ? "num" : ""}">${esc(v)}</td>`;
-      }).join("") + "</tr>";
-  }).join("");
+    cols.map(c => `<th data-colhelp="${esc(table)}|${esc(c)}">${esc(opts.rawHeads ? c : label(c))}</th>`).join("");
+  const n = opts.first && rows.length > opts.first ? opts.first : rows.length;
+  let body = rows.slice(0, n).map(r => rowHTML(r, cols, table, opts)).join("");
+  if (n < rows.length) {
+    const longest = {};
+    for (const c of cols) { let best = ""; for (const r of rows) { const v = r[c] ?? ""; if (v.length > best.length) best = v; } longest[c] = best; }
+    body += `<tr class="sizer" aria-hidden="true">${opts.select ? `<td class="sel"></td>` : ""}${cols.map(c => cellHTML(longest, c)).join("")}</tr>`;
+  }
   return `<div class="tablewrap"><table${opts.id ? ` id="${opts.id}"` : ""}><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
 }
-const PRINTED_COLS = ["point_id","value_as_printed","unit_as_printed","page_ref","page_ref_convention","page_offset"];
-function withPrinted(rows, cols) {
-  const extra = PRINTED_COLS.filter(c => c !== "point_id" && !cols.includes(c));
-  return {cols: cols.concat(extra), rows: rows.map(r => Object.assign({}, Object.fromEntries(extra.map(c => [c, ""])),
-          PRINTED.find(p => p.point_id === r.point_id) ? Object.fromEntries(extra.map(c => [c, PRINTED.find(p => p.point_id === r.point_id)[c]])) : {}, r))};
+let tableGen = 0;
+const FIRST = 25;
+function appendRest(rows, cols, table, opts) {  // the rows after the first FIRST, one frame after the first paint
+  const gen = ++tableGen;
+  if (rows.length <= FIRST) return;
+  requestAnimationFrame(() => setTimeout(() => {
+    if (gen !== tableGen) return;
+    const tb = document.querySelector("#" + opts.id + " tbody"), sizer = tb && tb.querySelector("tr.sizer");
+    if (!tb) return;
+    tb.insertAdjacentHTML("beforeend", rows.slice(FIRST).map(r => rowHTML(r, cols, table, opts)).join(""));
+    if (sizer) sizer.remove();
+  }, 0));
 }
-
+const PRINTED_COLS = ["value_as_printed", "unit_as_printed"];
+function withPrinted(rows) {
+  return rows.map(r => { const p = PRINTED.get(r.point_id); return Object.assign({value_as_printed: p ? p.value_as_printed : "", unit_as_printed: p ? p.unit_as_printed : ""}, r); });
+}
+function pagerHTML(n, page) {
+  const pages = Math.max(1, Math.ceil(n / PAGE));
+  const a = n ? page * PAGE + 1 : 0, b = Math.min(n, (page + 1) * PAGE);
+  return `<div class="pager"><button class="btn" data-page="-1"${page <= 0 ? " disabled" : ""}>&#8592; Prev</button>
+    <span class="pinfo" id="pinfo">rows ${fmt(a)}-${fmt(b)} of ${fmt(n)}</span>
+    <button class="btn" data-page="1"${page >= pages - 1 ? " disabled" : ""}>Next &#8594;</button></div>`;
+}
 function countBar(n, total, what, btnId, btnText) {
-  return `<div class="countbar"><div class="count" id="count"><b>${n.toLocaleString()}</b> of ${total.toLocaleString()} ${what}</div>
+  return `<div class="countbar"><div class="count" id="count"><b>${fmt(n)}</b> of ${fmt(total)} ${what}</div>
     <button class="btn primary" id="${btnId}">&#8681; ${btnText}</button></div>`;
 }
-function renderMeasurement(key) {
-  const all = TABLES[key], rows = filtered(key), cols = COLS[key];
-  const joined = !!state.joined[key];
-  const shown = joined ? withPrinted(rows, cols) : {rows, cols};
-  if (state.picked[key] && !rows.some(r => r.point_id === state.picked[key])) state.picked[key] = null;
+function renderTable() {
+  const key = state.tab, rows = filtered(key), cols = DATA[key].cols, box = $("tablecard");
+  if (!box) return;
+  const pages = Math.max(1, Math.ceil(rows.length / PAGE));
+  const page = state.page[key] = Math.min(state.page[key] || 0, pages - 1);
+  const joined = !!state.joined[key] && !!PRINTED;
+  let slice = rows.slice(page * PAGE, page * PAGE + PAGE);
+  if (joined) slice = withPrinted(slice);
   const pickedId = state.picked[key];
-  let h = countBar(rows.length, all.length, "rows", "dl", "Download these rows (CSV)");
-  if (PLOT_QUANTITY[key]) h += plotHTML(key, rows);
-  h += `<section class="card tablecard"><div class="sechead"><h2>Table</h2><span class="secnote">follows the filters</span></div>
-    <label class="check"><input type="checkbox" id="join" ${joined ? "checked" : ""}> Add the value, unit and page as printed in the source</label>
-    ${tableHTML(shown.rows, shown.cols, key, {select: true, pickedId, id: "datatable"})}
-    <div class="colhelp" id="colhelp">Tap a column title to read its meaning.</div>`;
+  let h = `<div class="sechead"><h2>Table</h2><span class="secnote">follows the filters, ${PAGE} rows per page</span></div>
+    <label class="check"><input type="checkbox" id="join" ${state.joined[key] ? "checked" : ""}> Add the value and unit as printed in the source</label>`;
+  const shownCols = joined ? cols.concat(PRINTED_COLS) : cols, topts = {select: true, pickedId, id: "datatable", first: FIRST};
+  h += rows.length ? tableHTML(slice, shownCols, key, topts) : `<div class="info">No rows match these filters.</div>`;
+  h += pagerHTML(rows.length, page);
+  h += `<div class="colhelp" id="colhelp">Tap a column title to read its meaning.</div>`;
   if (pickedId) {
-    const p = PRINTED.filter(x => x.point_id === pickedId);
+    const p = PRINTED && PRINTED.get(pickedId);
     h += `<div class="printed"><h3>As printed in the source, row ${esc(pickedId)}</h3>` +
-      (p.length ? tableHTML(p, PRINTED_COLS, "printed_values") : `<div>No printed value recorded for this row.</div>`) + `</div>`;
+      (!PRINTED ? `<div>Loading...</div>` : p ? tableHTML([p], ["point_id"].concat(PRINTED_COLS), "printed_values") : `<div>No printed value recorded for this row.</div>`) + `</div>`;
   } else {
-    h += `<div class="caption">Tap a row to see its value, unit and page as printed.</div>`;
+    h += `<div class="caption">Tap a row to see its value and unit as printed.</div>`;
   }
-  return h + `</section>`;
+  box.innerHTML = h;
+  appendRest(slice, shownCols, key, topts);
+  if ((pickedId || state.joined[key]) && !PRINTED) loadPrinted().then(() => { if (state.tab === key) renderTable(); })
+    .catch(() => { const c = $("colhelp"); if (c) c.textContent = "Could not load data/printed_values.json."; });
+}
+function renderMeasurement(key) {
+  const rows = filtered(key);
+  let h = countBar(rows.length, DATA[key].rows.length, "rows", "dl", "Download these rows (CSV)");
+  if (PLOT_QUANTITY[key]) h += `<section class="card plotcard" id="plotcard"></section>`;
+  h += `<section class="card tablecard" id="tablecard"></section>`;
+  $("body").innerHTML = h;
+  if (PLOT_QUANTITY[key]) renderPlot();
+  renderTable();
 }
 
 // ---------- plot (inline SVG), above the table, with its own source picker ----------
@@ -585,119 +632,190 @@ function niceTicks(lo, hi, n) {
   const t = []; for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-12; v += step) t.push(+v.toPrecision(10));
   return {ticks: t, step};
 }
-function marker(i, x, y, src, r = THEME.r) {
-  const c = SRC_COLOR[src], a = i < 0 ? `fill="${c}"` : `data-pt="${i}" class="pt" fill="${c}"`;
-  const shape = THEME.shapes ? SRC_SHAPE[src] : "circle";
-  if (shape === "square") return `<rect ${a} x="${(x - r * 0.85).toFixed(1)}" y="${(y - r * 0.85).toFixed(1)}" width="${(r * 1.7).toFixed(1)}" height="${(r * 1.7).toFixed(1)}"/>`;
-  if (shape === "triangle") return `<path ${a} d="M${x.toFixed(1)},${(y - r).toFixed(1)} L${(x + r).toFixed(1)},${(y + r * 0.8).toFixed(1)} L${(x - r).toFixed(1)},${(y + r * 0.8).toFixed(1)} Z"/>`;
-  if (shape === "diamond") return `<path ${a} d="M${x.toFixed(1)},${(y - r).toFixed(1)} L${(x + r).toFixed(1)},${y.toFixed(1)} L${x.toFixed(1)},${(y + r).toFixed(1)} L${(x - r).toFixed(1)},${y.toFixed(1)} Z"/>`;
-  return `<circle ${a} cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}"/>`;
+const SHAPES = ["circle", "square", "triangle", "diamond"];
+let STYLE_OF = new Map();  // source -> [colour, shape] for the ticked sources, in picker order
+function shapeD(shape, x, y, r) {  // one marker as path commands
+  const f = v => Math.round(v * 10) / 10;
+  if (shape === "square") { const h = r * 0.85; return `M${f(x - h)} ${f(y - h)}h${f(2 * h)}v${f(2 * h)}h${f(-2 * h)}z`; }
+  if (shape === "triangle") return `M${f(x)} ${f(y - r)}L${f(x + r)} ${f(y + r * 0.8)}L${f(x - r)} ${f(y + r * 0.8)}z`;
+  if (shape === "diamond") return `M${f(x)} ${f(y - r)}L${f(x + r)} ${f(y)}L${f(x)} ${f(y + r)}L${f(x - r)} ${f(y)}z`;
+  return `M${f(x - r)} ${f(y)}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0z`;
 }
 function swatch(src) {
-  return `<svg class="sw" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">${marker(-1, 6, 6, src, 5)}</svg>`;
+  const [c, shape] = STYLE_OF.get(src) || [THEME.palette[0], "circle"];
+  return `<svg class="sw" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path fill="${c}" d="${shapeD(shape, 6, 6, 5)}"/></svg>`;
 }
-function plotHTML(key, rows) {
-  const y = PLOT_QUANTITY[key], axis = state.axis[key] || "pressure_MPa";
-  const off = state.plotOff[key] || (state.plotOff[key] = []);
-  const plottable = rows.filter(r => !isNaN(num(r[axis])) && !isNaN(num(r[y])));
-  const srcs = distinct(plottable, "source_id");
-  let h = `<section class="card plotcard" id="plotcard"><div class="sechead"><h2>Plot</h2><span class="secnote">${esc(label(y))}</span></div>
+const PCACHE = {};
+function plotState(key) {
+  const y = PLOT_QUANTITY[key], axis = state.axis[key] || "pressure_MPa", ax = axis === "pressure_MPa" ? "_P" : "_T";
+  const tag = (state.fver[key] || 0) + "|" + axis;
+  if (!PCACHE[key] || PCACHE[key].tag !== tag) {
+    const plottable = filtered(key).filter(r => !isNaN(r[ax]) && !isNaN(r._Y));
+    const cnt = new Map();
+    for (const r of plottable) cnt.set(r.source_id, (cnt.get(r.source_id) || 0) + 1);
+    PCACHE[key] = {tag, plottable, present: [...cnt.entries()].sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1))};
+  }
+  const {plottable, present} = PCACHE[key];
+  if (!state.plotSel[key]) state.plotSel[key] = new Set(present.slice(0, PRESET).map(p => p[0]));
+  const on = state.plotSel[key];
+  return {y, axis, ax, plottable, present, on};
+}
+function renderPlot() {
+  const key = state.tab, box = $("plotcard");
+  if (!box) return;
+  const {y, axis, present} = plotState(key), q = state.plotQ[key] || "", items = plotListHTML(key);
+  box.innerHTML = `<div class="sechead"><h2>Plot</h2><span class="secnote">${esc(label(y))}</span></div>
     <div class="plotctl">
       <div class="field"><div class="lbl">Plot against</div><div class="seg" role="radiogroup">
         <label class="${axis === "pressure_MPa" ? "on" : ""}"><input type="radio" name="axis" value="pressure_MPa" ${axis === "pressure_MPa" ? "checked" : ""}> Pressure</label>
         <label class="${axis === "temperature_K" ? "on" : ""}"><input type="radio" name="axis" value="temperature_K" ${axis === "temperature_K" ? "checked" : ""}> Temperature</label></div></div>
-      <div class="field"><div class="lbl">Sources to plot <span class="hint">plot only</span></div><div class="chips" id="plotpicker">${srcs.map(s => {
-        const on = !off.includes(s);
-        return `<button class="pchip${on ? " on" : ""}" aria-pressed="${on}" data-plotsrc="${esc(s)}"><span class="tick">${on ? "&#10003;" : ""}</span>${swatch(s)}${esc(s)}</button>`;
-      }).join("")}${srcs.length > 1 ? `<button class="pchip all" data-plotall="1">All</button>` : ""}</div></div>
-    </div>`;
-  const pts = plottable.filter(r => !off.includes(r.source_id));
-  if (!plottable.length) return h + `<div class="info">No plottable rows for these filters.</div></section>`;
-  if (!pts.length) return h + `<div class="info">No source ticked. Tick a source above to plot it.</div><div class="caption" id="plotcount">0 points plotted.</div></section>`;
+      <div class="field pickfield"><div class="lbl">Sources to plot <span class="hint" id="plothint">plot only; ${present.length} in these rows</span></div>
+        ${present.length > 8 ? `<input type="text" inputmode="search" class="listsearch" data-listsearch="plotpicker" data-qkey="plotQ" placeholder="Search sources" aria-label="Search sources to plot" value="${esc(q)}">` : ""}
+        <div class="checklist" id="plotpicker">${items}</div>
+        <div class="listbtns"><button class="btn small" data-plotall="1">All</button><button class="btn small" data-plotnone="1">None</button></div></div>
+    </div>
+    <div id="plotarea"></div>`;
+  drawPlot();
+}
+let plotRows = [], plotY = "", plotXY = [[], []];
+function drawPlot() {
+  const key = state.tab, area = $("plotarea");
+  if (!area) return;
+  const {y, axis, ax, plottable, present, on} = plotState(key);
+  const ticked = present.filter(p => on.has(p[0])).map(p => p[0]);
+  const np = THEME.palette.length;
+  STYLE_OF = new Map(ticked.map((s, i) => [s, [THEME.palette[i % np], THEME.shapes ? SHAPES[Math.floor(i / np) % 4] : "circle"]]));
+  const hint = $("plothint");
+  if (hint) hint.textContent = `plot only; ${ticked.length} of ${present.length} ticked`;
+  if (!plottable.length) { area.innerHTML = `<div class="info">No plottable rows for these filters.</div>`; plotRows = []; return; }
+  const all = plottable.filter(r => on.has(r.source_id));
+  if (!all.length) { area.innerHTML = `<div class="info">No source ticked. Tick a source above to plot it.</div><div class="caption" id="plotcount">0 points plotted.</div>`; plotRows = []; return; }
+  let pts = all;
+  if (all.length > MAXPTS) { pts = new Array(MAXPTS); for (let k = 0; k < MAXPTS; k++) pts[k] = all[Math.floor(k * all.length / MAXPTS)]; }
   const narrow = window.innerWidth < 600;
-  const W = narrow ? 380 : 640, H = narrow ? 300 : 360, L = narrow ? 52 : 60, R = THEME.direct ? (narrow ? 78 : 96) : 14, T = 16, B = 46;
-  const xs = pts.map(r => num(r[axis])), ys = pts.map(r => num(r[y]));
+  const direct = THEME.direct && ticked.length <= 6;
+  const W = narrow ? 380 : 640, H = narrow ? 300 : 360, L = narrow ? 52 : 60, R = direct ? (narrow ? 96 : 130) : 14, T = 16, B = 46;
+  const xs = pts.map(r => r[ax]), ys = pts.map(r => r._Y);
+  let xa = Infinity, xb = -Infinity, ya = Infinity, yb = -Infinity;
+  for (let i = 0; i < pts.length; i++) { const a = xs[i], b = ys[i]; if (a < xa) xa = a; if (a > xb) xb = a; if (b < ya) ya = b; if (b > yb) yb = b; }
   const pad = (a, b) => { const d = (b - a) || Math.abs(a) || 1; return [a - 0.06 * d, b + 0.06 * d]; };
-  const [x0, x1] = pad(Math.min(...xs), Math.max(...xs)), [y0, y1] = pad(Math.min(...ys), Math.max(...ys));
+  const [x0, x1] = pad(xa, xb), [y0, y1] = pad(ya, yb);
   const sx = v => L + (v - x0) / (x1 - x0) * (W - L - R), sy = v => H - B - (v - y0) / (y1 - y0) * (H - T - B);
   const xt = niceTicks(x0, x1, narrow ? 4 : 6).ticks.filter(v => v >= x0 && v <= x1), yt = niceTicks(y0, y1, 5).ticks.filter(v => v >= y0 && v <= y1);
-  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label(y))} against ${esc(label(axis))}" font-size="12">`;
+  const r = pts.length > 600 ? 2.6 : pts.length > 150 ? 3.6 : Math.min(THEME.r, 5);
+  let s = `<svg viewBox="0 0 ${W} ${H}"${pts.length > 600 ? ' class="dense"' : ""} role="img" aria-label="${esc(label(y))} against ${esc(label(axis))}" font-size="12">`;
   s += yt.map(v => `<line class="grid" x1="${L}" x2="${W - R}" y1="${sy(v)}" y2="${sy(v)}"/><text class="tick" x="${L - 8}" y="${sy(v) + 4}" text-anchor="end">${v}</text>`).join("");
   s += xt.map(v => `<line class="grid gx" y1="${T}" y2="${H - B}" x1="${sx(v)}" x2="${sx(v)}"/><text class="tick" y="${H - B + 18}" x="${sx(v)}" text-anchor="middle">${v}</text>`).join("");
   s += `<line class="axis" x1="${L}" x2="${W - R}" y1="${H - B}" y2="${H - B}"/><line class="axis ay" x1="${L}" x2="${L}" y1="${T}" y2="${H - B}"/>`;
   s += `<text class="axlbl" x="${(L + W - R) / 2}" y="${H - 8}" text-anchor="middle">${esc(label(axis))}</text>`;
   s += `<text class="axlbl" transform="translate(15 ${(T + H - B) / 2}) rotate(-90)" text-anchor="middle">${esc(label(y))}</text>`;
-  s += pts.map((r, i) => marker(i, sx(xs[i]), sy(ys[i]), r.source_id)).join("");
-  if (THEME.direct) {
+  const px = new Float64Array(pts.length), py = new Float64Array(pts.length), bySrc = new Map(ticked.map(t => [t, []]));
+  for (let i = 0; i < pts.length; i++) {
+    px[i] = sx(xs[i]); py[i] = sy(ys[i]);
+    bySrc.get(pts[i].source_id).push(shapeD(STYLE_OF.get(pts[i].source_id)[1], px[i], py[i], r));
+  }
+  s += `<g class="pts">${ticked.filter(t => bySrc.get(t).length).map(t => `<path class="pt" fill="${STYLE_OF.get(t)[0]}" d="${bySrc.get(t).join("")}"/>`).join("")}</g>`;
+  if (direct) {
     // direct labels: each source named next to its right-most point, nudged apart
-    const ends = distinct(pts, "source_id").map(src => {
-      let best = -1; pts.forEach((r, i) => { if (r.source_id === src && (best < 0 || xs[i] > xs[best])) best = i; });
-      return {src, x: sx(xs[best]), y: sy(ys[best])};
-    }).sort((a, b) => a.y - b.y);
+    const ends = ticked.map(src => {
+      let best = -1; for (let i = 0; i < pts.length; i++) if (pts[i].source_id === src && (best < 0 || xs[i] > xs[best])) best = i;
+      return best < 0 ? null : {src, x: sx(xs[best]), y: sy(ys[best])};
+    }).filter(Boolean).sort((a, b) => a.y - b.y);
     for (let k = 1; k < ends.length; k++) if (ends[k].y - ends[k - 1].y < 14) ends[k].y = ends[k - 1].y + 14;
-    s += ends.map(e => `<text class="dlabel" x="${Math.min(e.x + 11, W - R + 4).toFixed(1)}" y="${(e.y + 4).toFixed(1)}" fill="${SRC_COLOR[e.src]}">${esc(e.src)}</text>`).join("");
+    s += ends.map(e => `<text class="dlabel" x="${Math.min(e.x + 9, W - R + 4).toFixed(1)}" y="${(e.y + 4).toFixed(1)}" fill="${STYLE_OF.get(e.src)[0]}">${esc(e.src)}</text>`).join("");
   }
   s += `</svg>`;
-  h += `<div class="plot" id="plot">${s}<div class="tip" id="tip"></div></div>`;
-  h += `<div class="caption" id="plotcount">${pts.length.toLocaleString()} of ${plottable.length.toLocaleString()} plottable points shown. Tap a point for its values.</div></section>`;
-  plotPts = pts.map(r => {
-    const tipCols = ["point_id","source_id","gas","salt","salt_molality","temperature_K","pressure_MPa", y].filter(c => c in r);
-    return [...new Set(tipCols)].map(c => [label(c), r[c] === "" ? "None" : r[c]]);
-  });
-  return h;
+  const LEG = 30;
+  const legend = `<div class="legend" aria-label="Plotted sources">${ticked.slice(0, LEG).map(src => `<span class="lg">${swatch(src)}${esc(src)}</span>`).join("")}${ticked.length > LEG ? `<span class="lg more">+ ${ticked.length - LEG} more ticked</span>` : ""}</div>`;
+  const note = all.length > MAXPTS
+    ? `<div class="caption sampled" id="plotcount">showing ${fmt(MAXPTS)} of ${fmt(all.length)} points - narrow the filters to see all. Tap a point for its values.</div>`
+    : `<div class="caption" id="plotcount">${fmt(all.length)} of ${fmt(plottable.length)} plottable points shown. Tap a point for its values.</div>`;
+  area.innerHTML = `<div class="plot" id="plot">${s}<div class="tip" id="tip"></div></div>${legend}${note}`;
+  plotRows = pts; plotY = y; plotXY = [px, py];
 }
-let plotPts = [];
-function showTip(el) {
-  const tip = document.getElementById("tip"), box = document.getElementById("plot");
-  if (!tip || !box) return;
-  const i = +el.dataset.pt;
-  tip.innerHTML = `<table>${plotPts[i].map(([k, v]) => `<tr><td class="k">${esc(k)}</td><td><b>${esc(v)}</b></td></tr>`).join("")}</table>`;
+function nearestPoint(e) {  // the plotted point nearest the pointer, within about 14 screen pixels
+  const svg = document.querySelector("#plot svg");
+  if (!svg || !plotRows.length) return -1;
+  const m = svg.getScreenCTM();
+  if (!m) return -1;
+  const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
+  const lim = 14 / m.a, [px, py] = plotXY;
+  let best = -1, bd = lim * lim;
+  for (let i = 0; i < px.length; i++) { const dx = px[i] - p.x, dy = py[i] - p.y, d = dx * dx + dy * dy; if (d <= bd) { bd = d; best = i; } }
+  return best;
+}
+function showTip(i, e) {
+  const tip = $("tip"), box = $("plot"), r = plotRows[i];
+  if (!tip || !box || !r) return;
+  const cols = [...new Set(["point_id", "source_id", "gas", "salt", "salt_molality", "temperature_K", "pressure_MPa", plotY].filter(c => c in r))];
+  tip.innerHTML = `<table>${cols.map(c => `<tr><td class="k">${esc(label(c))}</td><td><b>${esc(r[c] === "" ? "None" : r[c])}</b></td></tr>`).join("")}</table>`;
   tip.style.display = "block";
-  const b = box.getBoundingClientRect(), c = el.getBoundingClientRect();
-  let left = c.left - b.left + 12, top = c.top - b.top - 10;
+  const b = box.getBoundingClientRect(), m = document.querySelector("#plot svg").getScreenCTM();
+  const cx = m.a * plotXY[0][i] + m.e - b.left, cy = m.d * plotXY[1][i] + m.f - b.top;
+  let left = cx + 12, top = cy - 10;
   const tw = tip.offsetWidth, th = tip.offsetHeight;
-  if (left + tw > b.width) left = c.left - b.left - tw - 8;
+  if (left + tw > b.width) left = cx - tw - 8;
   if (left < 0) left = 4;
   if (top + th > b.height) top = b.height - th - 4;
   if (top < 0) top = 4;
   tip.style.left = left + "px"; tip.style.top = top + "px";
 }
+function hideTip() { const tip = $("tip"); if (tip) tip.style.display = "none"; }
 
 // ---------- sources and dictionary ----------
-function sourceRows() {
-  return SOURCES.map(s => {
-    const o = Object.assign({}, s);
-    for (const [k] of TAB_LIST.slice(0, 5)) o["rows_" + k] = String(TABLES[k].filter(r => r.source_id === s.source_id).length);
-    return o;
-  });
+const SRC_COLS = ["source_id", "short_reference", "reference", "source_type", "doi", "method"];
+function sourcesFiltered() {
+  const q = state.src.text.toLowerCase(), m = state.src.methods;
+  return DATA.sources.rows.filter(r => (!q || (r.source_id + " " + r.short_reference + " " + r.reference).toLowerCase().includes(q)) &&
+                                       (!m.length || m.includes(r.method)));
+}
+function renderSourcesTable() {
+  const rows = sourcesFiltered(), box = $("tablecard");
+  const pages = Math.max(1, Math.ceil(rows.length / PAGE));
+  const page = state.page.sources = Math.min(state.page.sources || 0, pages - 1);
+  $("count").innerHTML = `<b>${fmt(rows.length)}</b> of ${fmt(DATA.sources.rows.length)} sources`;
+  const slice = rows.slice(page * PAGE, page * PAGE + PAGE), topts = {id: "datatable", first: FIRST};
+  box.innerHTML = (rows.length ? tableHTML(slice, SRC_COLS, "sources", topts) : `<div class="info">No sources match.</div>`) +
+    pagerHTML(rows.length, page) + `<div class="colhelp" id="colhelp">Tap a column title to read its meaning.</div>`;
+  appendRest(slice, SRC_COLS, "sources", topts);
 }
 function renderSources() {
-  const all = sourceRows();
-  const rows = all.filter(r => (!state.src.text || r.reference.toLowerCase().includes(state.src.text.toLowerCase())) &&
-                               (!state.src.methods.length || state.src.methods.includes(r.method)));
-  const cols = ["source_id","reference","source_type","doi","method", ...TAB_LIST.slice(0, 5).map(([k]) => "rows_" + k)];
-  const heads = Object.fromEntries(TAB_LIST.slice(0, 5).map(([k, t]) => ["rows_" + k, "Rows: " + t.toLowerCase()]));
-  return countBar(rows.length, all.length, "sources", "dlsrc", "Download these sources (CSV)") +
-    `<section class="card tablecard">${tableHTML(rows, cols, "sources", {heads, numCols: cols.filter(c => c.startsWith("rows_")), id: "datatable"})}
-    <div class="colhelp" id="colhelp">Tap a column title to read its meaning.</div></section>`;
+  $("body").innerHTML = countBar(0, DATA.sources.rows.length, "sources", "dlsrc", "Download these sources (CSV)") +
+    `<section class="card tablecard" id="tablecard"></section>`;
+  renderSourcesTable();
 }
 function renderDictionary() {
-  return `<section class="card tablecard">${tableHTML(DICTIONARY, ["table","column","unit","meaning","blank_means"], "column_dictionary", {rawHeads: true})}</section>`;
+  const t = DATA.dictionary;
+  $("body").innerHTML = `<section class="card tablecard"><div class="sechead"><h2>Column meanings</h2><span class="secnote">from the v1.2 column dictionary; applies_to names the v1.2 files</span></div>${tableHTML(t.rows, t.cols, "column_dictionary", {rawHeads: true})}</section>`;
 }
 
 // ---------- page ----------
 function renderBody() {
-  const key = state.tab, body = document.getElementById("body");
-  body.innerHTML = key === "sources" ? renderSources() : key === "dictionary" ? renderDictionary() : renderMeasurement(key);
+  const key = state.tab, body = $("body");
+  if (!DATA[key]) {
+    if (LOADERR[key]) { body.innerHTML = `<div class="info err" role="alert">${esc(LOADERR[key])}</div>`; return; }
+    body.innerHTML = "";
+    load(key).then(() => { if (state.tab === key) { renderBody(); renderSide(); } },
+                   () => { if (state.tab === key) { renderBody(); renderSide(); } });
+    return;
+  }
+  key === "sources" ? renderSources() : key === "dictionary" ? renderDictionary() : renderMeasurement(key);
 }
 function render() {
-  document.getElementById("tabs").innerHTML = TAB_LIST.map(([k, t]) =>
+  $("tabs").innerHTML = TAB_LIST.map(([k, t]) =>
     `<button data-tab="${k}" class="${k === state.tab ? "active" : ""}" aria-current="${k === state.tab}"><span class="full">${esc(t)}</span><span class="short">${esc(SHORT[k])}</span></button>`).join("");
   renderBody();
   renderSide();
 }
 const SHORT = {solubility:"Solubility", water_content:"Water", mixtures:"Mixtures", phase_boundaries:"Boundaries",
-               other_quantities:"Other", sources:"Sources", dictionary:"Columns"};
+               sources:"Sources", dictionary:"Columns"};
+let rafPending = false;
+function soon() {  // coalesce slider moves into one redraw per frame
+  if (rafPending) return;
+  rafPending = true;
+  requestAnimationFrame(() => { rafPending = false; renderBody(); renderMoreBtn(); });
+}
+function setHint(col, n, allText) { const h = $("hint_" + col); if (h) h.textContent = n ? n + " chosen" : allText || "all"; }
 
 document.addEventListener("click", e => {
   const t = e.target;
@@ -705,56 +823,95 @@ document.addEventListener("click", e => {
   if (tabBtn) { state.tab = tabBtn.dataset.tab; render(); document.querySelector(`[data-tab="${state.tab}"]`)?.scrollIntoView?.({inline: "nearest", block: "nearest"}); return; }
   const chip = t.closest(".chip[data-col]");
   if (chip) {
-    const f = filtersFor(state.tab)[chip.dataset.col], v = chip.dataset.val, i = f.indexOf(v);
-    i >= 0 ? f.splice(i, 1) : f.push(v); render(); return;
+    const col = chip.dataset.col, f = filtersFor(state.tab)[col], v = chip.dataset.val, i = f.indexOf(v);
+    i >= 0 ? f.splice(i, 1) : f.push(v);
+    chip.classList.toggle("on", i < 0); chip.setAttribute("aria-pressed", i < 0);
+    setHint(col, f.length); changed(state.tab); renderBody(); renderMoreBtn(); return;
   }
-  const pchip = t.closest("[data-plotsrc]");
-  if (pchip) {
-    const off = state.plotOff[state.tab], v = pchip.dataset.plotsrc, i = off.indexOf(v);
-    i >= 0 ? off.splice(i, 1) : off.push(v); renderBody(); return;
+  if (t.closest("[data-fsrcclear]")) {
+    filtersFor(state.tab).source_id.clear();
+    document.querySelectorAll("[data-fsrc]").forEach(c => { c.checked = false; });
+    setHint("source_id", 0, "all " + options(state.tab, "source_id").length); changed(state.tab); renderBody(); renderMoreBtn(); return;
   }
-  if (t.closest("[data-plotall]")) { state.plotOff[state.tab] = []; renderBody(); return; }
+  if (t.closest("[data-plotall]") || t.closest("[data-plotnone]")) {
+    const {present} = plotState(state.tab), all = !!t.closest("[data-plotall]");
+    state.plotSel[state.tab] = new Set(all ? present.map(p => p[0]) : []);
+    document.querySelectorAll("[data-plotsrc]").forEach(c => { c.checked = all; });
+    drawPlot(); return;
+  }
+  const pg = t.closest("[data-page]");
+  if (pg && !pg.disabled) {
+    state.page[state.tab] = (state.page[state.tab] || 0) + +pg.dataset.page;
+    state.tab === "sources" ? renderSourcesTable() : renderTable();
+    $("tablecard")?.querySelector(".tablewrap")?.scrollTo?.(0, 0);
+    return;
+  }
   const mchip = t.closest(".chip[data-method]");
-  if (mchip) { const m = state.src.methods, v = mchip.dataset.method, i = m.indexOf(v); i >= 0 ? m.splice(i, 1) : m.push(v); render(); return; }
+  if (mchip) {
+    const m = state.src.methods, v = mchip.dataset.method, i = m.indexOf(v); i >= 0 ? m.splice(i, 1) : m.push(v);
+    mchip.classList.toggle("on", i < 0); mchip.setAttribute("aria-pressed", i < 0);
+    setHint("method", m.length); state.page.sources = 0; renderSourcesTable(); return;
+  }
   const help = t.closest("[data-help]");
-  if (help) { document.getElementById(help.dataset.help).classList.toggle("open"); return; }
-  if (t.closest("#moreBtn")) { document.getElementById("side").classList.toggle("open"); renderSide(); return; }
+  if (help) { $(help.dataset.help).classList.toggle("open"); return; }
+  if (t.closest("#moreBtn")) { $("side").classList.toggle("open"); renderMoreBtn(); return; }
   if (t.closest("#dl")) {
-    const key = state.tab; download(key + "_selection.csv", toCSV(filtered(key), COLS[key])); return;
+    const key = state.tab, joined = !!state.joined[key] && !!PRINTED, rows = filtered(key);
+    download(key + "_selection.csv", toCSV(joined ? withPrinted(rows) : rows, joined ? DATA[key].cols.concat(PRINTED_COLS) : DATA[key].cols)); return;
   }
-  if (t.closest("#dlsrc")) {
-    const keep = new Set([...document.querySelectorAll("#datatable tbody tr")].map(tr => tr.children[0].textContent));
-    download("sources_selection.csv", toCSV(SOURCES.filter(s => keep.has(s.source_id)), ["source_id","reference","source_type","doi","method"])); return;
-  }
+  if (t.closest("#dlsrc")) { download("sources_selection.csv", toCSV(sourcesFiltered(), DATA.sources.cols)); return; }
   const th = t.closest("th[data-colhelp]");
   if (th) {
-    const [table, col] = th.dataset.colhelp.split("|"), box = document.getElementById("colhelp");
-    if (box) box.textContent = label(col) + ": " + (helpFor(table, col) || (col.startsWith("rows_") ? "How many rows that table holds for this source." : "No meaning recorded."));
+    const [table, col] = th.dataset.colhelp.split("|"), show = () => {
+      const box = $("colhelp");
+      if (box) box.textContent = label(col) + ": " + (helpFor(table, col) || "No meaning recorded in the v1.2 column dictionary.");
+    };
+    if (DICTIONARY) show(); else { const box = $("colhelp"); if (box) box.textContent = "Loading the column meanings..."; load("dictionary").then(show, () => { const b = $("colhelp"); if (b) b.textContent = "Could not load data/dictionary.json."; }); }
     return;
   }
   const tr = t.closest("tr[data-pick]");
-  if (tr && !t.closest("a")) { const k = state.tab; state.picked[k] = state.picked[k] === tr.dataset.pick && t.type !== "radio" ? null : tr.dataset.pick; renderBody(); return; }
-  const pt = t.closest("[data-pt]");
-  if (pt) { showTip(pt); return; }
-  if (!t.closest(".tip")) { const tip = document.getElementById("tip"); if (tip) tip.style.display = "none"; }
+  if (tr && !t.closest("a")) { const k = state.tab; state.picked[k] = state.picked[k] === tr.dataset.pick && t.type !== "radio" ? null : tr.dataset.pick; renderTable(); return; }
+  if (t.closest("#plot svg")) { const i = nearestPoint(e); i >= 0 ? showTip(i, e) : hideTip(); return; }
+  if (!t.closest(".tip")) hideTip();
 });
-document.addEventListener("mouseover", e => { const pt = e.target.closest?.("[data-pt]"); if (pt && pt.closest("#plot")) showTip(pt); });
+let hoverPending = null;
+document.addEventListener("mousemove", e => {  // desktop hover; one nearest-point search per frame
+  if (!e.target.closest?.("#plot svg")) return;
+  if (!hoverPending) requestAnimationFrame(() => { const ev = hoverPending; hoverPending = null; const i = nearestPoint(ev); i >= 0 ? showTip(i, ev) : hideTip(); });
+  hoverPending = e;
+});
 document.addEventListener("input", e => {
   const t = e.target;
   if (t.dataset.range) {
     const g = filtersFor(state.tab)[t.dataset.range], v = +t.value;
     if (t.dataset.end === "lo") g.lo = Math.min(v, g.hi); else g.hi = Math.max(v, g.lo);
     t.value = g[t.dataset.end]; t.nextElementSibling.textContent = (+t.value).toFixed(2);
-    renderBody();
+    changed(state.tab); soon();
     return;
   }
-  if (t.id === "srcText") { state.src.text = t.value; renderBody(); }
+  if (t.dataset.listsearch) {  // search inside a tick-box list: redraw that list only
+    state[t.dataset.qkey][state.tab] = t.value;
+    const id = t.dataset.listsearch;
+    $(id).innerHTML = id === "fsrclist" ? sourceListHTML(state.tab) : plotListHTML(state.tab);
+    return;
+  }
+  if (t.id === "srcText") { state.src.text = t.value; state.page.sources = 0; renderSourcesTable(); }
 });
 document.addEventListener("change", e => {
   const t = e.target;
-  if (t.dataset.blank) { filtersFor(state.tab)[t.dataset.blank].keepBlank = t.checked; render(); return; }
-  if (t.id === "join") { state.joined[state.tab] = t.checked; renderBody(); return; }
-  if (t.name === "axis") { state.axis[state.tab] = t.value; renderBody(); return; }
+  if (t.dataset.fsrc !== undefined) {
+    const s = filtersFor(state.tab).source_id;
+    t.checked ? s.add(t.dataset.fsrc) : s.delete(t.dataset.fsrc);
+    setHint("source_id", s.size, "all " + options(state.tab, "source_id").length); changed(state.tab); renderBody(); renderMoreBtn(); return;
+  }
+  if (t.dataset.plotsrc !== undefined) {
+    const on = state.plotSel[state.tab];
+    t.checked ? on.add(t.dataset.plotsrc) : on.delete(t.dataset.plotsrc);
+    drawPlot(); return;
+  }
+  if (t.dataset.blank) { filtersFor(state.tab)[t.dataset.blank].keepBlank = t.checked; changed(state.tab); renderBody(); renderMoreBtn(); return; }
+  if (t.id === "join") { state.joined[state.tab] = t.checked; renderTable(); return; }
+  if (t.name === "axis") { state.axis[state.tab] = t.value; state.plotSel[state.tab] = null; renderPlot(); return; }
 });
 render();
 
