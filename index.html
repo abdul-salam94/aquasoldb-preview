@@ -3,12 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AquaSolDB viewer: pick a style (made-up data)</title>
+<link rel="icon" href="data:,">
+<title>AquaSolDB viewer: pick a style (published v1.2 data)</title>
 <style>
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body { font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; background: #f4f4f6; color: #222; line-height: 1.45; }
 .banner { background: #fff6d6; border-bottom: 1px solid #f1df9c; color: #5c4a00; font-size: 14px; padding: 8px 14px; text-align: center; }
+.banner a, .foot a { color: inherit; }
+.banner .preview { font-size: 12px; margin-top: 2px; }
+.foot { max-width: 980px; margin: 0 auto; padding: 0 16px 40px; font-size: 13px; color: #555; }
 main { max-width: 980px; margin: 0 auto; padding: 22px 16px 50px; }
 h1 { font-size: 28px; margin: 0 0 4px; }
 p.lede { color: #555; margin: 0 0 20px; }
@@ -25,15 +29,15 @@ p.lede { color: #555; margin: 0 0 20px; }
 </style>
 </head>
 <body>
-<div class="banner">Preview with made-up data -- pick a style</div>
+<div class="banner"><div class="dataline">Data: AquaSolDB v1.2 (published), CC BY 4.0 - <a href="https://doi.org/10.5281/zenodo.22905509" rel="noopener">doi:10.5281/zenodo.22905509</a></div><div class="preview">Preview of the viewer app; the database's next version is in preparation -- pick a style</div></div>
 <main>
   <h1>AquaSolDB viewer: 10 styles</h1>
-  <p class="lede">Same made-up rows, filters, plot and download in each. Open each one on the phone and pick the look you like. Styles 4 and up have a light/dark switch.</p>
+  <p class="lede">Same published AquaSolDB v1.2 rows, filters, plot and download in each. Open each one on the phone and pick the look you like. Style 1 and styles 4 and up have a light/dark switch.</p>
   <div class="grid">
     <a class="card" href="owid/index.html">
       <div class="num">Style 1 of 10</div>
       <div class="name">Our World in Data</div>
-      <div class="feel">White page, serif headings, muted colours, thin rules, calm chart with labels on the lines.</div>
+      <div class="feel">White page, serif headings, muted colours, thin rules, calm chart with labels on the lines; light/dark toggle.</div>
       <div class="strip" aria-hidden="true"><span style="background:#ffffff"></span><span style="background:#1d3d63"></span><span style="background:#be5915"></span><span style="background:#58ac8c"></span><span style="background:#6d3e91"></span><span style="background:#dadada"></span></div>
       <div class="go">Open &#8594;</div></a><a class="card" href="dark/index.html">
       <div class="num">Style 2 of 10</div>
@@ -83,5 +87,6 @@ p.lede { color: #555; margin: 0 0 20px; }
       <div class="go">Open &#8594;</div></a>
   </div>
 </main>
+<footer class="foot"><p>If you use this dataset, cite it as below AND cite the original paper that printed each value you use; the source_id column of every row names that paper, and csv/sources.csv gives its full reference and DOI.</p><p>Data: AquaSolDB v1.2 (published), <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a> - cite: Abd, A., &amp; Abushaikha, A. (2026). AquaSolDB (Version 1.2) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.22905509 - <a href="https://doi.org/10.5281/zenodo.22905509" rel="noopener">doi:10.5281/zenodo.22905509</a></p><p>Preview of the viewer app; the database's next version is in preparation.</p></footer>
 </body>
 </html>
