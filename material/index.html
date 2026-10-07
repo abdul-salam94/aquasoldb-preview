@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#eceff4">
+<meta name="theme-color" content="#f3edf7">
 <script>
 (function () {
   var t = null;
   try { t = localStorage.getItem("aquasoldb-soft-theme"); } catch (e) {}
   if (t !== "dark" && t !== "light") t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   document.documentElement.setAttribute("data-theme", t);
-  document.querySelector('meta[name="theme-color"]').setAttribute("content", t === "dark" ? "#2e3440" : "#eceff4");
+  document.querySelector('meta[name="theme-color"]').setAttribute("content", t === "dark" ? "#211f26" : "#f3edf7");
 })();
 </script>
-<title>AquaSolDB viewer, style 5 of 10: Nord (made-up data)</title>
+<title>AquaSolDB viewer, style 6 of 10: Material (made-up data)</title>
 <style>
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -113,12 +113,12 @@ header.top .toprow { display: flex; align-items: center; justify-content: space-
 .themebtn svg { width: 22px; height: 22px; flex: 0 0 auto; }
 .themebtn .to-dark, :root[data-theme="dark"] .themebtn .to-light { display: inline-flex; align-items: center; gap: 8px; }
 .themebtn .to-light, :root[data-theme="dark"] .themebtn .to-dark { display: none; }
-:root { --s1: #2e4a70; --s2: #bf616a; --s3: #6fa3a0; --s4: #d8b062; }
-:root[data-theme="dark"] { --s1: #a3c1e6; --s2: #d08770; --s3: #5f9488; --s4: #ebcb8b; }
-.plot [fill="#2e4a70"], .sw [fill="#2e4a70"] { fill: var(--s1); }
-.plot [fill="#bf616a"], .sw [fill="#bf616a"] { fill: var(--s2); }
-.plot [fill="#6fa3a0"], .sw [fill="#6fa3a0"] { fill: var(--s3); }
-.plot [fill="#d8b062"], .sw [fill="#d8b062"] { fill: var(--s4); }
+:root { --s1: #4f378b; --s2: #c0603a; --s3: #5fae9f; --s4: #e0b63c; }
+:root[data-theme="dark"] { --s1: #d0bcff; --s2: #f2a07e; --s3: #4fa392; --s4: #f6dc7e; }
+.plot [fill="#4f378b"], .sw [fill="#4f378b"] { fill: var(--s1); }
+.plot [fill="#c0603a"], .sw [fill="#c0603a"] { fill: var(--s2); }
+.plot [fill="#5fae9f"], .sw [fill="#5fae9f"] { fill: var(--s3); }
+.plot [fill="#e0b63c"], .sw [fill="#e0b63c"] { fill: var(--s4); }
 
 /* ---- shared skin ---- */
 /* Shared skin for styles 5-10: every colour, radius and font comes from variables the theme file sets
@@ -201,48 +201,67 @@ tr.picked td { background: var(--accent-soft); }
 }
 
 /* ---- theme ---- */
-/* Style 5, Nord: cool Nordic palette (slate blues, frost greys), flat, minimal. */
+/* Style 6, Material: Google Material 3 feel. Tonal surfaces, outlined filter chips, pill buttons,
+   a top app bar, a navigation bar on the phone and a floating action button for Download. */
 :root, :root[data-theme="light"] { color-scheme: light;
-  --bg: #eceff4; --card: #f9fafc; --text: #2e3440; --muted: #4c566a; --line: #d8dee9; --line2: #e5e9f0;
-  --accent: #4c6a92; --on-accent: #ffffff; --accent-soft: #e0e6ee; --accent-ink: #3b5577; --link: #3b5577;
-  --chip-bg: #e5e9f0; --chip-ink: #3b4252; --chip-border: 1px solid #d8dee9;
-  --banner-bg: #e5e9f0; --banner-ink: #3b4252; --field: #f2f4f8; --thbg: #eef1f5; --blank: #9aa3b3;
-  --bar: #f9fafc; --grid: #e5e9f0; --axis: #c2cad6; --tick: #4c566a; --axlbl: #2e3440;
-  --r-card: 6px; --r-pill: 4px; --r-field: 4px;
-  --font: "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; }
+  --bg: #fdf8fd; --card: #f3edf7; --text: #1d1b20; --muted: #49454f; --line: #cac4d0; --line2: #e7e0ec;
+  --accent: #6750a4; --on-accent: #ffffff; --accent-soft: #e8def8; --accent-ink: #1d192b; --link: #6750a4;
+  --chip-bg: #fdf8fd; --chip-ink: #49454f; --chip-border: 1px solid #79747e;
+  --banner-bg: #ffd8e4; --banner-ink: #31111d; --field: #fdf8fd; --thbg: #ece6f0; --blank: #938f99;
+  --bar: #f3edf7; --grid: #e7e0ec; --axis: #cac4d0; --tick: #49454f; --axlbl: #1d1b20;
+  --fab: #eaddff; --on-fab: #21005d; --appbar: #f3edf7;
+  --r-card: 16px; --r-pill: 999px; --r-field: 8px; --card-border: none;
+  --shadow-strong: 0 1px 3px rgba(0,0,0,.2), 0 1px 2px rgba(0,0,0,.12);
+  --elev3: 0 4px 8px 3px rgba(0,0,0,.15), 0 1px 3px rgba(0,0,0,.3);
+  --font: "Roboto Flex", Roboto, "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif; }
 :root[data-theme="dark"] { color-scheme: dark;
-  --bg: #2e3440; --card: #3b4252; --text: #eceff4; --muted: #c3cad6; --line: #4c566a; --line2: #434c5e;
-  --accent: #88c0d0; --on-accent: #242933; --accent-soft: #434c5e; --accent-ink: #b8d8e3; --link: #a9cfdc;
-  --chip-bg: #434c5e; --chip-ink: #e5e9f0; --chip-border: 1px solid #4c566a;
-  --banner-bg: #3b4252; --banner-ink: #ebcb8b; --field: #353b48; --thbg: #434c5e; --blank: #7d879a;
-  --bar: #3b4252; --grid: #434c5e; --axis: #616e88; --tick: #c3cad6; --axlbl: #e5e9f0; }
-.banner { border-bottom: 1px solid var(--line); font-weight: 500; }
-.stylenav { justify-content: flex-start; max-width: 1160px; margin: 0 auto; padding: 2px 14px; }
-.stylenav a[aria-current="page"] { font-weight: 600; }
-header.top h1 { font-weight: 600; letter-spacing: -0.3px; }
-header.top h1::after { content: ""; display: block; width: 40px; height: 3px; background: var(--accent); margin-top: 6px; }
-.themebtn { border-radius: 6px; box-shadow: none; border: 1px solid var(--line); }
-.tabs { border-bottom: 1px solid var(--line); padding-bottom: 0; gap: 0; }
-.tabs button { border-radius: 0; background: none; border-bottom: 3px solid transparent; }
-.tabs button.active { background: none; color: var(--text); border-bottom-color: var(--accent); }
-.lbl { font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
-.lbl .hint { text-transform: none; letter-spacing: 0; }
-.chip.on { font-weight: 600; }
-.count b { font-weight: 600; }
-.btn { font-weight: 600; }
-.sechead h2 { font-weight: 600; }
-.seg label.on { box-shadow: none; border: 1px solid var(--line); }
+  --bg: #141218; --card: #211f26; --text: #e6e0e9; --muted: #cac4d0; --line: #49454f; --line2: #36343b;
+  --accent: #d0bcff; --on-accent: #381e72; --accent-soft: #4a4458; --accent-ink: #e8def8; --link: #d0bcff;
+  --chip-bg: #141218; --chip-ink: #cac4d0; --chip-border: 1px solid #938f99;
+  --banner-bg: #633b48; --banner-ink: #ffd8e4; --field: #1d1b20; --thbg: #2b2930; --blank: #79747e;
+  --bar: #211f26; --grid: #36343b; --axis: #49454f; --tick: #cac4d0; --axlbl: #e6e0e9;
+  --fab: #4f378b; --on-fab: #eaddff; --appbar: #211f26;
+  --shadow-strong: 0 1px 3px rgba(0,0,0,.5); --elev3: 0 4px 8px 3px rgba(0,0,0,.4), 0 1px 3px rgba(0,0,0,.6); }
+/* top app bar */
+header.top { max-width: none; margin: 0; padding: 10px max(20px, calc((100% - 1120px) / 2)) 14px; background: var(--appbar); }
+header.top h1 { font-size: 26px; font-weight: 500; }
+.themebtn { border: none; box-shadow: none; background: var(--accent-soft); color: var(--accent-ink); font-weight: 500; }
+.stylenav { justify-content: flex-start; max-width: 1160px; margin: 0 auto; }
+.tabs { margin-top: 14px; }
+.tabs button { border: 1px solid var(--line); color: var(--muted); font-weight: 500; }
+.tabs button.active { background: var(--accent-soft); color: var(--accent-ink); border-color: var(--accent-soft); }
+.lbl { font-weight: 500; }
+.chip { font-weight: 500; border-radius: 8px; }
+.chip.on { background: var(--accent-soft); border-color: var(--accent-soft); color: var(--accent-ink); }
+.chip.on::before { content: "\2713"; font-size: 13px; margin-right: 2px; }
+.pchip { border-radius: 8px; font-weight: 500; }
+.pchip.on { background: var(--accent-soft); border-color: var(--accent-soft); color: var(--accent-ink); }
+.seg { background: none; border: 1px solid #79747e; padding: 0; gap: 0; overflow: hidden; }
+.seg label { border-radius: 0; color: var(--text); font-weight: 500; }
+.seg label.on { background: var(--accent-soft); color: var(--accent-ink); box-shadow: none; }
+.count b { font-weight: 500; font-size: 28px; }
+.btn { font-weight: 500; }
+.sechead h2 { font-weight: 500; font-size: 22px; }
+/* floating action button: Download */
+.countbar .btn.primary { position: fixed; right: max(20px, calc((100% - 1120px) / 2)); bottom: 24px; z-index: 25; min-height: 56px;
+  padding: 0 20px; border-radius: 16px; background: var(--fab); color: var(--on-fab); box-shadow: var(--elev3); font-weight: 500; }
+.countbar { min-height: 64px; }
+.shell { padding-bottom: 110px; }
 @media (max-width: 760px) {
-  .tabs { border-bottom: none; }
-  .tabs button { border-bottom: none; border-top: 3px solid transparent; border-radius: 0; }
-  .tabs button.active { background: none; color: var(--text); border-top-color: var(--accent); }
+  header.top { padding: 8px 14px 12px; }
+  header.top h1 { font-size: 22px; }
+  .tabs { background: var(--bar); border-top: none; padding-top: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
+  .tabs button { border: none; min-height: 48px; border-radius: 999px; }
+  .tabs button.active { background: var(--accent-soft); color: var(--accent-ink); font-weight: 700; }
+  .countbar .btn.primary { right: 16px; bottom: calc(88px + env(safe-area-inset-bottom)); }
+  .shell { padding-bottom: 100px; }
 }
 
 </style>
 </head>
 <body>
-<div class="banner">Preview with made-up data -- style 5 of 10: Nord</div>
-<nav class="stylenav" aria-label="Other styles"><span class="lab">Styles:</span><a href="../index.html">All styles</a><a href="../owid/index.html">1. Our World in Data</a><a href="../dark/index.html">2. Dark dashboard</a><a href="../journal/index.html">3. Journal data page</a><a href="../soft/index.html">4. Soft app</a><a href="../nord/index.html" aria-current="page">5. Nord</a><a href="../material/index.html">6. Material</a></nav>
+<div class="banner">Preview with made-up data -- style 6 of 10: Material</div>
+<nav class="stylenav" aria-label="Other styles"><span class="lab">Styles:</span><a href="../index.html">All styles</a><a href="../owid/index.html">1. Our World in Data</a><a href="../dark/index.html">2. Dark dashboard</a><a href="../journal/index.html">3. Journal data page</a><a href="../soft/index.html">4. Soft app</a><a href="../nord/index.html">5. Nord</a><a href="../material/index.html" aria-current="page">6. Material</a></nav>
 <header class="top"><div class="toprow"><h1>AquaSolDB viewer</h1><button type="button" class="themebtn" id="themeBtn" aria-label="Switch to dark mode"><span class="to-dark"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>Dark</span><span class="to-light"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>Light</span></button></div><p class="lede">Read-only view of made-up sample data. Solubility in mol per kg of water; temperature in K; pressure in MPa (total pressure unless the pressure basis says otherwise).</p></header>
 <nav class="tabs" id="tabs" aria-label="Tables"></nav>
 <div class="shell">
@@ -256,7 +275,7 @@ header.top h1::after { content: ""; display: block; width: 40px; height: 3px; ba
 </div>
 <script>
 "use strict";
-const THEME = {"palette": ["#2e4a70", "#bf616a", "#6fa3a0", "#d8b062"], "direct": false, "shapes": false, "r": 6};
+const THEME = {"palette": ["#4f378b", "#c0603a", "#5fae9f", "#e0b63c"], "direct": false, "shapes": false, "r": 7};
 // ---------- made-up sample data (never real data, never real DOIs) ----------
 const SOURCES = [
   {source_id: "sample2001", reference: "Sample, A. (2001) Gas solubility in salt water at moderate pressure. Journal of Example Data 1, 1-10.", source_type: "journal", doi: "10.0000/example.0001", method: "analytical_sampling"},
@@ -776,7 +795,7 @@ render();
       meta = document.querySelector('meta[name="theme-color"]'), mq = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : null;
   function apply(t) {
     root.setAttribute("data-theme", t);
-    meta.setAttribute("content", t === "dark" ? "#2e3440" : "#eceff4");
+    meta.setAttribute("content", t === "dark" ? "#211f26" : "#f3edf7");
     btn.setAttribute("aria-label", t === "dark" ? "Switch to light mode" : "Switch to dark mode");
   }
   apply(root.getAttribute("data-theme") === "dark" ? "dark" : "light");
