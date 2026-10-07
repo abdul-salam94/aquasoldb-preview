@@ -3,8 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b0e13">
-<title>AquaSolDB viewer, style 2 of 4: Dark dashboard (made-up data)</title>
+<meta name="theme-color" content="#eceff4">
+<script>
+(function () {
+  var t = null;
+  try { t = localStorage.getItem("aquasoldb-soft-theme"); } catch (e) {}
+  if (t !== "dark" && t !== "light") t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  document.documentElement.setAttribute("data-theme", t);
+  document.querySelector('meta[name="theme-color"]').setAttribute("content", t === "dark" ? "#2e3440" : "#eceff4");
+})();
+</script>
+<title>AquaSolDB viewer, style 5 of 10: Nord (made-up data)</title>
 <style>
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -92,86 +101,148 @@ td.sel input { width: 18px; height: 18px; }
   .plotctl { gap: 0 16px; }
 }
 
-/* ---- theme ---- */
-:root { --bg: #0b0e13; --card: #141922; --card2: #1a202b; --line: #262e3b; --text: #e8edf4; --muted: #95a0b2; --accent: #2dd4bf; --accent-ink: #04201c; }
-body { background: var(--bg); color: var(--text); font-family: "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif; }
-a { color: var(--accent); }
-.banner { background: #2a2410; color: #f5d77a; border-bottom: 1px solid #4a3f17; }
+/* ---- light/dark mode ---- */
+/* Shared by every style with the light/dark toggle (soft and styles 5-10).
+   The mode is set on <html data-theme="light|dark"> by a tiny head script before first paint.
+   The style sheet after this one supplies the colour variables used here. */
+header.top .toprow { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.themebtn { display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto; min-width: 48px; min-height: 48px; padding: 0 16px 0 12px;
+  font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; color: var(--accent-ink); background: var(--card);
+  border: 1.5px solid var(--line); border-radius: 999px; box-shadow: var(--shadow); }
+.themebtn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.themebtn svg { width: 22px; height: 22px; flex: 0 0 auto; }
+.themebtn .to-dark, :root[data-theme="dark"] .themebtn .to-light { display: inline-flex; align-items: center; gap: 8px; }
+.themebtn .to-light, :root[data-theme="dark"] .themebtn .to-dark { display: none; }
+:root { --s1: #2e4a70; --s2: #bf616a; --s3: #6fa3a0; --s4: #d8b062; }
+:root[data-theme="dark"] { --s1: #a3c1e6; --s2: #d08770; --s3: #5f9488; --s4: #ebcb8b; }
+.plot [fill="#2e4a70"], .sw [fill="#2e4a70"] { fill: var(--s1); }
+.plot [fill="#bf616a"], .sw [fill="#bf616a"] { fill: var(--s2); }
+.plot [fill="#6fa3a0"], .sw [fill="#6fa3a0"] { fill: var(--s3); }
+.plot [fill="#d8b062"], .sw [fill="#d8b062"] { fill: var(--s4); }
+
+/* ---- shared skin ---- */
+/* Shared skin for styles 5-10: every colour, radius and font comes from variables the theme file sets
+   for :root (light) and :root[data-theme="dark"]. The theme file then adds its own distinctive rules. */
+html { background: var(--bg); }
+body { background: var(--bg-img, var(--bg)); background-attachment: fixed; color: var(--text); font-family: var(--font); }
+a { color: var(--link, var(--accent-ink)); }
+.banner { background: var(--banner-bg); color: var(--banner-ink); font-weight: 600; }
 .stylenav { color: var(--muted); }
-.stylenav a { color: var(--muted); border-radius: 8px; }
-.stylenav a[aria-current="page"] { color: var(--accent); background: rgba(45,212,191,.1); }
-header.top { padding: 16px 24px 8px; }
-header.top h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.4px; }
-header.top h1::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; background: var(--accent);
-  margin-right: 10px; vertical-align: 4px; box-shadow: 0 0 12px var(--accent); }
-header.top .lede { color: var(--muted); margin: 4px 0 0; font-size: 14px; max-width: 760px; }
-.tabs { margin: 8px 24px 0; gap: 6px; padding: 6px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; }
-.tabs button { padding: 0 14px; border-radius: 10px; color: var(--muted); font-size: 14px; font-weight: 600; }
-.tabs button.active { background: var(--accent); color: var(--accent-ink); }
-.shell { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 20px; padding: 18px 24px 60px; align-items: start; }
-#side { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px; position: sticky; top: 12px; }
-.sidehead b { color: var(--text); }
-.sidehead span { color: var(--muted); }
-.lbl { color: var(--muted); font-weight: 600; font-size: 13px; }
-.hint { color: #6b7688; }
-.chip { background: var(--card2); border: 1px solid var(--line); border-radius: 999px; color: var(--text); }
-.chip.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
-.helptext { background: var(--card2); border: 1px solid var(--line); color: var(--muted); border-radius: 8px; }
-.range-row .v { color: var(--accent); }
+.stylenav a { color: var(--link, var(--accent-ink)); border-radius: var(--r-pill); }
+.stylenav a[aria-current="page"] { background: var(--accent); color: var(--on-accent); }
+header.top { padding: 14px 20px 4px; max-width: 1160px; margin: 0 auto; }
+header.top h1 { font-family: var(--font-head, var(--font)); font-size: 28px; font-weight: 700; }
+header.top .lede { color: var(--muted); margin: 4px 0 0; font-size: 14px; }
+.tabs { max-width: 1160px; margin: 10px auto 0; padding: 0 20px; gap: 6px; }
+.tabs button { padding: 0 16px; border-radius: var(--r-pill); color: var(--muted); font-weight: 600; font-size: 14px; }
+.tabs button.active { background: var(--accent); color: var(--on-accent); }
+.shell { max-width: 1160px; margin: 0 auto; padding: 16px 20px 60px; }
+#side, .countbar, .card { background: var(--card); border: var(--card-border, 1px solid var(--line)); border-radius: var(--r-card);
+  box-shadow: var(--shadow, none); }
+#side { padding: 16px 18px 6px; margin-bottom: 18px; }
+#quick, #more { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 0 24px; }
+.sidehead b { font-size: 17px; font-family: var(--font-head, var(--font)); }
+.sidehead span, .hint, .secnote, .colhelp, .caption, .count { color: var(--muted); }
+.lbl { font-weight: 700; color: var(--text); }
+.chip { background: var(--chip-bg); border: var(--chip-border, none); border-radius: var(--r-pill); color: var(--chip-ink); font-weight: 600; }
+.chip.on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.helptext { background: var(--accent-soft); border-radius: var(--r-field); color: var(--accent-ink); }
+.range-row .v { color: var(--accent-ink); font-weight: 700; }
 input[type=range], .check input, td.sel input { accent-color: var(--accent); }
-input[type=text] { background: var(--card2); color: var(--text); border: 1px solid var(--line); border-radius: 10px; }
-.countbar { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 10px 12px 10px 18px; }
-.count { color: var(--muted); }
-.count b { color: var(--text); font-size: 24px; margin-right: 2px; }
-.btn { background: var(--card2); color: var(--text); border: 1px solid var(--line); border-radius: 12px; font-weight: 600; }
-.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-.card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
-.sechead h2 { font-size: 16px; text-transform: uppercase; letter-spacing: 1px; color: var(--text); }
-.secnote { color: var(--muted); }
-.seg { background: var(--card2); border: 1px solid var(--line); border-radius: 12px; padding: 3px; gap: 3px; }
-.seg label { border-radius: 9px; color: var(--muted); font-weight: 600; min-height: 40px; }
-.seg label.on { background: var(--accent); color: var(--accent-ink); }
-.pchip { background: var(--card2); border: 1px solid var(--line); border-radius: 999px; color: var(--muted); }
-.pchip.on { color: var(--text); border-color: #3b4658; }
+input[type=text] { border: 1.5px solid var(--line); border-radius: var(--r-field); background: var(--field); color: var(--text); }
+.countbar { padding: 10px 10px 10px 18px; }
+.count b { color: var(--text); font-size: 24px; font-weight: 800; }
+.btn { background: var(--accent-soft); color: var(--accent-ink); border: none; border-radius: var(--r-pill); font-weight: 700; }
+.btn.primary { background: var(--accent); color: var(--on-accent); }
+.card { padding: 18px; }
+.sechead h2 { font-family: var(--font-head, var(--font)); font-size: 19px; }
+.seg { background: var(--accent-soft); border-radius: var(--r-pill); padding: 3px; gap: 3px; }
+.seg label { border-radius: var(--r-pill); color: var(--accent-ink); font-weight: 600; }
+.seg label.on { background: var(--card); color: var(--text); box-shadow: var(--shadow-strong, none); }
+.pchip { background: var(--field); border: 1.5px solid var(--line); border-radius: var(--r-pill); color: var(--muted); font-weight: 600; }
+.pchip.on { background: var(--card); border-color: var(--axis); color: var(--text); }
 .pchip:not(.on) .sw { opacity: .3; }
-.pchip.all { color: var(--accent); }
-.plot .grid { stroke: #222a36; }
-.plot .axis { stroke: #3a4456; }
-.plot .tick { fill: #8590a3; }
-.plot .axlbl { fill: #c7cfdb; font-weight: 600; }
-.plot .pt { fill-opacity: .9; stroke: var(--card); stroke-width: 1.5; }
-.tip { background: #0f141c; border: 1px solid #334055; border-radius: 10px; color: var(--text); box-shadow: 0 6px 20px rgba(0,0,0,.5); }
+.pchip.all { color: var(--accent-ink); }
+.plot .grid { stroke: var(--grid); }
+.plot .axis { stroke: var(--axis); }
+.plot .tick { fill: var(--tick); }
+.plot .axlbl { fill: var(--axlbl); font-weight: 700; }
+.plot .pt { fill-opacity: .92; stroke: var(--card-solid, var(--card)); stroke-width: 1.5; }
+.tip { background: var(--card-solid, var(--card)); color: var(--text); border: 1px solid var(--line); border-radius: var(--r-field); box-shadow: var(--shadow-strong, none); }
 .tip .k { color: var(--muted); }
-.tablewrap { border: 1px solid var(--line); border-radius: 12px; }
-th { background: var(--card2); color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--line); }
-td { border-bottom: 1px solid #1f2632; }
-th.sel { background: var(--card2); }
-td.sel { background: var(--card); }
-td.blank { color: #566174; }
-tr.picked td { background: rgba(45,212,191,.12); }
-tbody tr:hover td { background: #18202b; }
-.colhelp, .caption { color: var(--muted); }
-.printed { background: var(--card2); border: 1px solid var(--line); border-radius: 12px; }
-.printed h3 { color: var(--accent); }
-.info { background: rgba(45,212,191,.08); color: var(--accent); border-radius: 12px; }
+.tablewrap { border-radius: var(--r-field); border: 1px solid var(--line); }
+th { background: var(--thbg); color: var(--muted); font-weight: 700; border-bottom: 1px solid var(--line); }
+td { border-bottom: 1px solid var(--line2); }
+th.sel { background: var(--thbg); }
+td.sel { background: var(--card-solid, var(--card)); }
+td.blank { color: var(--blank); }
+tr.picked td { background: var(--accent-soft); }
+.printed { background: var(--accent-soft); border-radius: var(--r-field); }
+.printed .tablewrap { background: var(--card-solid, var(--card)); }
+.info { background: var(--accent-soft); color: var(--accent-ink); border-radius: var(--r-field); }
 @media (max-width: 760px) {
-  header.top { padding: 12px 14px 4px; }
-  header.top h1 { font-size: 24px; }
-  .tabs { margin: 8px 14px 0; }
-  .shell { display: block; padding: 12px 14px 50px; }
-  #side { position: static; margin-bottom: 12px; padding: 12px 12px 4px; }
-  #side .morebtn { background: var(--card2); color: var(--text); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px; font-weight: 600; }
-  #side .morebtn .badge { background: var(--accent); color: var(--accent-ink); border-radius: 9px; padding: 0 6px; font-size: 12px; }
-  .card { padding: 12px; }
-  .countbar { padding: 8px 8px 8px 14px; }
+  body { padding-bottom: 76px; }
+  header.top { padding: 10px 14px 2px; }
+  header.top h1 { font-size: 23px; }
+  /* bottom tab bar on the phone */
+  .tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; margin: 0; padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+    gap: 2px; background: var(--bar); border-top: 1px solid var(--line); }
+  .tabs button { flex: 1 0 auto; min-width: 64px; min-height: 52px; padding: 0 8px; font-size: 12px; background: none; border-radius: var(--r-field); }
+  .tabs button.active { background: var(--accent-soft); color: var(--accent-ink); }
+  .tabs .full { display: none; }
+  .tabs .short { display: inline; }
+  .shell { padding: 10px 12px 30px; }
+  #side { padding: 12px 12px 4px; }
+  #quick, #more { display: block; }
+  #side .morebtn { background: var(--accent-soft); color: var(--accent-ink); border: none; border-radius: var(--r-field); margin-bottom: 10px; font-weight: 700; }
+  #side .morebtn .badge { background: var(--accent); color: var(--on-accent); border-radius: 9px; padding: 0 6px; font-size: 12px; }
+  .card { padding: 14px; }
+}
+
+/* ---- theme ---- */
+/* Style 5, Nord: cool Nordic palette (slate blues, frost greys), flat, minimal. */
+:root, :root[data-theme="light"] { color-scheme: light;
+  --bg: #eceff4; --card: #f9fafc; --text: #2e3440; --muted: #4c566a; --line: #d8dee9; --line2: #e5e9f0;
+  --accent: #4c6a92; --on-accent: #ffffff; --accent-soft: #e0e6ee; --accent-ink: #3b5577; --link: #3b5577;
+  --chip-bg: #e5e9f0; --chip-ink: #3b4252; --chip-border: 1px solid #d8dee9;
+  --banner-bg: #e5e9f0; --banner-ink: #3b4252; --field: #f2f4f8; --thbg: #eef1f5; --blank: #9aa3b3;
+  --bar: #f9fafc; --grid: #e5e9f0; --axis: #c2cad6; --tick: #4c566a; --axlbl: #2e3440;
+  --r-card: 6px; --r-pill: 4px; --r-field: 4px;
+  --font: "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; }
+:root[data-theme="dark"] { color-scheme: dark;
+  --bg: #2e3440; --card: #3b4252; --text: #eceff4; --muted: #c3cad6; --line: #4c566a; --line2: #434c5e;
+  --accent: #88c0d0; --on-accent: #242933; --accent-soft: #434c5e; --accent-ink: #b8d8e3; --link: #a9cfdc;
+  --chip-bg: #434c5e; --chip-ink: #e5e9f0; --chip-border: 1px solid #4c566a;
+  --banner-bg: #3b4252; --banner-ink: #ebcb8b; --field: #353b48; --thbg: #434c5e; --blank: #7d879a;
+  --bar: #3b4252; --grid: #434c5e; --axis: #616e88; --tick: #c3cad6; --axlbl: #e5e9f0; }
+.banner { border-bottom: 1px solid var(--line); font-weight: 500; }
+.stylenav { justify-content: flex-start; max-width: 1160px; margin: 0 auto; padding: 2px 14px; }
+.stylenav a[aria-current="page"] { font-weight: 600; }
+header.top h1 { font-weight: 600; letter-spacing: -0.3px; }
+header.top h1::after { content: ""; display: block; width: 40px; height: 3px; background: var(--accent); margin-top: 6px; }
+.themebtn { border-radius: 6px; box-shadow: none; border: 1px solid var(--line); }
+.tabs { border-bottom: 1px solid var(--line); padding-bottom: 0; gap: 0; }
+.tabs button { border-radius: 0; background: none; border-bottom: 3px solid transparent; }
+.tabs button.active { background: none; color: var(--text); border-bottom-color: var(--accent); }
+.lbl { font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+.lbl .hint { text-transform: none; letter-spacing: 0; }
+.chip.on { font-weight: 600; }
+.count b { font-weight: 600; }
+.btn { font-weight: 600; }
+.sechead h2 { font-weight: 600; }
+.seg label.on { box-shadow: none; border: 1px solid var(--line); }
+@media (max-width: 760px) {
+  .tabs { border-bottom: none; }
+  .tabs button { border-bottom: none; border-top: 3px solid transparent; border-radius: 0; }
+  .tabs button.active { background: none; color: var(--text); border-top-color: var(--accent); }
 }
 
 </style>
 </head>
 <body>
-<div class="banner">Preview with made-up data -- style 2 of 4: Dark dashboard</div>
-<nav class="stylenav" aria-label="Other styles"><span class="lab">Styles:</span><a href="../index.html">All styles</a><a href="../owid/index.html">1. Our World in Data</a><a href="../dark/index.html" aria-current="page">2. Dark dashboard</a><a href="../journal/index.html">3. Journal data page</a><a href="../soft/index.html">4. Soft app</a><a href="../nord/index.html">5. Nord</a></nav>
-<header class="top"><h1>AquaSolDB viewer</h1><p class="lede">Read-only view of made-up sample data. Solubility in mol per kg of water; temperature in K; pressure in MPa (total pressure unless the pressure basis says otherwise).</p></header>
+<div class="banner">Preview with made-up data -- style 5 of 10: Nord</div>
+<nav class="stylenav" aria-label="Other styles"><span class="lab">Styles:</span><a href="../index.html">All styles</a><a href="../owid/index.html">1. Our World in Data</a><a href="../dark/index.html">2. Dark dashboard</a><a href="../journal/index.html">3. Journal data page</a><a href="../soft/index.html">4. Soft app</a><a href="../nord/index.html" aria-current="page">5. Nord</a></nav>
+<header class="top"><div class="toprow"><h1>AquaSolDB viewer</h1><button type="button" class="themebtn" id="themeBtn" aria-label="Switch to dark mode"><span class="to-dark"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>Dark</span><span class="to-light"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>Light</span></button></div><p class="lede">Read-only view of made-up sample data. Solubility in mol per kg of water; temperature in K; pressure in MPa (total pressure unless the pressure basis says otherwise).</p></header>
 <nav class="tabs" id="tabs" aria-label="Tables"></nav>
 <div class="shell">
   <aside id="side" aria-label="Filters">
@@ -184,7 +255,7 @@ tbody tr:hover td { background: #18202b; }
 </div>
 <script>
 "use strict";
-const THEME = {"palette": ["#2dd4bf", "#a78bfa", "#f472b6", "#fbbf24", "#60a5fa", "#f87171"], "direct": false, "shapes": false, "r": 7};
+const THEME = {"palette": ["#2e4a70", "#bf616a", "#6fa3a0", "#d8b062"], "direct": false, "shapes": false, "r": 6};
 // ---------- made-up sample data (never real data, never real DOIs) ----------
 const SOURCES = [
   {source_id: "sample2001", reference: "Sample, A. (2001) Gas solubility in salt water at moderate pressure. Journal of Example Data 1, 1-10.", source_type: "journal", doi: "10.0000/example.0001", method: "analytical_sampling"},
@@ -697,6 +768,27 @@ document.addEventListener("change", e => {
 });
 render();
 
+</script>
+<script>
+(function () {
+  var KEY = "aquasoldb-soft-theme", root = document.documentElement, btn = document.getElementById("themeBtn"),
+      meta = document.querySelector('meta[name="theme-color"]'), mq = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : null;
+  function apply(t) {
+    root.setAttribute("data-theme", t);
+    meta.setAttribute("content", t === "dark" ? "#2e3440" : "#eceff4");
+    btn.setAttribute("aria-label", t === "dark" ? "Switch to light mode" : "Switch to dark mode");
+  }
+  apply(root.getAttribute("data-theme") === "dark" ? "dark" : "light");
+  btn.addEventListener("click", function () {
+    var t = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    try { localStorage.setItem(KEY, t); } catch (e) {}
+    apply(t);
+  });
+  if (mq && mq.addEventListener) mq.addEventListener("change", function (e) {
+    var saved = null; try { saved = localStorage.getItem(KEY); } catch (x) {}
+    if (saved !== "dark" && saved !== "light") apply(e.matches ? "dark" : "light");
+  });
+})();
 </script>
 </body>
 </html>
