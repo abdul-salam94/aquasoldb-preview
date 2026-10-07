@@ -331,10 +331,10 @@ const HELP_EXTRA = {
   "sources|reference": "Full reference of the source.",
   temperature_C: "Converted for viewing: temperature in K minus 273.15. Not stored in the database.",
   pressure_bar: "Converted for viewing: pressure in MPa times 10. Not stored in the database.",
-  x_gas_salt_ignored: "Converted for viewing: x = m / (m + 55.508435), m = solubility in mol per kg of water, " +
-    "55.508435 = mol of water in 1 kg (1000 / 18.01528). Not stored in the database.",
-  x_gas_with_salt: "Converted for viewing: x = m / (m + 55.508435 + total ions), total ions = Na + Cl + K + Ca + Mg + SO4 " +
-    "in mol per kg of water. Blank where the row does not give its ions. Not stored in the database.",
+  x_gas_salt_ignored: "Converted for viewing: x = m / (m + 55.508373), m = solubility in mol per kg of water, " +
+    "55.508373 = mol of water in 1 kg (1000 / 18.0153). Not stored in the database.",
+  x_gas_with_salt: "Converted for viewing: x = m / (m + 55.508373 + total ions), total ions = Na + Cl + K + Ca + Mg + SO4 " +
+    "in mol per kg of water (0 for pure water). Blank for a brine row that does not give its ions. Not stored in the database.",
   ionic_strength_mol_per_kgw: "Converted for viewing: I = 1/2 x sum of (ion molality x charge squared); charges Na +1, K +1, " +
     "Ca +2, Mg +2, Cl -1, SO4 -2. Blank where the row does not give its ions.",
   total_ions_mol_per_kgw: "Converted for viewing: Na + Cl + K + Ca + Mg + SO4, in mol per kg of water. Blank where the row does not give its ions.",
@@ -386,13 +386,16 @@ function download(name, text) {
 const $ = id => document.getElementById(id);
 
 // ---------- conversions: view and download only, the stored data never changes ----------
-// N_W = mol of water in 1 kg = 1000 / 18.01528 (the database builder's constant, code/companion/common.py).
+// N_W = mol of water in 1 kg = 1000 / 18.0153 = 55.508373 (the constant of the database builder this page shows,
+// data/aquasoldb/build/build_aquasoldb.py M_H2O = 18.0153; lead decision 2026-10-07).
 // The sums run in this fixed ion order; the Python reference (_build/check_conversions.py) uses the same order.
-const N_W = 1000 / 18.01528;
+const N_W = 1000 / 18.0153;
 const IONS = [["m_Na", 1], ["m_Cl", -1], ["m_K", 1], ["m_Ca", 2], ["m_Mg", 2], ["m_SO4", -2]];
 function prepRow(r, hasM) {  // numbers parsed once on load; NaN = not given
+  // Salt "none" = pure water: its ions count as 0 even where the ion columns are empty (lead decision 2026-10-07).
   let s = 0, i2 = 0, q = 0, ok = true;
-  for (const [c, z] of IONS) { const v = num(r[c]); if (isNaN(v)) { ok = false; break; } s += v; i2 += v * z * z; q += v * z; }
+  const pure = r.salt === "none";
+  for (const [c, z] of IONS) { const v = pure && r[c] === "" ? 0 : num(r[c]); if (isNaN(v)) { ok = false; break; } s += v; i2 += v * z * z; q += v * z; }
   r._S = ok ? s : NaN; r._I = ok ? 0.5 * i2 : NaN; r._Q = ok ? q : NaN;
   r._M = hasM ? num(r.solubility_mol_per_kgw) : NaN;
 }
@@ -732,10 +735,10 @@ const HOW_TEXT = `<p>These values are worked out by this page from the stored on
   <ul>
   <li>Temperature in &deg;C = temperature in K &minus; 273.15.</li>
   <li>Pressure in bar = pressure in MPa &times; 10.</li>
-  <li>One kilogram of water holds N<sub>W</sub> = 1000 / 18.01528 = 55.508435 mol of water (the constant the database builder uses).</li>
+  <li>One kilogram of water holds N<sub>W</sub> = 1000 / 18.0153 = 55.508373 mol of water (the constant the database builder uses).</li>
   <li>Gas mole fraction, salt ignored: x = m / (m + N<sub>W</sub>), where m is the gas solubility in mol per kg of water.</li>
-  <li>Gas mole fraction, salt counted: x = m / (m + N<sub>W</sub> + total ions). Only for rows that give their ion molalities;
-    elsewhere the cell is blank and says &ldquo;ions not given&rdquo;.</li>
+  <li>Gas mole fraction, salt counted: x = m / (m + N<sub>W</sub> + total ions). Pure water (salt &ldquo;none&rdquo;) has no ions,
+    so the two mole fractions are equal there. A brine row that does not give its ion molalities stays blank and says &ldquo;ions not given&rdquo;.</li>
   <li>Total ions = Na + Cl + K + Ca + Mg + SO<sub>4</sub>, each in mol per kg of water.</li>
   <li>Ionic strength I = &frac12; &times; the sum of (ion molality &times; charge&sup2;), with charges Na +1, K +1, Ca +2, Mg +2, Cl &minus;1, SO<sub>4</sub> &minus;2.</li>
   <li>Charge balance = the sum of (ion molality &times; charge). It should be about 0 for a neutral brine.</li>
