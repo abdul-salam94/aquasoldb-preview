@@ -4,17 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:,">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#f3f1ec">
 <script>
 (function () {
   var t = null;
   try { t = localStorage.getItem("aquasoldb-soft-theme"); } catch (e) {}
   if (t !== "dark" && t !== "light") t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   document.documentElement.setAttribute("data-theme", t);
-  document.querySelector('meta[name="theme-color"]').setAttribute("content", t === "dark" ? "#15181d" : "#ffffff");
+  document.querySelector('meta[name="theme-color"]').setAttribute("content", t === "dark" ? "#1a1f27" : "#f3f1ec");
 })();
 </script>
-<title>AquaSolDB viewer</title>
+<title>AquaSolDB viewer, style 4 of 10: Soft app (published v1.2 data)</title>
 <style>
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -133,23 +133,6 @@ tr.sizer { visibility: collapse; }
   .foot { padding: 10px 14px 28px; }
   .pickfield { max-width: none; }
 }
-/* ---- units and extra columns panel; converted cells ---- */
-.units > summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; min-height: 44px; padding: 10px 0; cursor: pointer; list-style-position: outside; }
-.units > summary .sumt { font-weight: 600; }
-.unitgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 0 28px; padding-top: 4px; }
-.unitgrid .seg label { padding: 0 16px; }
-.howconv > summary { min-height: 40px; display: flex; align-items: center; cursor: pointer; font-size: 14px; }
-.howtext { font-size: 14px; padding: 4px 12px 8px; }
-.howtext p { margin: 6px 0; }
-.howtext ul { margin: 6px 0; padding-left: 20px; }
-.howtext li { margin: 3px 0; }
-td.conv .why { font-size: 12px; font-style: italic; }
-.plotctl .seg { flex-wrap: wrap; }
-.units > summary, .howconv > summary { list-style: none; }
-.units > summary::-webkit-details-marker, .howconv > summary::-webkit-details-marker { display: none; }
-.units > summary::after, .howconv > summary::after { content: "\25BE"; margin-left: auto; padding-left: 8px; font-size: 14px; }
-.units[open] > summary::after, .howconv[open] > summary::after { content: "\25B4"; }
-.howconv > summary::after { margin-left: 8px; }
 
 /* ---- light/dark mode ---- */
 /* Shared by every style with the light/dark toggle (soft and styles 5-10).
@@ -163,116 +146,126 @@ header.top .toprow { display: flex; align-items: center; justify-content: space-
 .themebtn svg { width: 22px; height: 22px; flex: 0 0 auto; }
 .themebtn .to-dark, :root[data-theme="dark"] .themebtn .to-light { display: inline-flex; align-items: center; gap: 8px; }
 .themebtn .to-light, :root[data-theme="dark"] .themebtn .to-dark { display: none; }
-:root { --s1: #6d3e91; --s2: #c05917; --s3: #58ac8c; --s4: #286bbb; --s5: #883039; --s6: #bc8e5a; }
-:root[data-theme="dark"] { --s1: #bb98d8; --s2: #e3925e; --s3: #6cc3a2; --s4: #80b2ea; --s5: #dc8c94; --s6: #d8b384; }
-.plot [fill="#6d3e91"], .sw [fill="#6d3e91"] { fill: var(--s1); }
-.plot [fill="#c05917"], .sw [fill="#c05917"] { fill: var(--s2); }
-.plot [fill="#58ac8c"], .sw [fill="#58ac8c"] { fill: var(--s3); }
-.plot [fill="#286bbb"], .sw [fill="#286bbb"] { fill: var(--s4); }
-.plot [fill="#883039"], .sw [fill="#883039"] { fill: var(--s5); }
-.plot [fill="#bc8e5a"], .sw [fill="#bc8e5a"] { fill: var(--s6); }
+:root { --s1: #34507a; --s2: #b8693f; --s3: #6da394; --s4: #d4ae55; }
+:root[data-theme="dark"] { --s1: #a9c3ea; --s2: #e09a72; --s3: #5f9e8d; --s4: #ecd28c; }
+.plot [fill="#34507a"], .sw [fill="#34507a"] { fill: var(--s1); }
+.plot [fill="#b8693f"], .sw [fill="#b8693f"] { fill: var(--s2); }
+.plot [fill="#6da394"], .sw [fill="#6da394"] { fill: var(--s3); }
+.plot [fill="#d4ae55"], .sw [fill="#d4ae55"] { fill: var(--s4); }
 
 /* ---- theme ---- */
-/* Style 1, Our World in Data: white page, serif headings, muted colours, thin rules; light and dark mode.
+/* Soft app: calm, low-saturation palette with a light and a dark mode.
    The mode is set on <html data-theme="light|dark"> by a tiny head script before first paint. */
 :root, :root[data-theme="light"] { color-scheme: light;
-  --bg: #ffffff; --ink: #1d3d63; --text: #3a3a3a; --muted: #6e6e6e; --rule: #dadada; --soft: #f7f7f7; --accent: #be5915; --blue: #3b6798;
-  --field: #ffffff; --fline: #c9c9c9; --fline2: #8a8a8a; --on-ink: #ffffff; --banner-bg: #fbf3d9; --banner-ink: #6a5300; --banner-line: #ecdca4;
-  --grid: #e3e3e3; --axis: #9a9a9a; --tick: #6e6e6e; --axlbl: #5a5a5a; --pt-stroke: #ffffff; --thline: #b9b9b9; --tdline: #ececec;
-  --blank: #767676; --picked: #fdf0e6; --tipshadow: 0 2px 8px rgba(0,0,0,.1);
-  --card: #ffffff; --line: #c9c9c9; --accent-ink: #1d3d63; --shadow: none; }
+  --bg: #f3f1ec; --bg2: #eeece6; --card: #fcfbf8; --text: #2c2e35; --muted: #5f616b; --line: #e1ded6; --line2: #ece9e2;
+  --accent: #4f6a8c; --on-accent: #ffffff; --accent-soft: #e5e9ef; --accent-ink: #3a5070;
+  --src-bg: #f0e7e1; --src-ink: #84503a; --src-on: #9a6650; --salt-bg: #e3ece7; --salt-ink: #3d6a5b; --salt-on: #4d7a6b;
+  --stat-bg: #f1ebdc; --stat-ink: #735d2c; --stat-on: #7b6538;
+  --banner-bg: #f2ecd9; --banner-ink: #5a4b1f; --field: #f8f7f3; --thbg: #f6f4ef; --blank: #a9a8a2;
+  --bar: rgba(252,251,248,.97); --shadow: 0 6px 20px rgba(40,42,50,.06); --shadow-strong: 0 4px 12px rgba(40,42,50,.14);
+  --grid: #ebe8e1; --axis: #c9c5bb; --tick: #6c6e77; --axlbl: #3f414a; --pt-stroke: #fcfbf8; }
 :root[data-theme="dark"] { color-scheme: dark;
-  --bg: #15181d; --ink: #c8d6e8; --text: #d5d8dd; --muted: #a0a6af; --rule: #343a43; --soft: #1d2127; --accent: #e3925e; --blue: #94b6df;
-  --field: #1d2127; --fline: #4a525d; --fline2: #7d8692; --on-ink: #15181d; --banner-bg: #2b2716; --banner-ink: #e8d59c; --banner-line: #4a4225;
-  --grid: #2c3139; --axis: #5f6772; --tick: #a0a6af; --axlbl: #c0c5cc; --pt-stroke: #15181d; --thline: #4a525d; --tdline: #2a2f36;
-  --blank: #858c96; --picked: #3a2b20; --tipshadow: 0 2px 10px rgba(0,0,0,.5);
-  --card: #1d2127; --line: #4a525d; --accent-ink: #c8d6e8; --shadow: none; }
-html { background: var(--bg); }
-body { background: var(--bg); color: var(--text); font-family: "Segoe UI", "Helvetica Neue", system-ui, -apple-system, Roboto, Arial, sans-serif; }
-h1, h2, h3, .sidehead b { font-family: Georgia, "Times New Roman", "Noto Serif", serif; color: var(--ink); font-weight: 400; }
-a { color: var(--blue); }
-.banner { background: var(--banner-bg); color: var(--banner-ink); border-bottom: 1px solid var(--banner-line); }
-.stylenav { max-width: 1180px; margin: 0 auto; color: var(--muted); }
-.stylenav a { color: var(--blue); }
-.stylenav a[aria-current="page"] { color: var(--ink); border-bottom: 2px solid var(--accent); }
-header.top { max-width: 1180px; margin: 0 auto; padding: 18px 24px 10px; }
-header.top h1 { font-size: 40px; letter-spacing: -0.3px; }
-header.top .lede { color: var(--muted); margin: 6px 0 0; max-width: 720px; font-size: 15px; }
-.themebtn { font-family: Georgia, "Times New Roman", "Noto Serif", serif; font-weight: 400; border-radius: 3px; border-width: 1px; }
-.tabs { max-width: 1180px; margin: 6px auto 0; padding: 0 16px; border-bottom: 1px solid var(--rule); }
-.tabs button { padding: 0 12px; color: var(--muted); font-size: 15px; border-bottom: 3px solid transparent; }
-.tabs button.active { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
-.shell { max-width: 1180px; margin: 0 auto; padding: 18px 24px 60px; }
-#side { background: var(--soft); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 14px 18px 4px; margin-bottom: 24px; }
-.sidehead b { font-size: 20px; }
+  --bg: #1a1f27; --bg2: #171b22; --card: #232932; --text: #e3e5e9; --muted: #a4aab4; --line: #353c47; --line2: #2c323c;
+  --accent: #93abcb; --on-accent: #15202e; --accent-soft: #2d3746; --accent-ink: #bccbe0;
+  --src-bg: #3a302c; --src-ink: #e2bba8; --src-on: #c9957d; --salt-bg: #29362f; --salt-ink: #aed3c4; --salt-on: #86b6a4;
+  --stat-bg: #37322a; --stat-ink: #dccb9f; --stat-on: #c2ab72;
+  --banner-bg: #2f2b20; --banner-ink: #e3d4a6; --field: #1d222a; --thbg: #282e38; --blank: #6c727c;
+  --bar: rgba(35,41,50,.97); --shadow: 0 6px 20px rgba(0,0,0,.25); --shadow-strong: 0 4px 12px rgba(0,0,0,.4);
+  --grid: #2e353f; --axis: #4d5563; --tick: #9da3ad; --axlbl: #cdd1d8; --pt-stroke: #232932; }
+html { background: var(--bg2); }
+body { background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%); background-attachment: fixed; color: var(--text);
+  font-family: ui-rounded, "SF Pro Rounded", "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; }
+a { color: var(--accent); }
+.banner { background: var(--banner-bg); color: var(--banner-ink); border-radius: 0 0 16px 16px; font-weight: 600; }
+.stylenav { justify-content: center; color: var(--muted); }
+.stylenav a { color: var(--accent); border-radius: 999px; }
+.stylenav a[aria-current="page"] { background: var(--accent); color: var(--on-accent); }
+header.top { padding: 14px 20px 4px; max-width: 1160px; margin: 0 auto; }
+header.top h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.4px; }
+header.top h1 span.dot { color: var(--accent); }
+header.top .lede { color: var(--muted); margin: 4px 0 0; font-size: 14px; }
+.tabs { max-width: 1160px; margin: 10px auto 0; padding: 0 20px; gap: 8px; }
+.tabs button { padding: 0 18px; border-radius: 999px; background: var(--card); color: var(--muted); font-weight: 700; font-size: 14px; border: 1.5px solid var(--line2); }
+.tabs button.active { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.shell { max-width: 1160px; margin: 0 auto; padding: 16px 20px 60px; }
+#side { background: var(--card); border-radius: 24px; padding: 16px 18px 6px; margin-bottom: 18px; box-shadow: var(--shadow); border: 1px solid var(--line2); }
+#quick, #more { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 0 24px; }
+.sidehead b { font-size: 18px; font-weight: 800; }
 .sidehead span { color: var(--muted); }
-#quick, #more { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0 28px; }
-.lbl { color: var(--ink); font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: .6px; }
-.hint { color: var(--muted); text-transform: none; letter-spacing: 0; }
-.chip { background: var(--field); border: 1px solid var(--fline); border-radius: 3px; color: var(--text); }
-.chip.on { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
-.helptext { background: var(--field); border: 1px solid var(--rule); color: var(--muted); }
-.range-row .v { color: var(--ink); }
-input[type=range], .check input, td.sel input, .checklist input { accent-color: var(--ink); }
-input[type=text] { border: 1px solid var(--fline); border-radius: 3px; background: var(--field); color: var(--text); }
-.checklist { background: var(--field); border-color: var(--fline); border-radius: 3px; }
-.countbar { border-bottom: 1px solid var(--rule); padding-bottom: 12px; }
-.count { font-family: Georgia, "Times New Roman", serif; font-size: 22px; color: var(--ink); }
-.count b { font-weight: 400; color: var(--accent); }
-.btn { background: var(--field); color: var(--ink); border: 1px solid var(--ink); border-radius: 3px; }
-.btn.primary { background: var(--ink); color: var(--on-ink); }
-.card { padding: 6px 0 14px; border-bottom: 1px solid var(--rule); margin-bottom: 26px; }
-.sechead h2 { font-size: 26px; }
-.secnote, .pinfo { color: var(--muted); }
-.seg { border: 1px solid var(--fline); border-radius: 3px; overflow: hidden; }
-.seg label { color: var(--text); }
-.seg label.on { background: var(--ink); color: var(--on-ink); }
-.plot .grid { stroke: var(--grid); stroke-dasharray: 3 3; }
-.plot .gx { display: none; }
+.lbl { font-weight: 700; color: var(--text); }
+.hint { color: var(--muted); }
+.chips { gap: 8px; }
+.chip { background: var(--accent-soft); border: none; border-radius: 999px; color: var(--accent-ink); font-weight: 600; padding: 0 16px; }
+.chip.on { background: var(--accent); color: var(--on-accent); }
+[data-field="source_id"] .chip { background: var(--src-bg); color: var(--src-ink); }
+[data-field="source_id"] .chip.on { background: var(--src-on); color: var(--on-accent); }
+[data-field="salt"] .chip { background: var(--salt-bg); color: var(--salt-ink); }
+[data-field="salt"] .chip.on { background: var(--salt-on); color: var(--on-accent); }
+[data-field="status"] .chip, [data-field="phase"] .chip { background: var(--stat-bg); color: var(--stat-ink); }
+[data-field="status"] .chip.on, [data-field="phase"] .chip.on { background: var(--stat-on); color: var(--on-accent); }
+.helptext { background: var(--accent-soft); border-radius: 12px; color: var(--accent-ink); }
+.range-row .v { color: var(--accent-ink); font-weight: 700; }
+input[type=range], .check input, td.sel input { accent-color: var(--accent); }
+input[type=text] { border: 2px solid var(--line); border-radius: 16px; background: var(--field); color: var(--text); }
+input[type=text]::placeholder { color: var(--muted); }
+.countbar { background: var(--card); border-radius: 22px; padding: 10px 10px 10px 20px; box-shadow: var(--shadow); border: 1px solid var(--line2); }
+.count { color: var(--muted); font-weight: 600; }
+.count b { color: var(--accent-ink); font-size: 26px; font-weight: 800; }
+.btn { background: var(--accent-soft); color: var(--accent-ink); border: none; border-radius: 999px; font-weight: 700; padding: 0 20px; }
+.btn.primary { background: var(--accent); color: var(--on-accent); }
+.card { background: var(--card); border-radius: 26px; padding: 18px; box-shadow: var(--shadow); border: 1px solid var(--line2); }
+.sechead h2 { font-size: 20px; font-weight: 800; }
+.secnote { color: var(--muted); }
+.seg { background: var(--accent-soft); border-radius: 999px; padding: 4px; gap: 4px; }
+.seg label { border-radius: 999px; color: var(--accent-ink); font-weight: 700; min-height: 40px; padding: 0 18px; }
+.seg label.on { background: var(--card); color: var(--text); box-shadow: var(--shadow-strong); }
+.pchip { background: var(--field); border: 2px solid var(--line); border-radius: 999px; color: var(--muted); font-weight: 600; }
+.pchip.on { background: var(--card); border-color: var(--axis); color: var(--text); }
+.pchip:not(.on) .sw { opacity: .3; }
+.pchip.all { color: var(--accent-ink); }
+.plot .grid { stroke: var(--grid); }
 .plot .axis { stroke: var(--axis); }
-.plot .ay { display: none; }
 .plot .tick { fill: var(--tick); }
-.plot .axlbl { fill: var(--axlbl); font-size: 13px; }
-.plot .dlabel { font-size: 13px; font-weight: 600; }
-.plot .pt { fill-opacity: .85; stroke: var(--pt-stroke); stroke-width: 1; }
-.legend { color: var(--text); }
-.tip { background: var(--field); color: var(--text); border: 1px solid var(--rule); box-shadow: var(--tipshadow); }
+.plot .axlbl { fill: var(--axlbl); font-weight: 700; }
+.plot .pt { fill-opacity: .9; stroke: var(--pt-stroke); stroke-width: 1.5; }
+.tip { background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-strong); }
 .tip .k { color: var(--muted); }
-.tablewrap { border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule); }
-th { background: var(--bg); color: var(--ink); font-weight: 600; border-bottom: 1px solid var(--thline); }
-td { border-bottom: 1px solid var(--tdline); }
-th.sel, td.sel { background: var(--bg); }
+.tablewrap { border-radius: 18px; border: 2px solid var(--line); }
+th { background: var(--thbg); color: var(--muted); font-weight: 700; border-bottom: 2px solid var(--line); }
+td { border-bottom: 1px solid var(--line2); }
+th.sel { background: var(--thbg); }
+td.sel { background: var(--card); }
 td.blank { color: var(--blank); }
-tr.picked td { background: var(--picked); }
+tr.picked td { background: var(--accent-soft); }
 .colhelp, .caption { color: var(--muted); }
-.printed { background: var(--soft); border-left: 3px solid var(--accent); }
-.info { background: var(--soft); color: var(--ink); }
-.foot { color: var(--muted); border-top: 1px solid var(--rule); }
+.printed { background: var(--stat-bg); border-radius: 18px; }
+.printed .tablewrap { background: var(--card); }
+.info { background: var(--accent-soft); color: var(--accent-ink); border-radius: 16px; }
 @media (max-width: 760px) {
-  header.top { padding: 12px 14px 6px; }
-  header.top h1 { font-size: 30px; }
-  .tabs { padding: 0 6px; }
-  .shell { padding: 0 14px 50px; }
-  #side { margin: 0 -14px 16px; padding: 10px 14px 4px; }
+  body { padding-bottom: 76px; }
+  header.top { padding: 10px 14px 2px; }
+  header.top h1 { font-size: 24px; }
+  /* bottom tab bar on the phone */
+  .tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; margin: 0; padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+    gap: 2px; background: var(--bar); box-shadow: 0 -4px 16px rgba(0,0,0,.08); border-top: 1px solid var(--line); border-radius: 22px 22px 0 0; }
+  .tabs button { flex: 1 0 auto; min-width: 64px; min-height: 52px; padding: 0 8px; font-size: 12px; background: none; border: none; border-radius: 16px; }
+  .tabs button.active { background: var(--accent-soft); color: var(--accent-ink); }
+  .tabs .full { display: none; }
+  .tabs .short { display: inline; }
+  .shell { padding: 10px 12px 30px; }
+  #side { border-radius: 22px; padding: 12px 12px 4px; }
   #quick, #more { display: block; }
-  #side .morebtn { background: var(--field); color: var(--ink); border: 1px solid var(--ink); border-radius: 3px; margin-bottom: 10px; font-weight: 600; }
-  #side .morebtn .badge { background: var(--accent); color: var(--on-ink); border-radius: 9px; padding: 0 6px; font-size: 12px; }
-  .count { font-size: 19px; }
-  .sechead h2 { font-size: 22px; }
+  #side .morebtn { background: var(--accent-soft); color: var(--accent-ink); border: none; border-radius: 18px; margin-bottom: 10px; font-weight: 700; }
+  #side .morebtn .badge { background: var(--accent); color: var(--on-accent); border-radius: 9px; padding: 0 6px; font-size: 12px; }
+  .card { padding: 14px; border-radius: 22px; }
 }
-/* units panel */
-.unitcard { padding-top: 0; }
-.units > summary .sumt { font-family: Georgia, "Times New Roman", "Noto Serif", serif; font-weight: 400; font-size: 20px; color: var(--ink); }
-.howconv > summary { color: var(--blue); }
-.howtext { background: var(--soft); border-left: 3px solid var(--rule); color: var(--text); }
-td.conv { background: var(--soft); }
 
 </style>
 </head>
 <body>
-<div class="banner"><div class="dataline">Data: AquaSolDB v1.2 (published), CC BY 4.0 - <a href="https://doi.org/10.5281/zenodo.22905509" rel="noopener">doi:10.5281/zenodo.22905509</a></div><div class="preview">Preview of the viewer app; the database's next version is in preparation</div></div>
-
-<header class="top"><div class="toprow"><h1>AquaSolDB viewer</h1><button type="button" class="themebtn" id="themeBtn" aria-label="Switch to dark mode"><span class="to-dark"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>Dark</span><span class="to-light"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>Light</span></button></div><p class="lede">Read-only view of the published AquaSolDB v1.2. Solubility in mol per kg of water; temperature in K; pressure in MPa (total pressure unless the pressure basis says otherwise).</p></header>
+<div class="banner"><div class="dataline">Data: AquaSolDB v1.2 (published), CC BY 4.0 - <a href="https://doi.org/10.5281/zenodo.22905509" rel="noopener">doi:10.5281/zenodo.22905509</a></div><div class="preview">Preview of the viewer app; the database's next version is in preparation -- style 4 of 10: Soft app</div></div>
+<nav class="stylenav" aria-label="Other styles"><span class="lab">Styles:</span><a href="../index.html">All styles</a><a href="../owid/index.html">1. Our World in Data</a><a href="../dark/index.html">2. Dark dashboard</a><a href="../journal/index.html">3. Journal data page</a><a href="../soft/index.html" aria-current="page">4. Soft app</a><a href="../nord/index.html">5. Nord</a><a href="../material/index.html">6. Material</a><a href="../ios/index.html">7. iOS</a><a href="../terminal/index.html">8. Terminal</a><a href="../nature/index.html">9. Nature</a><a href="../glass/index.html">10. Glass</a></nav>
+<header class="top"><div class="toprow"><h1>AquaSolDB viewer<span class="dot">.</span></h1><button type="button" class="themebtn" id="themeBtn" aria-label="Switch to dark mode"><span class="to-dark"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>Dark</span><span class="to-light"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>Light</span></button></div><p class="lede">Read-only view of the published AquaSolDB v1.2. Solubility in mol per kg of water; temperature in K; pressure in MPa (total pressure unless the pressure basis says otherwise).</p></header>
 <nav class="tabs" id="tabs" aria-label="Tables"></nav>
 <div class="shell">
   <aside id="side" aria-label="Filters">
@@ -286,7 +279,7 @@ td.conv { background: var(--soft); }
 <footer class="foot"><p>If you use this dataset, cite it as below AND cite the original paper that printed each value you use; the source_id column of every row names that paper, and csv/sources.csv gives its full reference and DOI.</p><p>Data: AquaSolDB v1.2 (published), <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a> - cite: Abd, A., &amp; Abushaikha, A. (2026). AquaSolDB (Version 1.2) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.22905509 - <a href="https://doi.org/10.5281/zenodo.22905509" rel="noopener">doi:10.5281/zenodo.22905509</a></p><p>Preview of the viewer app; the database's next version is in preparation.</p></footer>
 <script>
 "use strict";
-const THEME = {"palette": ["#6d3e91", "#c05917", "#58ac8c", "#286bbb", "#883039", "#bc8e5a"], "direct": true, "shapes": false, "r": 6};
+const THEME = {"palette": ["#34507a", "#b8693f", "#6da394", "#d4ae55"], "direct": false, "shapes": false, "r": 8};
 // ---------- table shapes, labels and column help (the rows themselves are fetched from ../data/*.json) ----------
 const LABELS = {
   point_id:"Row ID", gas:"Gas", gas2:"Second gas", gas2_mole_fraction_feed:"Second gas in feed (mole fraction)",
@@ -298,15 +291,8 @@ const LABELS = {
   water_mole_fraction:"Water mole fraction", value_as_printed:"Value as printed", unit_as_printed:"Unit as printed",
   flags:"Flags", method:"Method", source_id:"Source", reference:"Reference", short_reference:"Short reference",
   source_type:"Source type", doi:"DOI",
-  // converted for viewing and download only (the stored data never changes); see "How values are converted"
-  temperature_C:"Temperature (°C)", pressure_bar:"Pressure (bar)",
-  x_gas_salt_ignored:"Gas mole fraction, salt ignored", x_gas_with_salt:"Gas mole fraction, salt counted",
-  ionic_strength_mol_per_kgw:"Ionic strength (mol/kg water)", total_ions_mol_per_kgw:"Total ions (mol/kg water)",
-  charge_balance_mol_per_kgw:"Charge balance (mol/kg water)",
 };
 const label = c => LABELS[c] || c;
-const CONVERTED_COLS = new Set(["temperature_C", "pressure_bar", "x_gas_salt_ignored", "x_gas_with_salt",
-  "ionic_strength_mol_per_kgw", "total_ions_mol_per_kgw", "charge_balance_mol_per_kgw"]);
 const NUMERIC = new Set(["temperature_K","pressure_MPa","salt_molality","m_Na","m_Cl","m_K","m_Ca","m_Mg","m_SO4",
   "solubility_mol_per_kgw","solubility_mole_fraction","water_mole_fraction","gas2_mole_fraction_feed"]);
 const PLOT_QUANTITY = {solubility:"solubility_mol_per_kgw", mixtures:"solubility_mol_per_kgw", water_content:"water_mole_fraction"};
@@ -329,22 +315,10 @@ const HELP_EXTRA = {
   short_reference: "Short reference printed in every v1.2 row file (column 'reference' there).",
   "sources|method": "The method of this source's own published rows (every source has exactly one).",
   "sources|reference": "Full reference of the source.",
-  temperature_C: "Converted for viewing: temperature in K minus 273.15. Not stored in the database.",
-  pressure_bar: "Converted for viewing: pressure in MPa times 10. Not stored in the database.",
-  x_gas_salt_ignored: "Converted for viewing: x = m / (m + 55.508373), m = solubility in mol per kg of water, " +
-    "55.508373 = mol of water in 1 kg (1000 / 18.0153). Not stored in the database.",
-  x_gas_with_salt: "Converted for viewing: x = m / (m + 55.508373 + total ions), total ions = Na + Cl + K + Ca + Mg + SO4 " +
-    "in mol per kg of water (0 for pure water). Blank for a brine row that does not give its ions. Not stored in the database.",
-  ionic_strength_mol_per_kgw: "Converted for viewing: I = 1/2 x sum of (ion molality x charge squared); charges Na +1, K +1, " +
-    "Ca +2, Mg +2, Cl -1, SO4 -2. Blank where the row does not give its ions.",
-  total_ions_mol_per_kgw: "Converted for viewing: Na + Cl + K + Ca + Mg + SO4, in mol per kg of water. Blank where the row does not give its ions.",
-  charge_balance_mol_per_kgw: "Converted for viewing: sum of (ion molality x charge); about 0 for a neutral brine. " +
-    "Blank where the row does not give its ions.",
 };
 let DICTIONARY = null;  // loaded with the Column meanings tab, or on the first column-title tap
 function helpFor(table, col) {
   if (HELP_EXTRA[table + "|" + col]) return HELP_EXTRA[table + "|" + col];
-  if (CONVERTED_COLS.has(col)) return HELP_EXTRA[col];  // page-made columns: never in the v1.2 dictionary
   if (!DICTIONARY) return "";
   const files = V12_FILES[table] || [];
   const names = HELP_ALIAS[col] || [col];
@@ -366,15 +340,10 @@ const esc = s => String(s).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">
 const num = v => (v === "" || v === undefined || v === null || isNaN(+v)) ? NaN : +v;
 const fmt = n => n.toLocaleString("en-US");
 const PAGE = 100, MAXPTS = 2000, PRESET = 12;
-// Stored columns go out exactly as stored; converted columns (CONV, below) with 8 significant figures, blank when not given.
-function csvCell(r, c) {
-  if (CONV[c]) { const k = conv(r, c); return k.why ? "" : sig(k.v, 8); }
-  return r[c] ?? "";
-}
-function toCSV(rows, cols, headLine) {
+function toCSV(rows, cols) {
   const q = v => /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
-  const out = headLine ? [headLine, cols.join(",")] : [cols.join(",")];
-  for (const r of rows) out.push(cols.map(c => q(csvCell(r, c))).join(","));
+  const out = [cols.join(",")];
+  for (const r of rows) out.push(cols.map(c => q(r[c] ?? "")).join(","));
   return out.join("\n") + "\n";
 }
 function download(name, text) {
@@ -384,59 +353,6 @@ function download(name, text) {
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
 }
 const $ = id => document.getElementById(id);
-
-// ---------- conversions: view and download only, the stored data never changes ----------
-// N_W = mol of water in 1 kg = 1000 / 18.0153 = 55.508373 (the constant of the database builder this page shows,
-// data/aquasoldb/build/build_aquasoldb.py M_H2O = 18.0153; lead decision 2026-10-07).
-// The sums run in this fixed ion order; the Python reference (_build/check_conversions.py) uses the same order.
-const N_W = 1000 / 18.0153;
-const IONS = [["m_Na", 1], ["m_Cl", -1], ["m_K", 1], ["m_Ca", 2], ["m_Mg", 2], ["m_SO4", -2]];
-function prepRow(r, hasM) {  // numbers parsed once on load; NaN = not given
-  // Salt "none" = pure water: its ions count as 0 even where the ion columns are empty (lead decision 2026-10-07).
-  let s = 0, i2 = 0, q = 0, ok = true;
-  const pure = r.salt === "none";
-  for (const [c, z] of IONS) { const v = pure && r[c] === "" ? 0 : num(r[c]); if (isNaN(v)) { ok = false; break; } s += v; i2 += v * z * z; q += v * z; }
-  r._S = ok ? s : NaN; r._I = ok ? 0.5 * i2 : NaN; r._Q = ok ? q : NaN;
-  r._M = hasM ? num(r.solubility_mol_per_kgw) : NaN;
-}
-const NO_IONS = "ions not given";
-const CONV = {  // f(r) -> number (NaN = blank); why = the help text shown in a blank cell
-  temperature_C: {unit: "degrees C", f: r => r._T - 273.15, why: "temperature not given"},
-  pressure_bar: {unit: "bar", f: r => r._P * 10, why: "pressure not given"},
-  x_gas_salt_ignored: {unit: "mole fraction", f: r => r._M / (r._M + N_W), why: "solubility not given"},
-  x_gas_with_salt: {unit: "mole fraction", f: r => r._M / (r._M + N_W + r._S), why: r => isNaN(r._M) ? "solubility not given" : NO_IONS},
-  ionic_strength_mol_per_kgw: {unit: "mol/kg water", f: r => r._I, why: NO_IONS},
-  total_ions_mol_per_kgw: {unit: "mol/kg water", f: r => r._S, why: NO_IONS},
-  charge_balance_mol_per_kgw: {unit: "mol/kg water", f: r => r._Q, why: NO_IONS},
-};
-function conv(r, c) { const e = CONV[c], v = e.f(r); return isNaN(v) ? {why: typeof e.why === "function" ? e.why(r) : e.why} : {v}; }
-const sig = (v, n) => String(Number(v.toPrecision(n)));  // n significant figures, no trailing zeros
-// Units and extra columns: one choice for every tab. Defaults: K, MPa, no extra columns.
-const units = {T: "K", P: "MPa", xgas: false, xsalt: false, brine: false, refdl: false};
-const hasM = key => !!DATA[key] && DATA[key].cols.includes("solubility_mol_per_kgw");
-function extraCols(key) {  // the converted columns now visible, in table order (after the stored columns)
-  const out = [];
-  if (hasM(key) && units.xgas) out.push("x_gas_salt_ignored");
-  if (hasM(key) && units.xsalt) out.push("x_gas_with_salt");
-  if (units.brine) out.push("ionic_strength_mol_per_kgw", "total_ions_mol_per_kgw", "charge_balance_mol_per_kgw");
-  return out;
-}
-function viewCols(key) {  // stored columns with K / MPa swapped or joined by degrees C / bar, then the extra columns
-  const out = [];
-  for (const c of DATA[key].cols) {
-    if (c === "temperature_K") { if (units.T !== "C") out.push(c); if (units.T !== "K") out.push("temperature_C"); }
-    else if (c === "pressure_MPa") { if (units.P !== "bar") out.push(c); if (units.P !== "MPa") out.push("pressure_bar"); }
-    else out.push(c);
-  }
-  return out.concat(extraCols(key));
-}
-function downloadCols(key) {  // every stored column (never dropped), plus exactly the visible converted columns
-  const conv = viewCols(key).filter(c => CONV[c]);
-  return DATA[key].cols.concat(conv);
-}
-const UNIT_OF = {temperature_K: "K", pressure_MPa: "MPa", salt_molality: "mol/kg water", solubility_mol_per_kgw: "mol/kg water",
-  solubility_mole_fraction: "mole fraction", water_mole_fraction: "mole fraction", gas2_mole_fraction_feed: "mole fraction",
-  m_Na: "mol/kg water", m_Cl: "mol/kg water", m_K: "mol/kg water", m_Ca: "mol/kg water", m_Mg: "mol/kg water", m_SO4: "mol/kg water"};
 
 // ---------- data: fetched from the same site, each table the first time its tab opens ----------
 // Every file is an array of arrays (row 0 = header). Blank cells arrive as null and become "".
@@ -460,10 +376,7 @@ function load(key) {
         rows[i - 1] = o;
       }
       const yq = PLOT_QUANTITY[key];  // numbers parsed once, so filtering and plotting never re-parse text
-      if (cols.includes("temperature_K")) {
-        const m = cols.includes("solubility_mol_per_kgw");
-        for (const r of rows) { r._T = num(r.temperature_K); r._P = num(r.pressure_MPa); if (yq) r._Y = num(r[yq]); prepRow(r, m); }
-      }
+      if (cols.includes("temperature_K")) for (const r of rows) { r._T = num(r.temperature_K); r._P = num(r.pressure_MPa); if (yq) r._Y = num(r[yq]); }
       const t = {cols, rows};
       DATA[key] = t;
       if (key === "dictionary") DICTIONARY = rows;
@@ -484,7 +397,7 @@ function loadPrinted() {
 
 // ---------- state ----------
 const state = {tab: "solubility", f: {}, fver: {}, page: {}, picked: {}, joined: {}, axis: {}, plotSel: {}, plotQ: {}, srcQ: {},
-               src: {text: "", methods: []}, yq: {}, unitsOpen: false, howOpen: false};
+               src: {text: "", methods: []}};
 const FCACHE = {}, OPTS = {};
 const CHIP_COLS = ["gas", "salt", "phase", "boundary_type"];
 function options(key, col) {
@@ -565,7 +478,7 @@ function plotListHTML(key) {
 function sourceField(key) {
   const f = filtersFor(key), q = state.srcQ[key] || "", items = sourceListHTML(key);
   return `<div class="field" data-field="source_id"><div class="lbl">Source <span class="hint" id="hint_source_id">${f.source_id.size ? f.source_id.size + " chosen" : "all " + options(key, "source_id").length}</span></div>
-    <input type="text" inputmode="search" class="listsearch" data-listsearch="fsrclist" data-qkey="srcQ" placeholder="Search sources, e.g. wiebe" aria-label="Search sources" value="${esc(q)}">
+    <input type="text" inputmode="search" class="listsearch" data-listsearch="fsrclist" data-qkey="srcQ" placeholder="Search sources, e.g. duan" aria-label="Search sources" value="${esc(q)}">
     <div class="checklist" id="fsrclist">${items}</div>
     <div class="listbtns"><button class="btn small" data-fsrcclear="1">Clear sources</button></div></div>`;
 }
@@ -619,24 +532,11 @@ function renderSide() {
 
 // ---------- tables ----------
 const LONG = new Set(["reference", "meaning", "derivation", "unit_as_printed", "applies_to"]);
-// Numbers show 6 significant figures; a stored number keeps its exact value in the cell's title, a converted one in data-v.
-function cellText(r, c) {
-  if (CONV[c]) { const k = conv(r, c); return k.why ? k.why : sig(k.v, 6); }
-  const v = r[c] ?? "";
-  if (v === "") return NUMERIC.has(c) ? "None" : "";
-  return NUMERIC.has(c) && !isNaN(+v) ? sig(+v, 6) : v;
-}
 function cellHTML(r, c) {
-  if (CONV[c]) {
-    const k = conv(r, c);
-    return k.why ? `<td class="blank conv" data-c="${c}"><span class="why">${esc(k.why)}</span></td>`
-                 : `<td class="num conv" data-c="${c}" data-v="${k.v}">${esc(sig(k.v, 6))}</td>`;
-  }
   const v = r[c] ?? "";
   if (c === "doi" && v) return `<td><a href="https://doi.org/${esc(v)}" target="_blank" rel="noopener">${esc(v)}</a></td>`;
   if (v === "") return `<td class="blank">${NUMERIC.has(c) ? "None" : ""}</td>`;
-  if (NUMERIC.has(c) && !isNaN(+v)) { const s = sig(+v, 6); return `<td class="num"${s !== v ? ` title="${esc(v)}"` : ""}>${esc(s)}</td>`; }
-  return `<td class="${LONG.has(c) ? "long" : ""}">${esc(v)}</td>`;
+  return `<td class="${NUMERIC.has(c) ? "num" : LONG.has(c) ? "long" : ""}">${esc(v)}</td>`;
 }
 function rowHTML(r, cols, table, opts) {
   const picked = opts.select && opts.pickedId === r.point_id;
@@ -654,8 +554,8 @@ function tableHTML(rows, cols, table, opts = {}) {
   let body = rows.slice(0, n).map(r => rowHTML(r, cols, table, opts)).join("");
   if (n < rows.length) {
     const longest = {};
-    for (const c of cols) { let best = ""; for (const r of rows) { const v = cellText(r, c); if (v.length > best.length) best = v; } longest[c] = best; }
-    body += `<tr class="sizer" aria-hidden="true">${opts.select ? `<td class="sel"></td>` : ""}${cols.map(c => `<td class="${LONG.has(c) ? "long" : ""}">${esc(longest[c])}</td>`).join("")}</tr>`;
+    for (const c of cols) { let best = ""; for (const r of rows) { const v = r[c] ?? ""; if (v.length > best.length) best = v; } longest[c] = best; }
+    body += `<tr class="sizer" aria-hidden="true">${opts.select ? `<td class="sel"></td>` : ""}${cols.map(c => cellHTML(longest, c)).join("")}</tr>`;
   }
   return `<div class="tablewrap"><table${opts.id ? ` id="${opts.id}"` : ""}><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
 }
@@ -688,7 +588,7 @@ function countBar(n, total, what, btnId, btnText) {
     <button class="btn primary" id="${btnId}">&#8681; ${btnText}</button></div>`;
 }
 function renderTable() {
-  const key = state.tab, rows = filtered(key), cols = viewCols(key), box = $("tablecard");
+  const key = state.tab, rows = filtered(key), cols = DATA[key].cols, box = $("tablecard");
   if (!box) return;
   const pages = Math.max(1, Math.ceil(rows.length / PAGE));
   const page = state.page[key] = Math.min(state.page[key] || 0, pages - 1);
@@ -717,70 +617,11 @@ function renderTable() {
 function renderMeasurement(key) {
   const rows = filtered(key);
   let h = countBar(rows.length, DATA[key].rows.length, "rows", "dl", "Download these rows (CSV)");
-  h += `<section class="card unitcard" id="unitcard">${unitsHTML(key)}</section>`;
   if (PLOT_QUANTITY[key]) h += `<section class="card plotcard" id="plotcard"></section>`;
   h += `<section class="card tablecard" id="tablecard"></section>`;
   $("body").innerHTML = h;
   if (PLOT_QUANTITY[key]) renderPlot();
   renderTable();
-}
-
-// ---------- "Units and extra columns" panel, with the plain-words conversion help ----------
-function segHTML(name, val, opts, aria) {
-  return `<div class="seg" role="radiogroup" aria-label="${esc(aria)}">` + opts.map(([v, t]) =>
-    `<label class="${val === v ? "on" : ""}"><input type="radio" name="${name}" value="${v}" ${val === v ? "checked" : ""}> ${t}</label>`).join("") + `</div>`;
-}
-const checkHTML = (id, on, text) => `<label class="check"><input type="checkbox" id="${id}" ${on ? "checked" : ""}> ${text}</label>`;
-const HOW_TEXT = `<p>These values are worked out by this page from the stored ones, for viewing and download only. The database itself never changes.</p>
-  <ul>
-  <li>Temperature in &deg;C = temperature in K &minus; 273.15.</li>
-  <li>Pressure in bar = pressure in MPa &times; 10.</li>
-  <li>One kilogram of water holds N<sub>W</sub> = 1000 / 18.0153 = 55.508373 mol of water (the constant the database builder uses).</li>
-  <li>Gas mole fraction, salt ignored: x = m / (m + N<sub>W</sub>), where m is the gas solubility in mol per kg of water.</li>
-  <li>Gas mole fraction, salt counted: x = m / (m + N<sub>W</sub> + total ions). Pure water (salt &ldquo;none&rdquo;) has no ions,
-    so the two mole fractions are equal there. A brine row that does not give its ion molalities stays blank and says &ldquo;ions not given&rdquo;.</li>
-  <li>Total ions = Na + Cl + K + Ca + Mg + SO<sub>4</sub>, each in mol per kg of water.</li>
-  <li>Ionic strength I = &frac12; &times; the sum of (ion molality &times; charge&sup2;), with charges Na +1, K +1, Ca +2, Mg +2, Cl &minus;1, SO<sub>4</sub> &minus;2.</li>
-  <li>Charge balance = the sum of (ion molality &times; charge). It should be about 0 for a neutral brine.</li>
-  </ul>
-  <p>The table shows 6 significant figures. A download keeps every stored column exactly as stored and gives the converted columns
-  8 significant figures; its first line names the units.</p>`;
-function unitsHTML(key) {
-  const tsum = units.T === "both" ? "K and &deg;C" : units.T === "C" ? "&deg;C" : "K";
-  const psum = units.P === "both" ? "MPa and bar" : units.P;
-  const nx = extraCols(key).length + (units.refdl ? 1 : 0);
-  return `<details class="units" id="unitsbox"${state.unitsOpen ? " open" : ""}><summary><span class="sumt">Units and extra columns</span>
-      <span class="hint" id="unitsum">${tsum}, ${psum}${nx ? ", " + nx + " extra" : ""}</span></summary>
-    <div class="unitgrid">
-      <div class="field"><div class="lbl">Temperature</div>${segHTML("tunit", units.T, [["K", "K"], ["C", "&deg;C"], ["both", "Both"]], "Temperature unit")}</div>
-      <div class="field"><div class="lbl">Pressure</div>${segHTML("punit", units.P, [["MPa", "MPa"], ["bar", "bar"], ["both", "Both"]], "Pressure unit")}</div>
-      <div class="field"><div class="lbl">Extra columns</div>
-        ${hasM(key) ? checkHTML("xgas", units.xgas, "Gas mole fraction, salt ignored") + checkHTML("xsalt", units.xsalt, "Gas mole fraction, salt counted") : ""}
-        ${checkHTML("brine", units.brine, "Brine: ionic strength, total ions, charge balance")}
-        ${checkHTML("refdl", units.refdl, "Add full reference and DOI to download")}</div>
-    </div>
-    <details class="howconv" id="howconv"${state.howOpen ? " open" : ""}><summary>How values are converted</summary><div class="howtext">${HOW_TEXT}</div></details>
-  </details>`;
-}
-function headLine(key, cols, n) {  // the CSV's first line: what it is and the unit of every column that has one.
-  // No commas in it, so a CSV reader keeps it as one field (skip it with comment="#" or skiprows=1).
-  const u = cols.filter(c => UNIT_OF[c] || CONV[c]).map(c => `${c} in ${UNIT_OF[c] || CONV[c].unit}`);
-  return `# AquaSolDB v1.2 (published) - ${TITLE[key]} - ${n} rows. Units: ${u.join("; ")}.` +
-    (cols.some(c => CONV[c]) ? " Converted columns are made by the viewer and are not stored in the database (see How values are converted)." : "");
-}
-function downloadRows(key) {
-  const go = () => {
-    const joined = !!state.joined[key] && !!PRINTED, rows = filtered(key);
-    let out = joined ? withPrinted(rows) : rows, cols = downloadCols(key).concat(joined ? PRINTED_COLS : []);
-    if (units.refdl) {
-      const S = new Map(DATA.sources.rows.map(s => [s.source_id, s]));
-      out = out.map(r => { const s = S.get(r.source_id); return Object.assign({}, r, {reference: s ? s.reference : "", doi: s ? s.doi : ""}); });
-      cols = cols.concat(["reference", "doi"]);
-    }
-    download(key + "_selection.csv", toCSV(out, cols, headLine(key, cols, out.length)));
-  };
-  if (units.refdl && !DATA.sources) load("sources").then(go, () => { const c = $("colhelp"); if (c) c.textContent = "Could not load data/sources.json for the references."; });
-  else go();
 }
 
 // ---------- plot (inline SVG), above the table, with its own source picker ----------
@@ -805,23 +646,11 @@ function swatch(src) {
   return `<svg class="sw" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path fill="${c}" d="${shapeD(shape, 6, 6, 5)}"/></svg>`;
 }
 const PCACHE = {};
-// The x axis follows the chosen units (K or degrees C, MPa or bar; "both" plots K and MPa). The plotted quantity is
-// mol/kg water or, for the gas tables, a mole fraction (salt ignored or salt counted).
-const YQ = [["m", "mol/kg"], ["x", "x, salt ignored"], ["xs", "x, salt counted"]];  // x = gas mole fraction
-function plotAxes(key) {
-  const axis = state.axis[key] || "pressure_MPa";
-  const xcol = axis === "pressure_MPa" ? (units.P === "bar" ? "pressure_bar" : "pressure_MPa") : (units.T === "C" ? "temperature_C" : "temperature_K");
-  const X = CONV[xcol] ? CONV[xcol].f : axis === "pressure_MPa" ? (r => r._P) : (r => r._T);
-  const yq = hasM(key) ? state.yq[key] || "m" : "m";
-  const y = yq === "x" ? "x_gas_salt_ignored" : yq === "xs" ? "x_gas_with_salt" : PLOT_QUANTITY[key];
-  const Y = yq === "m" ? (r => r._Y) : CONV[y].f;
-  return {axis, xcol, X, yq, y, Y};
-}
 function plotState(key) {
-  const {axis, xcol, X, yq, y, Y} = plotAxes(key);
-  const tag = (state.fver[key] || 0) + "|" + xcol + "|" + y;
+  const y = PLOT_QUANTITY[key], axis = state.axis[key] || "pressure_MPa", ax = axis === "pressure_MPa" ? "_P" : "_T";
+  const tag = (state.fver[key] || 0) + "|" + axis;
   if (!PCACHE[key] || PCACHE[key].tag !== tag) {
-    const plottable = filtered(key).filter(r => !isNaN(X(r)) && !isNaN(Y(r)));
+    const plottable = filtered(key).filter(r => !isNaN(r[ax]) && !isNaN(r._Y));
     const cnt = new Map();
     for (const r of plottable) cnt.set(r.source_id, (cnt.get(r.source_id) || 0) + 1);
     PCACHE[key] = {tag, plottable, present: [...cnt.entries()].sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1))};
@@ -829,15 +658,14 @@ function plotState(key) {
   const {plottable, present} = PCACHE[key];
   if (!state.plotSel[key]) state.plotSel[key] = new Set(present.slice(0, PRESET).map(p => p[0]));
   const on = state.plotSel[key];
-  return {y, Y, yq, axis, xcol, X, plottable, present, on};
+  return {y, axis, ax, plottable, present, on};
 }
 function renderPlot() {
   const key = state.tab, box = $("plotcard");
   if (!box) return;
-  const {y, yq, axis, present} = plotState(key), q = state.plotQ[key] || "", items = plotListHTML(key);
+  const {y, axis, present} = plotState(key), q = state.plotQ[key] || "", items = plotListHTML(key);
   box.innerHTML = `<div class="sechead"><h2>Plot</h2><span class="secnote">${esc(label(y))}</span></div>
     <div class="plotctl">
-      ${hasM(key) ? `<div class="field"><div class="lbl">Plot quantity</div>${segHTML("yq", yq, YQ, "Plotted quantity")}</div>` : ""}
       <div class="field"><div class="lbl">Plot against</div><div class="seg" role="radiogroup">
         <label class="${axis === "pressure_MPa" ? "on" : ""}"><input type="radio" name="axis" value="pressure_MPa" ${axis === "pressure_MPa" ? "checked" : ""}> Pressure</label>
         <label class="${axis === "temperature_K" ? "on" : ""}"><input type="radio" name="axis" value="temperature_K" ${axis === "temperature_K" ? "checked" : ""}> Temperature</label></div></div>
@@ -849,11 +677,11 @@ function renderPlot() {
     <div id="plotarea"></div>`;
   drawPlot();
 }
-let plotRows = [], plotY = "", plotX = "", plotXY = [[], []];
+let plotRows = [], plotY = "", plotXY = [[], []];
 function drawPlot() {
   const key = state.tab, area = $("plotarea");
   if (!area) return;
-  const {y, Y, xcol, X, plottable, present, on} = plotState(key);
+  const {y, axis, ax, plottable, present, on} = plotState(key);
   const ticked = present.filter(p => on.has(p[0])).map(p => p[0]);
   const np = THEME.palette.length;
   STYLE_OF = new Map(ticked.map((s, i) => [s, [THEME.palette[i % np], THEME.shapes ? SHAPES[Math.floor(i / np) % 4] : "circle"]]));
@@ -867,7 +695,7 @@ function drawPlot() {
   const narrow = window.innerWidth < 600;
   const direct = THEME.direct && ticked.length <= 6;
   const W = narrow ? 380 : 640, H = narrow ? 300 : 360, L = narrow ? 52 : 60, R = direct ? (narrow ? 96 : 130) : 14, T = 16, B = 46;
-  const xs = pts.map(X), ys = pts.map(Y);
+  const xs = pts.map(r => r[ax]), ys = pts.map(r => r._Y);
   let xa = Infinity, xb = -Infinity, ya = Infinity, yb = -Infinity;
   for (let i = 0; i < pts.length; i++) { const a = xs[i], b = ys[i]; if (a < xa) xa = a; if (a > xb) xb = a; if (b < ya) ya = b; if (b > yb) yb = b; }
   const pad = (a, b) => { const d = (b - a) || Math.abs(a) || 1; return [a - 0.06 * d, b + 0.06 * d]; };
@@ -875,11 +703,11 @@ function drawPlot() {
   const sx = v => L + (v - x0) / (x1 - x0) * (W - L - R), sy = v => H - B - (v - y0) / (y1 - y0) * (H - T - B);
   const xt = niceTicks(x0, x1, narrow ? 4 : 6).ticks.filter(v => v >= x0 && v <= x1), yt = niceTicks(y0, y1, 5).ticks.filter(v => v >= y0 && v <= y1);
   const r = pts.length > 600 ? 2.6 : pts.length > 150 ? 3.6 : Math.min(THEME.r, 5);
-  let s = `<svg viewBox="0 0 ${W} ${H}"${pts.length > 600 ? ' class="dense"' : ""} role="img" aria-label="${esc(label(y))} against ${esc(label(xcol))}" font-size="12">`;
+  let s = `<svg viewBox="0 0 ${W} ${H}"${pts.length > 600 ? ' class="dense"' : ""} role="img" aria-label="${esc(label(y))} against ${esc(label(axis))}" font-size="12">`;
   s += yt.map(v => `<line class="grid" x1="${L}" x2="${W - R}" y1="${sy(v)}" y2="${sy(v)}"/><text class="tick" x="${L - 8}" y="${sy(v) + 4}" text-anchor="end">${v}</text>`).join("");
   s += xt.map(v => `<line class="grid gx" y1="${T}" y2="${H - B}" x1="${sx(v)}" x2="${sx(v)}"/><text class="tick" y="${H - B + 18}" x="${sx(v)}" text-anchor="middle">${v}</text>`).join("");
   s += `<line class="axis" x1="${L}" x2="${W - R}" y1="${H - B}" y2="${H - B}"/><line class="axis ay" x1="${L}" x2="${L}" y1="${T}" y2="${H - B}"/>`;
-  s += `<text class="axlbl" x="${(L + W - R) / 2}" y="${H - 8}" text-anchor="middle">${esc(label(xcol))}</text>`;
+  s += `<text class="axlbl" x="${(L + W - R) / 2}" y="${H - 8}" text-anchor="middle">${esc(label(axis))}</text>`;
   s += `<text class="axlbl" transform="translate(15 ${(T + H - B) / 2}) rotate(-90)" text-anchor="middle">${esc(label(y))}</text>`;
   const px = new Float64Array(pts.length), py = new Float64Array(pts.length), bySrc = new Map(ticked.map(t => [t, []]));
   for (let i = 0; i < pts.length; i++) {
@@ -903,7 +731,7 @@ function drawPlot() {
     ? `<div class="caption sampled" id="plotcount">showing ${fmt(MAXPTS)} of ${fmt(all.length)} points - narrow the filters to see all. Tap a point for its values.</div>`
     : `<div class="caption" id="plotcount">${fmt(all.length)} of ${fmt(plottable.length)} plottable points shown. Tap a point for its values.</div>`;
   area.innerHTML = `<div class="plot" id="plot">${s}<div class="tip" id="tip"></div></div>${legend}${note}`;
-  plotRows = pts; plotY = y; plotX = xcol; plotXY = [px, py];
+  plotRows = pts; plotY = y; plotXY = [px, py];
 }
 function nearestPoint(e) {  // the plotted point nearest the pointer, within about 14 screen pixels
   const svg = document.querySelector("#plot svg");
@@ -919,9 +747,8 @@ function nearestPoint(e) {  // the plotted point nearest the pointer, within abo
 function showTip(i, e) {
   const tip = $("tip"), box = $("plot"), r = plotRows[i];
   if (!tip || !box || !r) return;
-  const tp = viewCols(state.tab).filter(c => /^(temperature|pressure)_/.test(c));
-  const cols = [...new Set(["point_id", "source_id", "gas", "salt", "salt_molality"].concat(tp, [plotX, plotY]).filter(c => c in r || CONV[c]))];
-  tip.innerHTML = `<table>${cols.map(c => `<tr><td class="k">${esc(label(c))}</td><td><b>${esc(CONV[c] ? cellText(r, c) : r[c] === "" ? "None" : r[c])}</b></td></tr>`).join("")}</table>`;
+  const cols = [...new Set(["point_id", "source_id", "gas", "salt", "salt_molality", "temperature_K", "pressure_MPa", plotY].filter(c => c in r))];
+  tip.innerHTML = `<table>${cols.map(c => `<tr><td class="k">${esc(label(c))}</td><td><b>${esc(r[c] === "" ? "None" : r[c])}</b></td></tr>`).join("")}</table>`;
   tip.style.display = "block";
   const b = box.getBoundingClientRect(), m = document.querySelector("#plot svg").getScreenCTM();
   const cx = m.a * plotXY[0][i] + m.e - b.left, cy = m.d * plotXY[1][i] + m.f - b.top;
@@ -1028,7 +855,10 @@ document.addEventListener("click", e => {
   const help = t.closest("[data-help]");
   if (help) { $(help.dataset.help).classList.toggle("open"); return; }
   if (t.closest("#moreBtn")) { $("side").classList.toggle("open"); renderMoreBtn(); return; }
-  if (t.closest("#dl")) { downloadRows(state.tab); return; }
+  if (t.closest("#dl")) {
+    const key = state.tab, joined = !!state.joined[key] && !!PRINTED, rows = filtered(key);
+    download(key + "_selection.csv", toCSV(joined ? withPrinted(rows) : rows, joined ? DATA[key].cols.concat(PRINTED_COLS) : DATA[key].cols)); return;
+  }
   if (t.closest("#dlsrc")) { download("sources_selection.csv", toCSV(sourcesFiltered(), DATA.sources.cols)); return; }
   const th = t.closest("th[data-colhelp]");
   if (th) {
@@ -1082,19 +912,7 @@ document.addEventListener("change", e => {
   if (t.dataset.blank) { filtersFor(state.tab)[t.dataset.blank].keepBlank = t.checked; changed(state.tab); renderBody(); renderMoreBtn(); return; }
   if (t.id === "join") { state.joined[state.tab] = t.checked; renderTable(); return; }
   if (t.name === "axis") { state.axis[state.tab] = t.value; state.plotSel[state.tab] = null; renderPlot(); return; }
-  if (t.name === "yq") { state.yq[state.tab] = t.value; state.plotSel[state.tab] = null; renderPlot(); return; }
-  // units: the table columns and the plot axis change; the plot's ticked sources stay (the plottable rows do not change)
-  if (t.name === "tunit" || t.name === "punit") { units[t.name === "tunit" ? "T" : "P"] = t.value; renderBody(); return; }
-  if (["xgas", "xsalt", "brine", "refdl"].includes(t.id)) {
-    units[t.id] = t.checked;
-    if (t.id === "refdl" && t.checked && !DATA.sources) load("sources").catch(() => {});  // ready before the download is asked for
-    renderBody(); return;
-  }
 });
-document.addEventListener("toggle", e => {  // remember which panels are open across redraws (toggle does not bubble)
-  if (e.target.id === "unitsbox") state.unitsOpen = e.target.open;
-  if (e.target.id === "howconv") state.howOpen = e.target.open;
-}, true);
 render();
 
 </script>
@@ -1104,7 +922,7 @@ render();
       meta = document.querySelector('meta[name="theme-color"]'), mq = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : null;
   function apply(t) {
     root.setAttribute("data-theme", t);
-    meta.setAttribute("content", t === "dark" ? "#15181d" : "#ffffff");
+    meta.setAttribute("content", t === "dark" ? "#1a1f27" : "#f3f1ec");
     btn.setAttribute("aria-label", t === "dark" ? "Switch to light mode" : "Switch to dark mode");
   }
   apply(root.getAttribute("data-theme") === "dark" ? "dark" : "light");
