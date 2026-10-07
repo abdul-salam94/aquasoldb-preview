@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#eceff4">
+<meta name="theme-color" content="#fbfaf5">
 <script>
 (function () {
   var t = null;
   try { t = localStorage.getItem("aquasoldb-soft-theme"); } catch (e) {}
   if (t !== "dark" && t !== "light") t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   document.documentElement.setAttribute("data-theme", t);
-  document.querySelector('meta[name="theme-color"]').setAttribute("content", t === "dark" ? "#2e3440" : "#eceff4");
+  document.querySelector('meta[name="theme-color"]').setAttribute("content", t === "dark" ? "#0b0e0b" : "#fbfaf5");
 })();
 </script>
-<title>AquaSolDB viewer, style 5 of 10: Nord (made-up data)</title>
+<title>AquaSolDB viewer, style 8 of 10: Terminal (made-up data)</title>
 <style>
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -113,12 +113,12 @@ header.top .toprow { display: flex; align-items: center; justify-content: space-
 .themebtn svg { width: 22px; height: 22px; flex: 0 0 auto; }
 .themebtn .to-dark, :root[data-theme="dark"] .themebtn .to-light { display: inline-flex; align-items: center; gap: 8px; }
 .themebtn .to-light, :root[data-theme="dark"] .themebtn .to-dark { display: none; }
-:root { --s1: #2e4a70; --s2: #bf616a; --s3: #6fa3a0; --s4: #d8b062; }
-:root[data-theme="dark"] { --s1: #a3c1e6; --s2: #d08770; --s3: #5f9488; --s4: #ebcb8b; }
-.plot [fill="#2e4a70"], .sw [fill="#2e4a70"] { fill: var(--s1); }
-.plot [fill="#bf616a"], .sw [fill="#bf616a"] { fill: var(--s2); }
-.plot [fill="#6fa3a0"], .sw [fill="#6fa3a0"] { fill: var(--s3); }
-.plot [fill="#d8b062"], .sw [fill="#d8b062"] { fill: var(--s4); }
+:root { --s1: #0b5426; --s2: #c25400; --s3: #4a90d9; --s4: #d9a400; }
+:root[data-theme="dark"] { --s1: #4be37a; --s2: #ffb000; --s3: #5fb3ff; --s4: #e6e6e6; }
+.plot [fill="#0b5426"], .sw [fill="#0b5426"] { fill: var(--s1); }
+.plot [fill="#c25400"], .sw [fill="#c25400"] { fill: var(--s2); }
+.plot [fill="#4a90d9"], .sw [fill="#4a90d9"] { fill: var(--s3); }
+.plot [fill="#d9a400"], .sw [fill="#d9a400"] { fill: var(--s4); }
 
 /* ---- shared skin ---- */
 /* Shared skin for styles 5-10: every colour, radius and font comes from variables the theme file sets
@@ -201,48 +201,71 @@ tr.picked td { background: var(--accent-soft); }
 }
 
 /* ---- theme ---- */
-/* Style 5, Nord: cool Nordic palette (slate blues, frost greys), flat, minimal. */
+/* Style 8, Terminal: monospace lab-notebook look. Green phosphor on near-black in dark mode,
+   ink on paper-white in light mode; square boxes, boxed tables, marker shapes per source. */
 :root, :root[data-theme="light"] { color-scheme: light;
-  --bg: #eceff4; --card: #f9fafc; --text: #2e3440; --muted: #4c566a; --line: #d8dee9; --line2: #e5e9f0;
-  --accent: #4c6a92; --on-accent: #ffffff; --accent-soft: #e0e6ee; --accent-ink: #3b5577; --link: #3b5577;
-  --chip-bg: #e5e9f0; --chip-ink: #3b4252; --chip-border: 1px solid #d8dee9;
-  --banner-bg: #e5e9f0; --banner-ink: #3b4252; --field: #f2f4f8; --thbg: #eef1f5; --blank: #9aa3b3;
-  --bar: #f9fafc; --grid: #e5e9f0; --axis: #c2cad6; --tick: #4c566a; --axlbl: #2e3440;
-  --r-card: 6px; --r-pill: 4px; --r-field: 4px;
-  --font: "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; }
+  --bg: #fbfaf5; --card: #ffffff; --text: #1a1a1a; --muted: #4d4d4d; --line: #1a1a1a; --line2: #d4d2ca;
+  --accent: #0b6b2e; --on-accent: #ffffff; --accent-soft: #e4f1e7; --accent-ink: #0b5426; --link: #0b5426;
+  --chip-bg: #ffffff; --chip-ink: #1a1a1a; --chip-border: 1px solid #1a1a1a;
+  --banner-bg: #fff1c2; --banner-ink: #4a3600; --field: #ffffff; --thbg: #efeee8; --blank: #9a9a9a;
+  --bar: #fbfaf5; --grid: #e6e4dc; --axis: #1a1a1a; --tick: #4d4d4d; --axlbl: #1a1a1a; --prompt: #0b6b2e;
+  --r-card: 0; --r-pill: 0; --r-field: 0; --card-border: 1px solid #1a1a1a;
+  --font: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, "Liberation Mono", "Courier New", monospace; }
 :root[data-theme="dark"] { color-scheme: dark;
-  --bg: #2e3440; --card: #3b4252; --text: #eceff4; --muted: #c3cad6; --line: #4c566a; --line2: #434c5e;
-  --accent: #88c0d0; --on-accent: #242933; --accent-soft: #434c5e; --accent-ink: #b8d8e3; --link: #a9cfdc;
-  --chip-bg: #434c5e; --chip-ink: #e5e9f0; --chip-border: 1px solid #4c566a;
-  --banner-bg: #3b4252; --banner-ink: #ebcb8b; --field: #353b48; --thbg: #434c5e; --blank: #7d879a;
-  --bar: #3b4252; --grid: #434c5e; --axis: #616e88; --tick: #c3cad6; --axlbl: #e5e9f0; }
-.banner { border-bottom: 1px solid var(--line); font-weight: 500; }
-.stylenav { justify-content: flex-start; max-width: 1160px; margin: 0 auto; padding: 2px 14px; }
-.stylenav a[aria-current="page"] { font-weight: 600; }
-header.top h1 { font-weight: 600; letter-spacing: -0.3px; }
-header.top h1::after { content: ""; display: block; width: 40px; height: 3px; background: var(--accent); margin-top: 6px; }
-.themebtn { border-radius: 6px; box-shadow: none; border: 1px solid var(--line); }
-.tabs { border-bottom: 1px solid var(--line); padding-bottom: 0; gap: 0; }
-.tabs button { border-radius: 0; background: none; border-bottom: 3px solid transparent; }
-.tabs button.active { background: none; color: var(--text); border-bottom-color: var(--accent); }
-.lbl { font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
-.lbl .hint { text-transform: none; letter-spacing: 0; }
-.chip.on { font-weight: 600; }
-.count b { font-weight: 600; }
-.btn { font-weight: 600; }
-.sechead h2 { font-weight: 600; }
-.seg label.on { box-shadow: none; border: 1px solid var(--line); }
+  --bg: #0b0e0b; --card: #0f140f; --text: #b8f0bf; --muted: #82c48d; --line: #2f6b3a; --line2: #1b3320;
+  --accent: #4be37a; --on-accent: #03170a; --accent-soft: #143019; --accent-ink: #9bf2b1; --link: #9bf2b1;
+  --chip-bg: #0f140f; --chip-ink: #b8f0bf; --chip-border: 1px solid #2f6b3a;
+  --banner-bg: #1d1a05; --banner-ink: #ffc94a; --field: #090c09; --thbg: #132013; --blank: #4f7d57;
+  --bar: #0d120d; --grid: #172a1a; --axis: #3c7a47; --tick: #8fcf96; --axlbl: #b8f0bf; --prompt: #ffc94a;
+  --card-border: 1px solid #2f6b3a; }
+body { font-size: 15px; }
+.banner { border-bottom: 1px dashed var(--line); font-weight: 400; }
+.stylenav { justify-content: flex-start; max-width: 1160px; margin: 0 auto; }
+header.top h1 { font-size: 24px; font-weight: 700; }
+header.top h1::before { content: "$ "; color: var(--prompt); }
+header.top h1::after { content: "_"; color: var(--prompt); animation: blink 1.1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { header.top h1::after { animation: none; } }
+.themebtn { border-radius: 0; box-shadow: none; border: 1px solid var(--line); background: var(--card); color: var(--text); font-weight: 400; }
+.themebtn::before { content: "["; } .themebtn::after { content: "]"; }
+.tabs { gap: 0; border-bottom: 1px solid var(--line); }
+.tabs button { border-radius: 0; color: var(--muted); font-weight: 400; }
+.tabs button.active { background: var(--accent); color: var(--on-accent); font-weight: 700; }
+.tabs button.active::before { content: "> "; }
+.sidehead b::before, .sechead h2::before { content: "## "; color: var(--prompt); }
+.sidehead b, .sechead h2 { font-size: 16px; }
+.lbl { font-weight: 700; font-size: 13px; }
+.lbl::before { content: "--"; color: var(--muted); }
+.chip { font-weight: 400; }
+.chip.on { font-weight: 700; }
+.chip.on::before { content: "[x] "; }
+.chip:not(.on)::before { content: "[ ] "; color: var(--muted); }
+.seg { background: none; border: 1px solid var(--line); padding: 0; gap: 0; }
+.seg label.on { background: var(--accent); color: var(--on-accent); box-shadow: none; }
+.pchip { border-radius: 0; }
+.count b { font-weight: 700; font-size: 22px; }
+.btn { font-weight: 700; border: 1px solid var(--line); }
+.btn.primary { border-color: var(--accent); }
+.tablewrap { border: 1px solid var(--line); }
+th, td { border-right: 1px solid var(--line2); }
+th { border-bottom: 1px solid var(--line); text-transform: uppercase; font-size: 12px; letter-spacing: .3px; }
+.tip { border: 1px solid var(--line); }
+.plot .pt { stroke-width: 1; }
 @media (max-width: 760px) {
-  .tabs { border-bottom: none; }
-  .tabs button { border-bottom: none; border-top: 3px solid transparent; border-radius: 0; }
-  .tabs button.active { background: none; color: var(--text); border-top-color: var(--accent); }
+  body { font-size: 14px; }
+  header.top h1 { font-size: 20px; }
+  .tabs { border-top: 1px solid var(--line); border-bottom: none; }
+  .tabs button { border-radius: 0; }
+  .tabs button.active { background: var(--accent); color: var(--on-accent); }
+  .tabs button.active::before { content: ""; }
+  #side .morebtn { border: 1px dashed var(--line); }
 }
 
 </style>
 </head>
 <body>
-<div class="banner">Preview with made-up data -- style 5 of 10: Nord</div>
-<nav class="stylenav" aria-label="Other styles"><span class="lab">Styles:</span><a href="../index.html">All styles</a><a href="../owid/index.html">1. Our World in Data</a><a href="../dark/index.html">2. Dark dashboard</a><a href="../journal/index.html">3. Journal data page</a><a href="../soft/index.html">4. Soft app</a><a href="../nord/index.html" aria-current="page">5. Nord</a><a href="../material/index.html">6. Material</a><a href="../ios/index.html">7. iOS</a><a href="../terminal/index.html">8. Terminal</a></nav>
+<div class="banner">Preview with made-up data -- style 8 of 10: Terminal</div>
+<nav class="stylenav" aria-label="Other styles"><span class="lab">Styles:</span><a href="../index.html">All styles</a><a href="../owid/index.html">1. Our World in Data</a><a href="../dark/index.html">2. Dark dashboard</a><a href="../journal/index.html">3. Journal data page</a><a href="../soft/index.html">4. Soft app</a><a href="../nord/index.html">5. Nord</a><a href="../material/index.html">6. Material</a><a href="../ios/index.html">7. iOS</a><a href="../terminal/index.html" aria-current="page">8. Terminal</a></nav>
 <header class="top"><div class="toprow"><h1>AquaSolDB viewer</h1><button type="button" class="themebtn" id="themeBtn" aria-label="Switch to dark mode"><span class="to-dark"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>Dark</span><span class="to-light"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>Light</span></button></div><p class="lede">Read-only view of made-up sample data. Solubility in mol per kg of water; temperature in K; pressure in MPa (total pressure unless the pressure basis says otherwise).</p></header>
 <nav class="tabs" id="tabs" aria-label="Tables"></nav>
 <div class="shell">
@@ -256,7 +279,7 @@ header.top h1::after { content: ""; display: block; width: 40px; height: 3px; ba
 </div>
 <script>
 "use strict";
-const THEME = {"palette": ["#2e4a70", "#bf616a", "#6fa3a0", "#d8b062"], "direct": false, "shapes": false, "r": 6};
+const THEME = {"palette": ["#0b5426", "#c25400", "#4a90d9", "#d9a400"], "direct": false, "shapes": true, "r": 6};
 // ---------- made-up sample data (never real data, never real DOIs) ----------
 const SOURCES = [
   {source_id: "sample2001", reference: "Sample, A. (2001) Gas solubility in salt water at moderate pressure. Journal of Example Data 1, 1-10.", source_type: "journal", doi: "10.0000/example.0001", method: "analytical_sampling"},
@@ -776,7 +799,7 @@ render();
       meta = document.querySelector('meta[name="theme-color"]'), mq = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : null;
   function apply(t) {
     root.setAttribute("data-theme", t);
-    meta.setAttribute("content", t === "dark" ? "#2e3440" : "#eceff4");
+    meta.setAttribute("content", t === "dark" ? "#0b0e0b" : "#fbfaf5");
     btn.setAttribute("aria-label", t === "dark" ? "Switch to light mode" : "Switch to dark mode");
   }
   apply(root.getAttribute("data-theme") === "dark" ? "dark" : "light");
