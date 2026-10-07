@@ -13,7 +13,7 @@
   document.querySelector('meta[name="theme-color"]').setAttribute("content", t === "dark" ? "#1a1f27" : "#f3f1ec");
 })();
 </script>
-<title>AquaSolDB viewer, style 4 of 4: Soft app (made-up data)</title>
+<title>AquaSolDB viewer, style 4 of 10: Soft app (made-up data)</title>
 <style>
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -101,6 +101,25 @@ td.sel input { width: 18px; height: 18px; }
   .plotctl { gap: 0 16px; }
 }
 
+/* ---- light/dark mode ---- */
+/* Shared by every style with the light/dark toggle (soft and styles 5-10).
+   The mode is set on <html data-theme="light|dark"> by a tiny head script before first paint.
+   The style sheet after this one supplies the colour variables used here. */
+header.top .toprow { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.themebtn { display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto; min-width: 48px; min-height: 48px; padding: 0 16px 0 12px;
+  font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; color: var(--accent-ink); background: var(--card);
+  border: 1.5px solid var(--line); border-radius: 999px; box-shadow: var(--shadow); }
+.themebtn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.themebtn svg { width: 22px; height: 22px; flex: 0 0 auto; }
+.themebtn .to-dark, :root[data-theme="dark"] .themebtn .to-light { display: inline-flex; align-items: center; gap: 8px; }
+.themebtn .to-light, :root[data-theme="dark"] .themebtn .to-dark { display: none; }
+:root { --s1: #34507a; --s2: #b8693f; --s3: #6da394; --s4: #d4ae55; }
+:root[data-theme="dark"] { --s1: #a9c3ea; --s2: #e09a72; --s3: #5f9e8d; --s4: #ecd28c; }
+.plot [fill="#34507a"], .sw [fill="#34507a"] { fill: var(--s1); }
+.plot [fill="#b8693f"], .sw [fill="#b8693f"] { fill: var(--s2); }
+.plot [fill="#6da394"], .sw [fill="#6da394"] { fill: var(--s3); }
+.plot [fill="#d4ae55"], .sw [fill="#d4ae55"] { fill: var(--s4); }
+
 /* ---- theme ---- */
 /* Soft app: calm, low-saturation palette with a light and a dark mode.
    The mode is set on <html data-theme="light|dark"> by a tiny head script before first paint. */
@@ -111,8 +130,7 @@ td.sel input { width: 18px; height: 18px; }
   --stat-bg: #f1ebdc; --stat-ink: #735d2c; --stat-on: #7b6538;
   --banner-bg: #f2ecd9; --banner-ink: #5a4b1f; --field: #f8f7f3; --thbg: #f6f4ef; --blank: #a9a8a2;
   --bar: rgba(252,251,248,.97); --shadow: 0 6px 20px rgba(40,42,50,.06); --shadow-strong: 0 4px 12px rgba(40,42,50,.14);
-  --grid: #ebe8e1; --axis: #c9c5bb; --tick: #6c6e77; --axlbl: #3f414a; --pt-stroke: #fcfbf8;
-  --s1: #34507a; --s2: #b8693f; --s3: #6da394; --s4: #d4ae55; }
+  --grid: #ebe8e1; --axis: #c9c5bb; --tick: #6c6e77; --axlbl: #3f414a; --pt-stroke: #fcfbf8; }
 :root[data-theme="dark"] { color-scheme: dark;
   --bg: #1a1f27; --bg2: #171b22; --card: #232932; --text: #e3e5e9; --muted: #a4aab4; --line: #353c47; --line2: #2c323c;
   --accent: #93abcb; --on-accent: #15202e; --accent-soft: #2d3746; --accent-ink: #bccbe0;
@@ -120,8 +138,8 @@ td.sel input { width: 18px; height: 18px; }
   --stat-bg: #37322a; --stat-ink: #dccb9f; --stat-on: #c2ab72;
   --banner-bg: #2f2b20; --banner-ink: #e3d4a6; --field: #1d222a; --thbg: #282e38; --blank: #6c727c;
   --bar: rgba(35,41,50,.97); --shadow: 0 6px 20px rgba(0,0,0,.25); --shadow-strong: 0 4px 12px rgba(0,0,0,.4);
-  --grid: #2e353f; --axis: #4d5563; --tick: #9da3ad; --axlbl: #cdd1d8; --pt-stroke: #232932;
-  --s1: #a9c3ea; --s2: #e09a72; --s3: #5f9e8d; --s4: #ecd28c; }
+  --grid: #2e353f; --axis: #4d5563; --tick: #9da3ad; --axlbl: #cdd1d8; --pt-stroke: #232932; }
+html { background: var(--bg2); }
 body { background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%); background-attachment: fixed; color: var(--text);
   font-family: ui-rounded, "SF Pro Rounded", "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; }
 a { color: var(--accent); }
@@ -130,19 +148,9 @@ a { color: var(--accent); }
 .stylenav a { color: var(--accent); border-radius: 999px; }
 .stylenav a[aria-current="page"] { background: var(--accent); color: var(--on-accent); }
 header.top { padding: 14px 20px 4px; max-width: 1160px; margin: 0 auto; }
-header.top .toprow { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 header.top h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.4px; }
 header.top h1 span.dot { color: var(--accent); }
 header.top .lede { color: var(--muted); margin: 4px 0 0; font-size: 14px; }
-/* sun/moon mode toggle */
-.themebtn { display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto; min-width: 48px; min-height: 48px; padding: 0 16px 0 12px;
-  font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; color: var(--accent-ink); background: var(--card);
-  border: 1.5px solid var(--line); border-radius: 999px; box-shadow: var(--shadow); }
-.themebtn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-.themebtn svg { width: 22px; height: 22px; flex: 0 0 auto; }
-.themebtn .to-light, :root[data-theme="dark"] .themebtn .to-dark { display: none; }
-:root[data-theme="dark"] .themebtn .to-light { display: inline-flex; align-items: center; gap: 8px; }
-.themebtn .to-dark { display: inline-flex; align-items: center; gap: 8px; }
 .tabs { max-width: 1160px; margin: 10px auto 0; padding: 0 20px; gap: 8px; }
 .tabs button { padding: 0 18px; border-radius: 999px; background: var(--card); color: var(--muted); font-weight: 700; font-size: 14px; border: 1.5px solid var(--line2); }
 .tabs button.active { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
@@ -182,11 +190,6 @@ input[type=text]::placeholder { color: var(--muted); }
 .pchip.on { background: var(--card); border-color: var(--axis); color: var(--text); }
 .pchip:not(.on) .sw { opacity: .3; }
 .pchip.all { color: var(--accent-ink); }
-/* source colours: muted hues that also step in lightness (dark blue, mid orange, mid-light green, light ochre) */
-.plot [fill="#34507a"], .sw [fill="#34507a"] { fill: var(--s1); }
-.plot [fill="#b8693f"], .sw [fill="#b8693f"] { fill: var(--s2); }
-.plot [fill="#6da394"], .sw [fill="#6da394"] { fill: var(--s3); }
-.plot [fill="#d4ae55"], .sw [fill="#d4ae55"] { fill: var(--s4); }
 .plot .grid { stroke: var(--grid); }
 .plot .axis { stroke: var(--axis); }
 .plot .tick { fill: var(--tick); }
@@ -209,7 +212,6 @@ tr.picked td { background: var(--accent-soft); }
   body { padding-bottom: 76px; }
   header.top { padding: 10px 14px 2px; }
   header.top h1 { font-size: 24px; }
-  .themebtn { padding: 0 14px 0 11px; }
   /* bottom tab bar on the phone */
   .tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; margin: 0; padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
     gap: 2px; background: var(--bar); box-shadow: 0 -4px 16px rgba(0,0,0,.08); border-top: 1px solid var(--line); border-radius: 22px 22px 0 0; }
@@ -228,8 +230,8 @@ tr.picked td { background: var(--accent-soft); }
 </style>
 </head>
 <body>
-<div class="banner">Preview with made-up data -- style 4 of 4: Soft app</div>
-<nav class="stylenav" aria-label="Other styles"><span class="lab">Styles:</span><a href="../index.html">All four</a><a href="../owid/index.html">1. Our World in Data</a><a href="../dark/index.html">2. Dark dashboard</a><a href="../journal/index.html">3. Journal data page</a><a href="../soft/index.html" aria-current="page">4. Soft app</a></nav>
+<div class="banner">Preview with made-up data -- style 4 of 10: Soft app</div>
+<nav class="stylenav" aria-label="Other styles"><span class="lab">Styles:</span><a href="../index.html">All styles</a><a href="../owid/index.html">1. Our World in Data</a><a href="../dark/index.html">2. Dark dashboard</a><a href="../journal/index.html">3. Journal data page</a><a href="../soft/index.html" aria-current="page">4. Soft app</a></nav>
 <header class="top"><div class="toprow"><h1>AquaSolDB viewer<span class="dot">.</span></h1><button type="button" class="themebtn" id="themeBtn" aria-label="Switch to dark mode"><span class="to-dark"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>Dark</span><span class="to-light"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>Light</span></button></div><p class="lede">Read-only view of made-up sample data. Solubility in mol per kg of water; temperature in K; pressure in MPa (total pressure unless the pressure basis says otherwise).</p></header>
 <nav class="tabs" id="tabs" aria-label="Tables"></nav>
 <div class="shell">
