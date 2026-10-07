@@ -3,7 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f5f0ff">
+<meta name="theme-color" content="#f3f1ec">
+<script>
+(function () {
+  var t = null;
+  try { t = localStorage.getItem("aquasoldb-soft-theme"); } catch (e) {}
+  if (t !== "dark" && t !== "light") t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  document.documentElement.setAttribute("data-theme", t);
+  document.querySelector('meta[name="theme-color"]').setAttribute("content", t === "dark" ? "#1a1f27" : "#f3f1ec");
+})();
+</script>
 <title>AquaSolDB viewer, style 4 of 4: Soft app (made-up data)</title>
 <style>
 * { box-sizing: border-box; }
@@ -93,91 +102,126 @@ td.sel input { width: 18px; height: 18px; }
 }
 
 /* ---- theme ---- */
-:root { --bg: #f5f0ff; --card: #ffffff; --text: #2d2a3e; --muted: #7b7591; --accent: #7c5cff; --accent-soft: #ece6ff;
-  --pink: #ffe1ea; --mint: #dcf7ef; --peach: #ffeedb; --line: #ebe5f7; }
-body { background: linear-gradient(180deg, #f3edff 0%, #fdf2f7 60%, #f0faf6 100%); background-attachment: fixed; color: var(--text);
+/* Soft app: calm, low-saturation palette with a light and a dark mode.
+   The mode is set on <html data-theme="light|dark"> by a tiny head script before first paint. */
+:root, :root[data-theme="light"] { color-scheme: light;
+  --bg: #f3f1ec; --bg2: #eeece6; --card: #fcfbf8; --text: #2c2e35; --muted: #5f616b; --line: #e1ded6; --line2: #ece9e2;
+  --accent: #4f6a8c; --on-accent: #ffffff; --accent-soft: #e5e9ef; --accent-ink: #3a5070;
+  --src-bg: #f0e7e1; --src-ink: #84503a; --src-on: #9a6650; --salt-bg: #e3ece7; --salt-ink: #3d6a5b; --salt-on: #4d7a6b;
+  --stat-bg: #f1ebdc; --stat-ink: #735d2c; --stat-on: #7b6538;
+  --banner-bg: #f2ecd9; --banner-ink: #5a4b1f; --field: #f8f7f3; --thbg: #f6f4ef; --blank: #a9a8a2;
+  --bar: rgba(252,251,248,.97); --shadow: 0 6px 20px rgba(40,42,50,.06); --shadow-strong: 0 4px 12px rgba(40,42,50,.14);
+  --grid: #ebe8e1; --axis: #c9c5bb; --tick: #6c6e77; --axlbl: #3f414a; --pt-stroke: #fcfbf8;
+  --s1: #34507a; --s2: #b8693f; --s3: #6da394; --s4: #d4ae55; }
+:root[data-theme="dark"] { color-scheme: dark;
+  --bg: #1a1f27; --bg2: #171b22; --card: #232932; --text: #e3e5e9; --muted: #a4aab4; --line: #353c47; --line2: #2c323c;
+  --accent: #93abcb; --on-accent: #15202e; --accent-soft: #2d3746; --accent-ink: #bccbe0;
+  --src-bg: #3a302c; --src-ink: #e2bba8; --src-on: #c9957d; --salt-bg: #29362f; --salt-ink: #aed3c4; --salt-on: #86b6a4;
+  --stat-bg: #37322a; --stat-ink: #dccb9f; --stat-on: #c2ab72;
+  --banner-bg: #2f2b20; --banner-ink: #e3d4a6; --field: #1d222a; --thbg: #282e38; --blank: #6c727c;
+  --bar: rgba(35,41,50,.97); --shadow: 0 6px 20px rgba(0,0,0,.25); --shadow-strong: 0 4px 12px rgba(0,0,0,.4);
+  --grid: #2e353f; --axis: #4d5563; --tick: #9da3ad; --axlbl: #cdd1d8; --pt-stroke: #232932;
+  --s1: #a9c3ea; --s2: #e09a72; --s3: #5f9e8d; --s4: #ecd28c; }
+body { background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%); background-attachment: fixed; color: var(--text);
   font-family: ui-rounded, "SF Pro Rounded", "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; }
 a { color: var(--accent); }
-.banner { background: #fff3c4; color: #6b5300; border-radius: 0 0 16px 16px; font-weight: 600; }
+.banner { background: var(--banner-bg); color: var(--banner-ink); border-radius: 0 0 16px 16px; font-weight: 600; }
 .stylenav { justify-content: center; color: var(--muted); }
 .stylenav a { color: var(--accent); border-radius: 999px; }
-.stylenav a[aria-current="page"] { background: var(--accent); color: #fff; }
+.stylenav a[aria-current="page"] { background: var(--accent); color: var(--on-accent); }
 header.top { padding: 14px 20px 4px; max-width: 1160px; margin: 0 auto; }
+header.top .toprow { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 header.top h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.4px; }
 header.top h1 span.dot { color: var(--accent); }
 header.top .lede { color: var(--muted); margin: 4px 0 0; font-size: 14px; }
+/* sun/moon mode toggle */
+.themebtn { display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto; min-width: 48px; min-height: 48px; padding: 0 16px 0 12px;
+  font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; color: var(--accent-ink); background: var(--card);
+  border: 1.5px solid var(--line); border-radius: 999px; box-shadow: var(--shadow); }
+.themebtn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.themebtn svg { width: 22px; height: 22px; flex: 0 0 auto; }
+.themebtn .to-light, :root[data-theme="dark"] .themebtn .to-dark { display: none; }
+:root[data-theme="dark"] .themebtn .to-light { display: inline-flex; align-items: center; gap: 8px; }
+.themebtn .to-dark { display: inline-flex; align-items: center; gap: 8px; }
 .tabs { max-width: 1160px; margin: 10px auto 0; padding: 0 20px; gap: 8px; }
-.tabs button { padding: 0 18px; border-radius: 999px; background: rgba(255,255,255,.7); color: var(--muted); font-weight: 700; font-size: 14px; }
-.tabs button.active { background: var(--accent); color: #fff; box-shadow: 0 6px 16px rgba(124,92,255,.3); }
+.tabs button { padding: 0 18px; border-radius: 999px; background: var(--card); color: var(--muted); font-weight: 700; font-size: 14px; border: 1.5px solid var(--line2); }
+.tabs button.active { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 .shell { max-width: 1160px; margin: 0 auto; padding: 16px 20px 60px; }
-#side { background: var(--card); border-radius: 24px; padding: 16px 18px 6px; margin-bottom: 18px; box-shadow: 0 8px 24px rgba(124,92,255,.08); }
+#side { background: var(--card); border-radius: 24px; padding: 16px 18px 6px; margin-bottom: 18px; box-shadow: var(--shadow); border: 1px solid var(--line2); }
 #quick, #more { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 0 24px; }
 .sidehead b { font-size: 18px; font-weight: 800; }
 .sidehead span { color: var(--muted); }
 .lbl { font-weight: 700; color: var(--text); }
 .hint { color: var(--muted); }
 .chips { gap: 8px; }
-.chip { background: var(--accent-soft); border: none; border-radius: 999px; color: #4a3aa8; font-weight: 600; padding: 0 16px; }
-.chip.on { background: var(--accent); color: #fff; box-shadow: 0 4px 10px rgba(124,92,255,.3); }
-[data-field="source_id"] .chip { background: var(--pink); color: #a33a5d; }
-[data-field="source_id"] .chip.on { background: #ff6f9a; color: #fff; box-shadow: 0 4px 10px rgba(255,111,154,.3); }
-[data-field="salt"] .chip { background: var(--mint); color: #1f7a62; }
-[data-field="salt"] .chip.on { background: #2ec4a0; color: #fff; }
-[data-field="status"] .chip, [data-field="phase"] .chip { background: var(--peach); color: #a35f12; }
-[data-field="status"] .chip.on, [data-field="phase"] .chip.on { background: #ffa23e; color: #fff; }
-.helptext { background: var(--accent-soft); border-radius: 12px; color: #4a3aa8; }
-.range-row .v { color: var(--accent); font-weight: 700; }
+.chip { background: var(--accent-soft); border: none; border-radius: 999px; color: var(--accent-ink); font-weight: 600; padding: 0 16px; }
+.chip.on { background: var(--accent); color: var(--on-accent); }
+[data-field="source_id"] .chip { background: var(--src-bg); color: var(--src-ink); }
+[data-field="source_id"] .chip.on { background: var(--src-on); color: var(--on-accent); }
+[data-field="salt"] .chip { background: var(--salt-bg); color: var(--salt-ink); }
+[data-field="salt"] .chip.on { background: var(--salt-on); color: var(--on-accent); }
+[data-field="status"] .chip, [data-field="phase"] .chip { background: var(--stat-bg); color: var(--stat-ink); }
+[data-field="status"] .chip.on, [data-field="phase"] .chip.on { background: var(--stat-on); color: var(--on-accent); }
+.helptext { background: var(--accent-soft); border-radius: 12px; color: var(--accent-ink); }
+.range-row .v { color: var(--accent-ink); font-weight: 700; }
 input[type=range], .check input, td.sel input { accent-color: var(--accent); }
-input[type=text] { border: 2px solid var(--line); border-radius: 16px; background: #fbf9ff; }
-.countbar { background: var(--card); border-radius: 22px; padding: 10px 10px 10px 20px; box-shadow: 0 8px 24px rgba(124,92,255,.08); }
+input[type=text] { border: 2px solid var(--line); border-radius: 16px; background: var(--field); color: var(--text); }
+input[type=text]::placeholder { color: var(--muted); }
+.countbar { background: var(--card); border-radius: 22px; padding: 10px 10px 10px 20px; box-shadow: var(--shadow); border: 1px solid var(--line2); }
 .count { color: var(--muted); font-weight: 600; }
-.count b { color: var(--accent); font-size: 26px; font-weight: 800; }
-.btn { background: var(--accent-soft); color: var(--accent); border: none; border-radius: 999px; font-weight: 700; padding: 0 20px; }
-.btn.primary { background: var(--accent); color: #fff; box-shadow: 0 6px 16px rgba(124,92,255,.3); }
-.card { background: var(--card); border-radius: 26px; padding: 18px; box-shadow: 0 8px 24px rgba(124,92,255,.08); }
+.count b { color: var(--accent-ink); font-size: 26px; font-weight: 800; }
+.btn { background: var(--accent-soft); color: var(--accent-ink); border: none; border-radius: 999px; font-weight: 700; padding: 0 20px; }
+.btn.primary { background: var(--accent); color: var(--on-accent); }
+.card { background: var(--card); border-radius: 26px; padding: 18px; box-shadow: var(--shadow); border: 1px solid var(--line2); }
 .sechead h2 { font-size: 20px; font-weight: 800; }
 .secnote { color: var(--muted); }
 .seg { background: var(--accent-soft); border-radius: 999px; padding: 4px; gap: 4px; }
-.seg label { border-radius: 999px; color: #4a3aa8; font-weight: 700; min-height: 40px; padding: 0 18px; }
-.seg label.on { background: #fff; color: var(--accent); box-shadow: 0 2px 8px rgba(124,92,255,.2); }
-.pchip { background: #f7f5fc; border: 2px solid var(--line); border-radius: 999px; color: var(--muted); font-weight: 600; }
-.pchip.on { background: #fff; border-color: #cfc3ff; color: var(--text); }
+.seg label { border-radius: 999px; color: var(--accent-ink); font-weight: 700; min-height: 40px; padding: 0 18px; }
+.seg label.on { background: var(--card); color: var(--text); box-shadow: var(--shadow-strong); }
+.pchip { background: var(--field); border: 2px solid var(--line); border-radius: 999px; color: var(--muted); font-weight: 600; }
+.pchip.on { background: var(--card); border-color: var(--axis); color: var(--text); }
 .pchip:not(.on) .sw { opacity: .3; }
-.pchip.all { color: var(--accent); }
-.plot .grid { stroke: #f0ecf8; }
-.plot .axis { stroke: #d7cff0; }
-.plot .tick { fill: #9a93b0; }
-.plot .axlbl { fill: #5d5775; font-weight: 700; }
-.plot .pt { fill-opacity: .85; stroke: #fff; stroke-width: 2; }
-.tip { background: #fff; border-radius: 14px; box-shadow: 0 8px 24px rgba(45,42,62,.18); }
+.pchip.all { color: var(--accent-ink); }
+/* source colours: muted hues that also step in lightness (dark blue, mid orange, mid-light green, light ochre) */
+.plot [fill="#34507a"], .sw [fill="#34507a"] { fill: var(--s1); }
+.plot [fill="#b8693f"], .sw [fill="#b8693f"] { fill: var(--s2); }
+.plot [fill="#6da394"], .sw [fill="#6da394"] { fill: var(--s3); }
+.plot [fill="#d4ae55"], .sw [fill="#d4ae55"] { fill: var(--s4); }
+.plot .grid { stroke: var(--grid); }
+.plot .axis { stroke: var(--axis); }
+.plot .tick { fill: var(--tick); }
+.plot .axlbl { fill: var(--axlbl); font-weight: 700; }
+.plot .pt { fill-opacity: .9; stroke: var(--pt-stroke); stroke-width: 1.5; }
+.tip { background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-strong); }
 .tip .k { color: var(--muted); }
 .tablewrap { border-radius: 18px; border: 2px solid var(--line); }
-th { background: #faf8ff; color: var(--muted); font-weight: 700; border-bottom: 2px solid var(--line); }
-td { border-bottom: 1px solid #f3effa; }
-th.sel { background: #faf8ff; }
-td.sel { background: #fff; }
-td.blank { color: #c3bdd6; }
+th { background: var(--thbg); color: var(--muted); font-weight: 700; border-bottom: 2px solid var(--line); }
+td { border-bottom: 1px solid var(--line2); }
+th.sel { background: var(--thbg); }
+td.sel { background: var(--card); }
+td.blank { color: var(--blank); }
 tr.picked td { background: var(--accent-soft); }
 .colhelp, .caption { color: var(--muted); }
-.printed { background: var(--peach); border-radius: 18px; }
-.printed .tablewrap { background: #fff; }
-.info { background: var(--accent-soft); color: #4a3aa8; border-radius: 16px; }
+.printed { background: var(--stat-bg); border-radius: 18px; }
+.printed .tablewrap { background: var(--card); }
+.info { background: var(--accent-soft); color: var(--accent-ink); border-radius: 16px; }
 @media (max-width: 760px) {
   body { padding-bottom: 76px; }
   header.top { padding: 10px 14px 2px; }
   header.top h1 { font-size: 24px; }
+  .themebtn { padding: 0 14px 0 11px; }
   /* bottom tab bar on the phone */
   .tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; margin: 0; padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
-    gap: 2px; background: rgba(255,255,255,.96); box-shadow: 0 -6px 20px rgba(124,92,255,.12); border-radius: 22px 22px 0 0; }
-  .tabs button { flex: 1 0 auto; min-width: 64px; min-height: 52px; padding: 0 8px; font-size: 12px; background: none; border-radius: 16px; }
-  .tabs button.active { background: var(--accent-soft); color: var(--accent); box-shadow: none; }
+    gap: 2px; background: var(--bar); box-shadow: 0 -4px 16px rgba(0,0,0,.08); border-top: 1px solid var(--line); border-radius: 22px 22px 0 0; }
+  .tabs button { flex: 1 0 auto; min-width: 64px; min-height: 52px; padding: 0 8px; font-size: 12px; background: none; border: none; border-radius: 16px; }
+  .tabs button.active { background: var(--accent-soft); color: var(--accent-ink); }
   .tabs .full { display: none; }
   .tabs .short { display: inline; }
   .shell { padding: 10px 12px 30px; }
   #side { border-radius: 22px; padding: 12px 12px 4px; }
   #quick, #more { display: block; }
-  #side .morebtn { background: var(--accent-soft); color: var(--accent); border: none; border-radius: 18px; margin-bottom: 10px; font-weight: 700; }
-  #side .morebtn .badge { background: var(--accent); color: #fff; border-radius: 9px; padding: 0 6px; font-size: 12px; }
+  #side .morebtn { background: var(--accent-soft); color: var(--accent-ink); border: none; border-radius: 18px; margin-bottom: 10px; font-weight: 700; }
+  #side .morebtn .badge { background: var(--accent); color: var(--on-accent); border-radius: 9px; padding: 0 6px; font-size: 12px; }
   .card { padding: 14px; border-radius: 22px; }
 }
 
@@ -186,7 +230,7 @@ tr.picked td { background: var(--accent-soft); }
 <body>
 <div class="banner">Preview with made-up data -- style 4 of 4: Soft app</div>
 <nav class="stylenav" aria-label="Other styles"><span class="lab">Styles:</span><a href="../index.html">All four</a><a href="../owid/index.html">1. Our World in Data</a><a href="../dark/index.html">2. Dark dashboard</a><a href="../journal/index.html">3. Journal data page</a><a href="../soft/index.html" aria-current="page">4. Soft app</a></nav>
-<header class="top"><h1>AquaSolDB viewer<span class="dot">.</span></h1><p class="lede">Read-only view of made-up sample data. Solubility in mol per kg of water; temperature in K; pressure in MPa (total pressure unless the pressure basis says otherwise).</p></header>
+<header class="top"><div class="toprow"><h1>AquaSolDB viewer<span class="dot">.</span></h1><button type="button" class="themebtn" id="themeBtn" aria-label="Switch to dark mode"><span class="to-dark"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>Dark</span><span class="to-light"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>Light</span></button></div><p class="lede">Read-only view of made-up sample data. Solubility in mol per kg of water; temperature in K; pressure in MPa (total pressure unless the pressure basis says otherwise).</p></header>
 <nav class="tabs" id="tabs" aria-label="Tables"></nav>
 <div class="shell">
   <aside id="side" aria-label="Filters">
@@ -199,7 +243,7 @@ tr.picked td { background: var(--accent-soft); }
 </div>
 <script>
 "use strict";
-const THEME = {"palette": ["#7c5cff", "#ff6f9a", "#2ec4a0", "#ffa23e", "#5aa9ff", "#e76f51"], "direct": false, "shapes": false, "r": 8};
+const THEME = {"palette": ["#34507a", "#b8693f", "#6da394", "#d4ae55"], "direct": false, "shapes": false, "r": 8};
 // ---------- made-up sample data (never real data, never real DOIs) ----------
 const SOURCES = [
   {source_id: "sample2001", reference: "Sample, A. (2001) Gas solubility in salt water at moderate pressure. Journal of Example Data 1, 1-10.", source_type: "journal", doi: "10.0000/example.0001", method: "analytical_sampling"},
@@ -712,6 +756,27 @@ document.addEventListener("change", e => {
 });
 render();
 
+</script>
+<script>
+(function () {
+  var KEY = "aquasoldb-soft-theme", root = document.documentElement, btn = document.getElementById("themeBtn"),
+      meta = document.querySelector('meta[name="theme-color"]'), mq = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : null;
+  function apply(t) {
+    root.setAttribute("data-theme", t);
+    meta.setAttribute("content", t === "dark" ? "#1a1f27" : "#f3f1ec");
+    btn.setAttribute("aria-label", t === "dark" ? "Switch to light mode" : "Switch to dark mode");
+  }
+  apply(root.getAttribute("data-theme") === "dark" ? "dark" : "light");
+  btn.addEventListener("click", function () {
+    var t = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    try { localStorage.setItem(KEY, t); } catch (e) {}
+    apply(t);
+  });
+  if (mq && mq.addEventListener) mq.addEventListener("change", function (e) {
+    var saved = null; try { saved = localStorage.getItem(KEY); } catch (x) {}
+    if (saved !== "dark" && saved !== "light") apply(e.matches ? "dark" : "light");
+  });
+})();
 </script>
 </body>
 </html>
