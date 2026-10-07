@@ -8,7 +8,7 @@
 <script>
 (function () {
   var t = null;
-  try { t = localStorage.getItem("aquasoldb-soft-theme"); } catch (e) {}
+  try { t = localStorage.getItem("aquasoldb-theme"); } catch (e) {}
   if (t !== "dark" && t !== "light") t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   document.documentElement.setAttribute("data-theme", t);
   document.querySelector('meta[name="theme-color"]').setAttribute("content", t === "dark" ? "#15181d" : "#ffffff");
@@ -20,10 +20,6 @@
 html, body { margin: 0; padding: 0; }
 body { font-size: 16px; line-height: 1.45; -webkit-text-size-adjust: 100%; }
 .banner { text-align: center; padding: 8px 14px; font-size: 14px; }
-.stylenav { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 4px; padding: 2px 12px; font-size: 14px; }
-.stylenav .lab { margin-right: 4px; }
-.stylenav a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 9px; text-decoration: none; }
-.stylenav a[aria-current="page"] { font-weight: 700; }
 header.top h1 { margin: 0; }
 .tabs { display: flex; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
 .tabs button { flex: 0 0 auto; min-height: 44px; font: inherit; cursor: pointer; background: none; border: none; color: inherit; }
@@ -89,8 +85,6 @@ td.sel input { width: 18px; height: 18px; }
 #body { min-width: 0; }
 .shell { min-height: 100vh; }  /* keeps the footer below the fold while a table loads (no layout shift) */
 @media (max-width: 760px) {
-  .stylenav { flex-wrap: nowrap; justify-content: flex-start !important; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
-  .stylenav a, .stylenav .lab { flex: 0 0 auto; }
   #side .morebtn { display: flex; flex-wrap: wrap; align-items: center; width: 100%; gap: 0 8px; min-height: 48px;
     font: inherit; cursor: pointer; text-align: left; padding: 6px 12px; }
   #side .morebtn .sub { font-size: 12px; flex: 1 1 auto; opacity: .75; }
@@ -152,7 +146,7 @@ td.conv .why { font-size: 12px; font-style: italic; }
 .howconv > summary::after { margin-left: 8px; }
 
 /* ---- light/dark mode ---- */
-/* Shared by every style with the light/dark toggle (soft and styles 5-10).
+/* Light/dark mode for the viewer.
    The mode is set on <html data-theme="light|dark"> by a tiny head script before first paint.
    The style sheet after this one supplies the colour variables used here. */
 header.top .toprow { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -173,7 +167,7 @@ header.top .toprow { display: flex; align-items: center; justify-content: space-
 .plot [fill="#bc8e5a"], .sw [fill="#bc8e5a"] { fill: var(--s6); }
 
 /* ---- theme ---- */
-/* Style 1, Our World in Data: white page, serif headings, muted colours, thin rules; light and dark mode.
+/* Our World in Data theme (the one viewer theme, R-DCR-298): white page, serif headings, muted colours, thin rules; light and dark mode.
    The mode is set on <html data-theme="light|dark"> by a tiny head script before first paint. */
 :root, :root[data-theme="light"] { color-scheme: light;
   --bg: #ffffff; --ink: #1d3d63; --text: #3a3a3a; --muted: #6e6e6e; --rule: #dadada; --soft: #f7f7f7; --accent: #be5915; --blue: #3b6798;
@@ -192,9 +186,6 @@ body { background: var(--bg); color: var(--text); font-family: "Segoe UI", "Helv
 h1, h2, h3, .sidehead b { font-family: Georgia, "Times New Roman", "Noto Serif", serif; color: var(--ink); font-weight: 400; }
 a { color: var(--blue); }
 .banner { background: var(--banner-bg); color: var(--banner-ink); border-bottom: 1px solid var(--banner-line); }
-.stylenav { max-width: 1180px; margin: 0 auto; color: var(--muted); }
-.stylenav a { color: var(--blue); }
-.stylenav a[aria-current="page"] { color: var(--ink); border-bottom: 2px solid var(--accent); }
 header.top { max-width: 1180px; margin: 0 auto; padding: 18px 24px 10px; }
 header.top h1 { font-size: 40px; letter-spacing: -0.3px; }
 header.top .lede { color: var(--muted); margin: 6px 0 0; max-width: 720px; font-size: 15px; }
@@ -1100,7 +1091,7 @@ render();
 </script>
 <script>
 (function () {
-  var KEY = "aquasoldb-soft-theme", root = document.documentElement, btn = document.getElementById("themeBtn"),
+  var KEY = "aquasoldb-theme", root = document.documentElement, btn = document.getElementById("themeBtn"),
       meta = document.querySelector('meta[name="theme-color"]'), mq = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : null;
   function apply(t) {
     root.setAttribute("data-theme", t);
